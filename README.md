@@ -1,3 +1,5 @@
+![715shots_so](https://github.com/Alex-Amenta/Short-Url/assets/111576219/37da35ed-94de-40c0-bb33-9baec50456a6)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
