@@ -21,7 +21,7 @@ const CustomizeUrl = () => {
         <input
           className="p-2 border border-l-8 bg-white border-black rounded max-w-[500px] w-full focus-visible:border-green-400 shadow-lg"
           type="text"
-          placeholder="Ejemplo: https://tusitio.com/tu-url"
+          placeholder="Ejemplo: https://tu-url.com/"
           required
         />
         <input
