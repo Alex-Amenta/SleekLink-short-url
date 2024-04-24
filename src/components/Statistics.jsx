@@ -31,11 +31,11 @@ const Statistics = () => {
         </div>
       </Suspense>
 
-      <article className="mt-20 flex flex-wrap justify-center items-center gap-16">
+      <article className="mt-20 flex flex-wrap justify-center xl:justify-around items-center gap-16">
         {dataStatistics.map(({ data, description }, index) => (
           <div
             key={index}
-            className="relative drop-shadow-xl w-56 h-64 overflow-hidden rounded-xl bg-green-100"
+            className="relative drop-shadow-xl w-56 h-64 overflow-hidden rounded-xl bg-green-300"
           >
             <div className="absolute flex flex-col items-center justify-center z-[1] opacity-90 rounded-xl inset-0.5 bg-green-50">
               <p className="text-4xl font-bold">{data}</p>
