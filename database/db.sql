@@ -3,5 +3,7 @@ CREATE TABLE url(
     originalUrl VARCHAR(255) NOT NULL,
     shortUrl VARCHAR(255) NOT NULL,
     countClick INT DEFAULT 0,
+    active BOOLEAN DEFAULT FALSE,
+    user_id VARCHAR(32),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -5,3 +5,16 @@ export const generateShortUrl = async (originalUrl, shortCode) => {
 
     return result;
 };
+
+export const generateShortUrlUser = async (originalUrl, shortCode, userId) => {
+    const userUrls = await conn.query("SELECT COUNT(*) AS count FROM url WHERE user_id = ?", [userId]);
+    const userUrlsCount = userUrls[0].count;
+
+    if (userUrlsCount >= 12) {
+        throw new Error("El usuario ha alcanzado el límite de URLs generadas");
+    }
+
+    const result = await conn.query("INSERT INTO url (originalUrl, shortUrl, user_id) VALUES (?, ?, ?)", [originalUrl, shortCode, userId]);
+
+    return result;
+}
