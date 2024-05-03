@@ -1,7 +1,6 @@
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import BackgroundPage from "@/components/BackgroundPage";
-import Footer from "@/components/Footer";
 import Provider from "@/components/Provider";
 import Navbar from "@/components/Navbar";
 
@@ -26,7 +25,6 @@ export default function RootLayout({ children }) {
           <BackgroundPage />
           <Navbar />
           {children}
-          <Footer />
         </Provider>
       </body>
     </html>
