@@ -2,6 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 const SignUpPage = () => {
   return (
@@ -42,6 +43,15 @@ const SignUpPage = () => {
             <span className="bg-green-400 shadow-green-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
             Registrarse
           </button>
+          <p className="mt-5 text-center text-black/50 text-sm">
+            Ya tienes una cuenta?{" "}
+            <Link
+              className="text-green-500 hover:underline underline-offset-2 animation"
+              href="/login"
+            >
+              Inicia Sesión
+            </Link>
+          </p>
         </div>
       </section>
     </form>

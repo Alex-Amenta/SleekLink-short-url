@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import SkeletonStatistics from "./SkeletonStatistics";
+import SkeletonStatistics from "./ui/SkeletonStatistics";
 import ChartsContainer from "./graphics/ChartsContainer";
 import Loading from "@/app/Loading";
 

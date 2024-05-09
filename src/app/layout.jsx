@@ -3,6 +3,7 @@ import "./globals.css";
 import BackgroundPage from "@/components/BackgroundPage";
 import Provider from "@/components/Provider";
 import Navbar from "@/components/Navbar";
+import ToastProvider from "@/components/ToastProvider";
 
 const inter = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -16,15 +17,17 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <link
         rel="icon"
-        href="/logo-shorturl.png"
-        sizes="32x32"
+        href="/ico-logo.png"
+        sizes="100x100"
         type="image/x-icon"
       />
       <body className={inter.className}>
         <Provider>
-          <BackgroundPage />
-          <Navbar />
-          {children}
+          <ToastProvider>
+            <BackgroundPage />
+            <Navbar />
+            {children}
+          </ToastProvider>
         </Provider>
       </body>
     </html>

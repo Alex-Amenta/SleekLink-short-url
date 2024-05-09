@@ -1,31 +1,78 @@
 "use client";
+import axios from "axios";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+  const router = useRouter();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    try {
+      const response = await axios.post("/api/user/login", { email, password });
+
+      if (response.status === 404) {
+        throw new Error("Failed to login");
+      }
+
+      // Almacena el token JWT en el localStorage
+      localStorage.setItem("jwt", response.data.token);
+
+      if (response.data) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
+
+      router.push("/");
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
+
   return (
-    <form className="min-h-screen px-10 lg:px-48 mt-[-4rem] flex justify-center items-center">
+    <form
+      onSubmit={handleSubmit}
+      className="min-h-screen px-10 lg:px-48 mt-[-4rem] flex justify-center items-center"
+    >
       <section className="py-10 bg-white rounded shadow-xl w-full md:w-[50%] flex flex-col justify-center items-center">
-          <h2 className="mb-3 text-center font-bold text-3xl">
-            Iniciar Sesión
-          </h2>
-          <p className="text-black/60 text-center text-sm text-prettyp w-[60%]">
+        <h2 className="mb-3 text-center font-bold text-3xl">Iniciar Sesión</h2>
+        <p className="text-black/60 text-center text-sm text-prettyp w-[60%]">
           ¡Bienvenido de vuelta! Por favor, inicia sesión para continuar.
-          </p>
+        </p>
 
         <div className="mt-5 flex flex-col justify-start items-stretch w-[70%]">
+          <button
+            onClick={() => signIn()}
+            className="mt-2 mb-10 p-2 flex justify-center items-center gap-3 bg-white shadow-md border border-slate-300 rounded hover:border hover:border-slate-500 transition"
+          >
+            <Image
+              src="/google.svg"
+              alt="Icono de google"
+              width={20}
+              height={20}
+            />
+            Iniciar Sesión con Google
+          </button>
+
           <label htmlFor="">Email</label>
           <input
             className="mb-5 p-2 rounded border"
             type="email"
             placeholder="tuemail@gmail.com"
+            name="email"
           />
           <label htmlFor="">Password</label>
           <input
             className="p-2 rounded border"
             type="password"
             placeholder="******"
+            name="password"
           />
 
           <button
@@ -35,7 +82,7 @@ const LoginPage = () => {
             <span className="bg-green-400 shadow-green-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
             Iniciar Sesión
           </button>
-          <p className="mt-5 text-black/50 text-sm">
+          <p className="mt-5 text-black/50 text-sm text-center">
             Todavia no tenes una cuenta?{" "}
             <Link
               className="text-green-500 hover:underline underline-offset-2 animation"
@@ -44,16 +91,6 @@ const LoginPage = () => {
               Registrate
             </Link>
           </p>
-
-          <button onClick={() => signIn()} className="mt-5 p-2 flex justify-center items-center gap-3 bg-white shadow-md border rounded">
-            <Image
-              src="/google.svg"
-              alt="Icono de google"
-              width={20}
-              height={20}
-            />
-            Iniciar Sesión con Google
-          </button>
         </div>
       </section>
     </form>

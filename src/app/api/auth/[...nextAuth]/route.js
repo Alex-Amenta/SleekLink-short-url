@@ -3,7 +3,9 @@ import GoogleProvider from "next-auth/providers/google";
 import { createUserGoogle } from "../../controllers/userController";
 
 export const handler = NextAuth({
-  // Configure one or more authentication providers
+  session: {
+    strategy: "jwt"
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,

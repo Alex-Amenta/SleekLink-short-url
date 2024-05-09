@@ -1,4 +1,4 @@
-import SkeletonStatistics from "@/components/SkeletonStatistics";
+import SkeletonStatistics from "@/components/ui/SkeletonStatistics";
 
 const Loading = () => {
   return (

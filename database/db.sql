@@ -14,6 +14,7 @@ CREATE TABLE user (
     email VARCHAR(255) NOT NULL
     password_hash TEXT,
     image VARCHAR(255),
+    isAdmin BOOLEAN DEFAULT FALSE,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY id_unique (id)
 );

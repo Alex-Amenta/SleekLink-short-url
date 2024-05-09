@@ -3,6 +3,7 @@ import { conn } from "@/app/libs/mysql";
 import { nanoid } from "nanoid";
 import { isValidUrl } from "../controllers/isValidUrlController";
 import { generateShortUrl, generateShortUrlUser } from "../controllers/shortUrlController";
+import jwt from "jsonwebtoken"
 
 export async function GET() {
     try {
@@ -15,13 +16,28 @@ export async function GET() {
 }
 
 export async function POST(request) {
-    const { originalUrl, userId } = await request.json();
+    const { originalUrl} = await request.json();
 
     const shortCode = nanoid(6);
     const shortUrl = `https://fastUrl/${shortCode}`;
+    const secretKey = process.env.JWT_SECRET_KEY || 'default-secret-key';
 
     try {
         if (!originalUrl) return NextResponse.json({ message: "Url is required" }, { status: 404 });
+
+        // Obtener el token JWT de la cabecera de autorización
+        const token = request.headers.authorization;
+
+        // Verificar si el token JWT existe antes de intentar decodificarlo
+        if (!token) {
+            return NextResponse.json({ message: "Authorization token is required" }, { status: 401 });
+        }
+
+        // Verificar y decodificar el token JWT
+        const decodedToken = jwt.verify(token.replace('Bearer ', ''), secretKey);
+
+        // Obtener el ID del usuario del token decodificado
+        const userId = decodedToken.userId;
 
         // Validar la URL
         const isValid = await isValidUrl(originalUrl);
@@ -31,12 +47,7 @@ export async function POST(request) {
         const existingUrl = await conn.query("SELECT * FROM url WHERE originalUrl = ?", [originalUrl]);
         if (existingUrl.length > 0) return NextResponse.json({ message: "This URL has already shortened" }, { status: 400 });
 
-        let result;
-        if (userId) {
-            result = await generateShortUrlUser(originalUrl, shortCode, userId);
-        } else {
-            result = await generateShortUrl(originalUrl, shortCode);
-        }
+        const result = await generateShortUrlUser(originalUrl, shortCode, userId);
 
         if (result.affectedRows === 1) {
             return NextResponse.json({ shortUrl }, { status: 201 });

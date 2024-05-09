@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import AngleDown from "./Angle-down";
-import AngleUp from "./Angle-up";
 
 const QUESTIONS = [
   {
@@ -47,18 +45,26 @@ const FrequentQuestions = () => {
 
   return (
     <section className="my-32">
-      <h2 className="text-3xl">Preguntas Frecuentes(FAQ) </h2>
+      <h2 className="text-3xl font-bold">Preguntas Frecuentes(FAQ) </h2>
       <ul>
         {QUESTIONS.map((q, index) => (
-          <li key={index} className={`mt-4 `}>
+          <li key={index} className={`mt-4`}>
             <button
-              className={`hover:underline underline-offset-4 decoration-green-600 flex justify-center items-center gap-2 ${index === activeQuestion ? "underline" : null}`}
+              className={`hover:underline underline-offset-4 decoration-green-600 flex justify-start items-center gap-2 text-pretty ${
+                index === activeQuestion ? "underline" : null
+              }`}
               onClick={() =>
                 setActiveQuestion(index === activeQuestion ? null : index)
               }
             >
-              {q.question}
-              {activeQuestion === index ? <AngleDown /> : <AngleUp />}
+              <span className="text-left">{q.question}</span>
+              <span>
+                {activeQuestion === index ? (
+                  <img src="/angle-up.svg" alt="Angle up icon" />
+                ) : (
+                  <img src="/angle-down.svg" alt="Angle down icon" />
+                )}
+              </span>
             </button>
             {activeQuestion === index && (
               <p className="mt-2 text-gray-700 bg-green-50 rounded p-2">

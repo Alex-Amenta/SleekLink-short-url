@@ -9,3 +9,13 @@ export const createUserGoogle = async (name, email, image) => {
         await conn.query("INSERT INTO user (id, name, email, image) VALUES (?, ?, ?, ?)", [userId, name, email, image]);
     }
 };
+
+export const getUserByEmail = async (email) => {
+    const user = await conn.query("SELECT * FROM user WHERE email = ?", [email]);
+
+    if (user.length === 0) {
+        throw new Error("User not found");
+    }
+
+    return user[0];
+};
