@@ -1,5 +1,5 @@
 "use client";
-import axios from "axios";
+import { useUserStore } from "@/zustand/store";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,6 +7,9 @@ import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const router = useRouter();
+  const { login, user } = useUserStore();
+
+  console.log(user);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -14,24 +17,10 @@ const LoginPage = () => {
     const formData = new FormData(event.target);
     const email = formData.get("email");
     const password = formData.get("password");
+    const success = await login(email, password);
 
-    try {
-      const response = await axios.post("/api/user/login", { email, password });
-
-      if (response.status === 404) {
-        throw new Error("Failed to login");
-      }
-
-      // Almacena el token JWT en el localStorage
-      localStorage.setItem("jwt", response.data.token);
-
-      if (response.data) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
-
+    if (success) {
       router.push("/");
-    } catch (error) {
-      console.error("Error:", error.message);
     }
   };
 

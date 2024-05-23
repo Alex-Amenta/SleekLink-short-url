@@ -1,17 +1,25 @@
 "use client";
 
-import { createShortUrl } from "@/helpers/actions";
 import { toast } from "react-toastify";
+import { useUrlStore } from "@/zustand/store";
 
 const FormCreateUrl = () => {
-  const handleSubmit = async (formData) => {
+  const { createShortUrl } = useUrlStore();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+
     try {
-      const token = localStorage.getItem("jwt");
-      console.log(token);
-      await createShortUrl(formData, token);
-      toast.success("Url invalida!, ingresa otra porfavor", {
-        position: "top-center",
-      });
+      const originalUrl = formData.get("originalUrl");
+
+      const success = await createShortUrl(originalUrl);
+
+      if (success) {
+        toast.success("URL creada con exito!", {
+          position: "top-center",
+        });
+      }
     } catch (error) {
       console.error("Error al acortar la URL:", error.message);
       toast.error("Error al acortar la URL", {
@@ -22,7 +30,7 @@ const FormCreateUrl = () => {
 
   return (
     <form
-      action={handleSubmit}
+      onSubmit={handleSubmit}
       className="mt-10 flex justify-start items-center gap-4 flex-wrap"
     >
       <input

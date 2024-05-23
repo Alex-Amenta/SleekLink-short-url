@@ -4,22 +4,11 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ModalUser from "./ui/ModalUser";
+import { useUserStore } from "@/zustand/store";
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
+  const { user, setUser } = useUserStore();
   const { data: session } = useSession();
-
-  useEffect(() => {
-    const userData = localStorage.getItem("user");
-    if (userData) {
-      try {
-        const userObj = JSON.parse(userData);
-        setUser(userObj);
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-      }
-    }
-  }, []);
 
   useEffect(() => {
     if (session?.user) {

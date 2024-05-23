@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { conn } from "@/app/libs/mysql";
 import { nanoid } from "nanoid";
+import { serialize } from "cookie";
+import crypto from "crypto";
 import { isValidUrl } from "../controllers/isValidUrlController";
 import { generateShortUrl, generateShortUrlUser } from "../controllers/shortUrlController";
 import jwt from "jsonwebtoken"
+import { authenticateUser, createAnonymousId } from "../controllers/auth";
 
 export async function GET() {
     try {
@@ -16,38 +19,49 @@ export async function GET() {
 }
 
 export async function POST(request) {
-    const { originalUrl} = await request.json();
-
-    const shortCode = nanoid(6);
-    const shortUrl = `https://fastUrl/${shortCode}`;
-    const secretKey = process.env.JWT_SECRET_KEY || 'default-secret-key';
+    const { originalUrl, customDomain } = await request.json();
 
     try {
-        if (!originalUrl) return NextResponse.json({ message: "Url is required" }, { status: 404 });
-
-        // Obtener el token JWT de la cabecera de autorización
-        const token = request.headers.authorization;
-
-        // Verificar si el token JWT existe antes de intentar decodificarlo
-        if (!token) {
-            return NextResponse.json({ message: "Authorization token is required" }, { status: 401 });
+        if (!originalUrl) {
+            return NextResponse.json({ message: "Url is required" }, { status: 404 });
         }
 
-        // Verificar y decodificar el token JWT
-        const decodedToken = jwt.verify(token.replace('Bearer ', ''), secretKey);
-
-        // Obtener el ID del usuario del token decodificado
-        const userId = decodedToken.userId;
+        const userId = await authenticateUser(request);
+        const { anonymousId } = await createAnonymousId(request);
 
         // Validar la URL
         const isValid = await isValidUrl(originalUrl);
         if (isValid.status === 404) return isValid;
 
-        //Evitar duplicados
+        // Evitar duplicados
         const existingUrl = await conn.query("SELECT * FROM url WHERE originalUrl = ?", [originalUrl]);
-        if (existingUrl.length > 0) return NextResponse.json({ message: "This URL has already shortened" }, { status: 400 });
+        if (existingUrl.length > 0) {
+            return NextResponse.json({ message: "This URL has already been shortened" }, { status: 400 });
+        }
 
-        const result = await generateShortUrlUser(originalUrl, shortCode, userId);
+        let shortCode;
+        let shortUrl;
+
+        if (customDomain) {
+            const existingCustomDomain = await conn.query("SELECT * FROM url WHERE shortCode = ?", [customDomain]);
+            if (existingCustomDomain.length > 0) {
+                return NextResponse.json({ message: "This custom domain is already in use" }, { status: 400 });
+            }
+
+            shortCode = customDomain;
+            shortUrl = `https://${customDomain}`;
+        } else {
+            shortCode = nanoid(6);
+            shortUrl = `https://fastUrl/${shortCode}`;
+        }
+
+        let result;
+
+        if (userId) {
+            result = await generateShortUrlUser(originalUrl, shortCode, shortUrl, userId);
+        } else {
+            result = await generateShortUrl(originalUrl, shortCode, shortUrl, anonymousId);
+        }
 
         if (result.affectedRows === 1) {
             return NextResponse.json({ shortUrl }, { status: 201 });

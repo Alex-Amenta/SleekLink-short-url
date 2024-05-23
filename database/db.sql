@@ -1,10 +1,12 @@
 CREATE TABLE url(
     id INT AUTO_INCREMENT PRIMARY KEY,
     originalUrl VARCHAR(255) NOT NULL,
+    shortCode VARCHAR(255) NOT NULL,
     shortUrl VARCHAR(255) NOT NULL,
     countClick INT DEFAULT 0,
     active BOOLEAN DEFAULT FALSE,
     user_id VARCHAR(32),
+    anonymous_id VARCHAR(255);
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

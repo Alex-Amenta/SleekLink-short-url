@@ -1,5 +1,6 @@
 "use client";
 
+import { useUserStore } from "@/zustand/store";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import { useState } from "react";
 const ModalUser = ({ userData }) => {
   const [openModal, setOpenModal] = useState(false);
   const { data: session } = useSession();
+  const { logout } = useUserStore();
   const router = useRouter();
 
   const handleToggleModal = () => {
@@ -21,12 +23,11 @@ const ModalUser = ({ userData }) => {
   const handleSignOut = async () => {
     if (session) {
       await signOut();
+      logout();
     }
 
+    logout();
     router.push("/");
-
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("user");
   };
 
   return (

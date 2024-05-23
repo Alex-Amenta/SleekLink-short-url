@@ -26,23 +26,17 @@ const Statistics = () => {
         real.
       </h3>
       <Suspense fallback={<Loading />}>
-        <div className="mt-10 flex justify-start lg:justify-center items-center flex-wrap gap-10 xl:gap-28">
+        <div className="mt-10 flex justify-start md:justify-center items-center flex-wrap gap-10 xl:gap-28">
           <ChartsContainer />
         </div>
       </Suspense>
 
       <article className="mt-20 flex flex-wrap justify-center xl:justify-around items-center gap-16">
         {dataStatistics.map(({ data, description }, index) => (
-          <div
-            key={index}
-            className="relative drop-shadow-xl w-56 h-64 overflow-hidden rounded-xl bg-green-300"
-          >
-            <div className="absolute flex flex-col items-center justify-center z-[1] opacity-90 rounded-xl inset-0.5 bg-green-50">
+            <div key={index} className="flex flex-col items-center justify-center opacity-90">
               <p className="text-4xl font-bold">{data}</p>
               <p className="text-balance text-black/70 mt-3">{description}</p>
             </div>
-            <div className="absolute w-56 h-48 bg-green-500 blur-[50px] -left-1/2 -top-1/2"></div>
-          </div>
         ))}
       </article>
     </section>
