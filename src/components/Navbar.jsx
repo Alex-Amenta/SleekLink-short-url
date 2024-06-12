@@ -17,28 +17,32 @@ const Navbar = () => {
   }, [session]);
 
   return (
-    <nav className="flex justify-between items-center py-3 px-10 lg:px-48">
-      <Link href="/">
-        <div className="">
-          <img
-            src="/logo-shorturl.webp"
-            alt="Logo oficial de ShortUrl"
-            width={150}
-            height={150}
-          />
+    <nav className="navbar_blur sticky top-0 z-10">
+      <div className="flex justify-between items-center py-3 px-10 lg:px-48">
+        <Link href="/">
+          <div className="">
+            <img
+              src="/logo-sleeklink.png"
+              alt="Logo oficial de SleekLink"
+              width={70}
+              height={70}
+            />
+          </div>
+        </Link>
+        <div>
+          {user ? (
+            <ModalUser userData={user} />
+          ) : (
+            <Link
+              href="/login"
+              className="p-2 px-6 text-black 
+            hover:bg-green-700 hover:text-white shadow-md 
+            border border-green-600 rounded transition"
+            >
+              Iniciar Sesión
+            </Link>
+          )}
         </div>
-      </Link>
-      <div>
-        {user ? (
-          <ModalUser userData={user} />
-        ) : (
-          <Link
-            href="/login"
-            className="p-2 px-6 bg-green-500 text-white hover:shadow-md hover:border border-green-600 hover:shadow-green-500 rounded transition"
-          >
-            Iniciar Sesión
-          </Link>
-        )}
       </div>
     </nav>
   );

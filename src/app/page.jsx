@@ -10,10 +10,10 @@ export default function Home() {
     <main className="min-h-screen px-10 lg:px-48">
       <div>
         <h1 className="text-5xl text-pretty font-bold mt-16 mb-6 bg-gradient-to-r from-slate-950 to-green-500 inline-block text-transparent bg-clip-text">
-          ¡ShortURL: Acorta tus enlaces, amplía tus posibilidades!
+          ¡SleekLink: Acorta tus enlaces de manera elegante, amplía tus posibilidades!
         </h1>
         <p className="text-lg text-black/65">
-          ShortURL es tu compañero perfecto para transformar URLs largas y
+          SleekLink es tu compañero perfecto para transformar URLs largas y
           complicadas en enlaces cortos y fáciles de compartir. ¡Simplemente
           pega tu URL, obtén tu enlace corto y compártelo con el mundo!
         </p>

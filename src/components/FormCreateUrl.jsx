@@ -2,9 +2,14 @@
 
 import { toast } from "react-toastify";
 import { useUrlStore } from "@/zustand/store";
+import { useEffect } from "react";
+
+import UrlCard from "./UrlCard";
 
 const FormCreateUrl = () => {
-  const { createShortUrl } = useUrlStore();
+  const { createShortUrl, fetchUrlsByUserId, urls } = useUrlStore();
+
+  console.log(urls);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,6 +53,9 @@ const FormCreateUrl = () => {
         <span className="bg-green-400 shadow-green-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
         Acortar URL
       </button>
+
+      {urls.length > 0 &&
+        urls.flat().map((url) => <UrlCard key={url.id} urlData={url} />)}
     </form>
   );
 };

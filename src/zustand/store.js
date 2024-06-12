@@ -50,10 +50,46 @@ export const useUrlStore = create((set) => ({
             const response = await axios.post("/api/url", { originalUrl, customDomain }, { withCredentials: true });
 
             set((state) => ({
-                urls: [...state.urls, response.data.shortUrl],
-                shortUrl: response.data.shortUrl,
+                urls: [...state.urls, response.data],
+                shortUrl: response.data,
                 loading: false,
             }));
+        } catch (error) {
+            set({
+                error: error.response ? error.response.data.message : "An error occurred",
+                loading: false,
+            });
+        }
+    },
+
+    fetchUrls: async () => {
+        set({ loading: true, error: null });
+
+        try {
+            const response = await axios.get("/api/url", { withCredentials: true });
+
+            set({
+                urls: response.data.result,
+                loading: false,
+            });
+        } catch (error) {
+            set({
+                error: error.response ? error.response.data.message : "An error occurred",
+                loading: false,
+            });
+        }
+    },
+
+    fetchUrlsByUserId: async (userId) => {
+        set({ loading: true, error: null });
+
+        try {
+            const response = await axios.get(`/api/url/user/${userId}`, { withCredentials: true });
+
+            set({
+                urls: response.data.result,
+                loading: false,
+            });
         } catch (error) {
             set({
                 error: error.response ? error.response.data.message : "An error occurred",

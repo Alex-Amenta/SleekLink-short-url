@@ -1,18 +1,14 @@
 import { NextResponse } from "next/server";
 import { conn } from "@/app/libs/mysql";
 import { nanoid } from "nanoid";
-import { serialize } from "cookie";
-import crypto from "crypto";
 import { isValidUrl } from "../controllers/isValidUrlController";
 import { generateShortUrl, generateShortUrlUser } from "../controllers/shortUrlController";
-import jwt from "jsonwebtoken"
 import { authenticateUser, createAnonymousId } from "../controllers/auth";
 
 export async function GET() {
     try {
         const result = await conn.query("SELECT * FROM url;");
         return NextResponse.json(result)
-
     } catch (error) {
         return NextResponse.json({ message: error.message }, { status: 404 })
     }
@@ -27,7 +23,7 @@ export async function POST(request) {
         }
 
         const userId = await authenticateUser(request);
-        const { anonymousId } = await createAnonymousId(request);
+        const { anonymousId, cookieHeader } = await createAnonymousId(request);
 
         // Validar la URL
         const isValid = await isValidUrl(originalUrl);
@@ -52,19 +48,26 @@ export async function POST(request) {
             shortUrl = `https://${customDomain}`;
         } else {
             shortCode = nanoid(6);
-            shortUrl = `https://fastUrl/${shortCode}`;
+            shortUrl = `https://sleeklink/${shortCode}`;
         }
 
         let result;
+        let dataUrl;
 
         if (userId) {
             result = await generateShortUrlUser(originalUrl, shortCode, shortUrl, userId);
+            dataUrl = await conn.query('SELECT * FROM url WHERE originalUrl = ? AND user_id = ?', [originalUrl, userId]);
         } else {
             result = await generateShortUrl(originalUrl, shortCode, shortUrl, anonymousId);
+            dataUrl = await conn.query('SELECT * FROM url WHERE originalUrl = ? AND anonymous_id = ?', [originalUrl, anonymousId]);
         }
 
-        if (result.affectedRows === 1) {
-            return NextResponse.json({ shortUrl }, { status: 201 });
+        if (result.affectedRows === 1 && dataUrl.length > 0) {
+            const response = NextResponse.json(dataUrl, { status: 201 });
+            if (cookieHeader) {
+                response.headers.set('Set-Cookie', cookieHeader);
+            }
+            return response;
         } else {
             return NextResponse.json({ error: "Could not shorten the URL. Try again later." }, { status: 500 });
         }

@@ -1,6 +1,8 @@
+import HearthIcon from "./ui/icons/HearthIcon";
+
 const Footer = () => {
   return (
-    <footer className="pb-10 text-green-950 flex justify-between items-center font-bold">
+    <footer className="pb-10 text-black flex justify-between items-center font-bold">
       <div>
         <p>
           ©Creado por{" "}
@@ -12,7 +14,9 @@ const Footer = () => {
           >
             Alexander Amenta
           </a>{" "}
-          🖤
+          <span className="inline-flex align-bottom">
+            <HearthIcon />
+          </span>
         </p>
       </div>
       <div className="flex justify-center items-center gap-4">
