@@ -33,10 +33,14 @@ const Statistics = () => {
 
       <article className="mt-20 flex flex-wrap justify-center xl:justify-around items-center gap-16">
         {dataStatistics.map(({ data, description }, index) => (
-            <div key={index} className="flex flex-col items-center justify-center opacity-90">
-              <p className="text-4xl font-bold">{data}</p>
-              <p className="text-balance text-black/70 mt-3">{description}</p>
-            </div>
+          <div
+            key={index}
+            className="bg-gradient-to-r from-green-400 to-green-700 p-6 w-full md:w-[17rem] 
+            shadow-md rounded text-white flex flex-col items-center justify-center opacity-90"
+          >
+            <p className="text-4xl font-bold">{data}</p>
+            <p className="text-balance text-white/80">{description}</p>
+          </div>
         ))}
       </article>
     </section>

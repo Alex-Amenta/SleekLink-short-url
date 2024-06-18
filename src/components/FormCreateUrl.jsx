@@ -9,8 +9,6 @@ import UrlCard from "./UrlCard";
 const FormCreateUrl = () => {
   const { createShortUrl, fetchUrlsByUserId, urls } = useUrlStore();
 
-  console.log(urls);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);

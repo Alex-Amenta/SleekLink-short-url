@@ -5,6 +5,8 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import DashboardIcon from "./icons/DashboardIcon";
+import SettingsIcon from "./icons/SettingsIcon";
 
 const ModalUser = ({ userData }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -52,7 +54,7 @@ const ModalUser = ({ userData }) => {
           className="px-10 lg:px-48 fixed right-0 top-10 flex items-center justify-center"
           onClick={handleCloseModal}
         >
-          <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-4">
+          <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md py-4 px-10">
             <div className="flex items-center justify-end py-1 border-b">
               <button
                 onClick={handleCloseModal}
@@ -83,9 +85,20 @@ const ModalUser = ({ userData }) => {
                 href="/dashboard"
                 className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded"
               >
-                <img src="/link.svg" alt="Link svg" width={20} height={20} />
-                URLs
+                <DashboardIcon/>
+                Panel de control
               </Link>
+              <Link
+                href="/dashboard/settings"
+                className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded"
+              >
+                <SettingsIcon />
+                Configuración
+              </Link>
+              <a className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded" href="https://www.linkedin.com/in/alexander-amenta/" target="_blank" rel="noopener noreferrer">
+              <img  src="/linkedin.svg" alt="Icono de LinkedIn" />
+                Contacto
+              </a>
               <button
                 onClick={handleSignOut}
                 className="w-full flex justify-start items-center gap-1 hover:bg-red-100 transition p-1 rounded"

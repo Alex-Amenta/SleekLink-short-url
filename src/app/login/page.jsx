@@ -9,8 +9,6 @@ const LoginPage = () => {
   const router = useRouter();
   const { login, user } = useUserStore();
 
-  console.log(user);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 

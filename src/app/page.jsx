@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import FormCreateUrl from "@/components/FormCreateUrl";
 import FrequentQuestions from "@/components/FrequentQuestions";
 import Statistics from "@/components/Statistics";
+import ModalCookies from "@/components/ui/ModalCookies";
 import { createUrl } from "@/helpers/actions";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
         </p>
       </div>
 
+      
       <FormCreateUrl />
       <CustomizeUrl />
       <Statistics />

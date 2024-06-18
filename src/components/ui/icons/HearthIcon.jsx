@@ -1,6 +1,7 @@
 const HearthIcon = () => {
   return (
     <svg
+      className="text-green-700"
       width="24"
       height="24"
       fill="none"

@@ -1,17 +1,17 @@
-import NextAuth, { getServerSession } from "next-auth"
+import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import { createUserGoogle } from "../../controllers/userController";
 
 export const handler = NextAuth({
-  session: {
-    strategy: "jwt"
-  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
+  session: {
+    jwt: true, // Habilitar JWT para manejar sesiones de usuario
+  },
   callbacks: {
     async signIn({ account, profile }) {
       if (!profile?.email) {

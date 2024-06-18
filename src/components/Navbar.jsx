@@ -14,10 +14,11 @@ const Navbar = () => {
     if (session?.user) {
       setUser(session.user);
     }
+    console.log({user});
   }, [session]);
 
   return (
-    <nav className="navbar_blur sticky top-0 z-10">
+    <nav className="navbar_blur sticky top-0 z-10 mb-5">
       <div className="flex justify-between items-center py-3 px-10 lg:px-48">
         <Link href="/">
           <div className="">
