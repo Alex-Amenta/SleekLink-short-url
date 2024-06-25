@@ -11,7 +11,7 @@ export async function POST(request) {
         const userData = JSON.parse(JSON.stringify(user));
 
         if (!userData || !password) {
-            return NextResponse.json({ message: "Incompleted email or password" }, { status: 401 });
+            return NextResponse.json({ message: "Incompleted email or password" }, { status: 404 });
         }
         // Comparar la contraseña proporcionada con la contraseña almacenada utilizando bcrypt.compare
         const passwordMatch = await bcrypt.compare(password, userData.password_hash);
@@ -20,9 +20,7 @@ export async function POST(request) {
             return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
         }
 
-        const token = await generateJwt({ email, password });
-
-        const payloadDecoded = verifyJwt(token);
+        const token = await generateJwt({ email, userId: userData.id });
 
         return NextResponse.json({...userData, token}, { status: 200 });
     } catch (error) {

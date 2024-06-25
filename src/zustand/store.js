@@ -1,23 +1,34 @@
 import axios from "axios";
 import { create } from "zustand";
 
-export const useUserStore = create((set) => ({
+export const useUserStore = create((set, get) => ({
     user: null,
+    error: null,
+    setError: (error) => set({ error }),
     setUser: (user) => set({ user }),
-    logout: () => set({ user: null }),
+    logout: () => {
+        localStorage.removeItem('authToken');
+        set({ user: null })
+    },
     login: async (email, password) => {
         try {
             const response = await axios.post("/api/user/login", { email, password });
-
             if (response.status === 200) {
-                set({ user: JSON.stringify(response.data) });
+                const { token, ...user } = response.data;
+                localStorage.setItem("authToken", token);
+                set({ user });
                 return true;
             } else {
                 throw new Error("Failed to login");
             }
         } catch (error) {
-            console.error("Error:", error.message);
+            if (error.response && error.response.status === 401) {
+                set({ error: "Invalid username or password" });
+            } else {
+                console.error("Error:", error.message);
+            }
             return false;
+
         }
 
     },
@@ -34,8 +45,16 @@ export const useUserStore = create((set) => ({
             console.log("Error", error.message);
             return false;
         }
+    },
+    isAuthenticated: () => {
+        return !!get().user
     }
 }));
+
+export const getZustandState = () => {
+    const state = useUserStore.getState();
+    return state;
+}
 
 export const useUrlStore = create((set) => ({
     urls: [],
@@ -43,11 +62,14 @@ export const useUrlStore = create((set) => ({
     error: null,
     loading: false,
 
-    createShortUrl: async (originalUrl, customDomain = null) => {
+    createShortUrl: async (title, originalUrl, customDomain = null) => {
         set({ loading: true, error: null });
 
         try {
-            const response = await axios.post("/api/url", { originalUrl, customDomain }, { withCredentials: true });
+            const token = localStorage.getItem('authToken');
+            const headers = token ? { "Authorization": `Bearer ${token}` } : {};
+
+            const response = await axios.post("/api/url", { title, originalUrl, customDomain }, { withCredentials: true, headers });
 
             set((state) => ({
                 urls: [...state.urls, response.data],
@@ -84,15 +106,40 @@ export const useUrlStore = create((set) => ({
         set({ loading: true, error: null });
 
         try {
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+
             const response = await axios.get(`/api/url/user/${userId}`, { withCredentials: true });
 
             set({
-                urls: response.data.result,
+                urls: response.data,
                 loading: false,
             });
         } catch (error) {
             set({
                 error: error.response ? error.response.data.message : "An error occurred",
+                loading: false,
+            });
+        }
+    },
+    deleteUrl: async (id) => {
+        set({ loading: true, error: null });
+        try {
+            const response = await axios.delete(`/api/url/${id}`);
+
+            if (response.statusCode === 200) {
+                set((state) => ({
+                    urls: state.urls.filter(url => url.id !== id),
+                    loading: false,
+                }));
+                return { success: true, message: response.data.message }
+            } else {
+                return { success: false, error: "Failed to delete URL" }
+            }
+
+        } catch (error) {
+            console.error("Error deleting URL:", error);
+            set({
+                error: error.response ? error.response.data.message : "An error occurred while deleting the URL",
                 loading: false,
             });
         }

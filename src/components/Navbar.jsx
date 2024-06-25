@@ -10,11 +10,12 @@ const Navbar = () => {
   const { user, setUser } = useUserStore();
   const { data: session } = useSession();
 
+  console.log(user);
+
   useEffect(() => {
     if (session?.user) {
       setUser(session.user);
     }
-    console.log({user});
   }, [session]);
 
   return (
@@ -38,7 +39,7 @@ const Navbar = () => {
               href="/login"
               className="p-2 px-6 text-black 
             hover:bg-green-700 hover:text-white shadow-md 
-            border border-green-600 rounded transition"
+            border border-green-600 rounded-md transition"
             >
               Iniciar Sesión
             </Link>

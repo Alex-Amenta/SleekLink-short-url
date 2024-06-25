@@ -83,25 +83,25 @@ const ModalUser = ({ userData }) => {
             <div className="my-4 space-y-2">
               <Link
                 href="/dashboard"
-                className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded"
+                className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded-md"
               >
                 <DashboardIcon/>
                 Panel de control
               </Link>
               <Link
                 href="/dashboard/settings"
-                className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded"
+                className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded-md"
               >
                 <SettingsIcon />
                 Configuración
               </Link>
-              <a className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded" href="https://www.linkedin.com/in/alexander-amenta/" target="_blank" rel="noopener noreferrer">
+              <a className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded-md" href="https://www.linkedin.com/in/alexander-amenta/" target="_blank" rel="noopener noreferrer">
               <img  src="/linkedin.svg" alt="Icono de LinkedIn" />
                 Contacto
               </a>
               <button
                 onClick={handleSignOut}
-                className="w-full flex justify-start items-center gap-1 hover:bg-red-100 transition p-1 rounded"
+                className="w-full flex justify-start items-center gap-1 hover:bg-red-100 transition p-1 rounded-md"
               >
                 <img
                   src="/arrow-rigth.svg"

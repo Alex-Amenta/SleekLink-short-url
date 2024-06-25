@@ -4,7 +4,7 @@ import crypto from 'crypto';
 
 export async function authenticateUser(request) {
     // Lógica para autenticar al usuario
-    const token = request.headers.authorization;
+    const token = request.headers.get('authorization');
     const secretKey = process.env.JWT_SECRET_KEY || 'default-secret-key';
     let userId = null;
 
@@ -15,6 +15,8 @@ export async function authenticateUser(request) {
         } catch (error) {
             throw new Error("Invalid token");
         }
+    } else {
+        console.log('No se encontró token en el encabezado');
     }
 
     return userId;

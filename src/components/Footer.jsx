@@ -24,7 +24,7 @@ const Footer = () => {
           href="https://www.linkedin.com/in/alexander-amenta/"
           target="_blank"
           rel="noopener noreferrer "
-          className="hover:scale-110 transition border border-black p-1 rounded"
+          className="hover:scale-110 transition border border-black p-1 rounded-md"
         >
           <img src="/linkedin.svg" alt="Icono de LinkedIn" />
         </a>
@@ -32,7 +32,7 @@ const Footer = () => {
           href="https://github.com/Alex-Amenta"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:scale-110 transition border border-black p-1 rounded"
+          className="hover:scale-110 transition border border-black p-1 rounded-md"
         >
           <img src="/github.svg" alt="Icono de Github" />
         </a>

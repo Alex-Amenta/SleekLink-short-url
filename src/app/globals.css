@@ -31,3 +31,18 @@ body {
     backdrop-filter: blur(8px);
   }
 }
+
+.pulse-loader {
+  background-color: var(--shadow-color);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--shadow-color);
+  }
+  100% {
+    box-shadow: 0 0 0 12px var(--shadow-color-transparent);
+  }
+}
+

@@ -7,6 +7,9 @@ const ModalCookies = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
+    const acceptedCookie = localStorage.getItem("acceptCookie");
+    if (acceptedCookie) setIsOpen(false);
+
     const mainContent = document.getElementById("main-content");
     if (mainContent) {
       if (isOpen) {
@@ -18,6 +21,7 @@ const ModalCookies = () => {
   }, [isOpen]);
 
   const handleAccept = () => {
+    localStorage.setItem("acceptCookie", "true");
     setIsOpen(false);
     // Lógica adicional para aceptar cookies
   };
@@ -31,9 +35,9 @@ const ModalCookies = () => {
 
   return (
     <article className="fixed inset-0 mb-10 flex items-end justify-center z-50">
-      <div className="bg-white rounded p-4  max-w-[50%] shadow-md">
+      <div className="bg-white rounded-md p-4  max-w-[50%] shadow-md">
         <h3 className="text-xl font-bold mb-2">
-          <span className="inline-flex align-middle rounded p-1 bg-amber-600">
+          <span className="inline-flex align-middle rounded-md p-1 bg-amber-600">
             <CookieIcon />
           </span>{" "}
           Cookies
@@ -49,13 +53,13 @@ const ModalCookies = () => {
         <div className="flex justify-end items-center gap-4 mt-4">
           <button
             onClick={handleAccept}
-            className="p-2 bg-green-600 hover:bg-green-800 rounded text-white"
+            className="p-2 bg-green-600 hover:bg-green-800 rounded-md text-white"
           >
             Aceptar
           </button>
           <button
             onClick={handleCancel}
-            className="p-2 rounded border hover:border-black"
+            className="p-2 rounded-md border hover:border-black"
           >
             Cancelar
           </button>

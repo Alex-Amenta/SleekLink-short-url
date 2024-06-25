@@ -1,6 +1,7 @@
-const LinkIcon = () => {
+const LinkIcon = ({ className }) => {
   return (
     <svg
+      className={className}
       width="24"
       height="24"
       fill="none"

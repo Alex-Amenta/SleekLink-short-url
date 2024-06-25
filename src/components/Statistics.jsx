@@ -21,7 +21,7 @@ const dataStatistics = [
 const Statistics = () => {
   return (
     <section className="my-44">
-      <h3 className="text-4xl font-bold">
+      <h3 className="text-4xl text-center font-bold">
         Monitorea el rendimiento de tus URLs con estadísticas de clics en tiempo
         real.
       </h3>
@@ -36,7 +36,7 @@ const Statistics = () => {
           <div
             key={index}
             className="bg-gradient-to-r from-green-400 to-green-700 p-6 w-full md:w-[17rem] 
-            shadow-md rounded text-white flex flex-col items-center justify-center opacity-90"
+            shadow-md rounded-md text-white flex flex-col items-center justify-center opacity-90"
           >
             <p className="text-4xl font-bold">{data}</p>
             <p className="text-balance text-white/80">{description}</p>

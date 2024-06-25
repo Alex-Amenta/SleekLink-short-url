@@ -67,7 +67,7 @@ const FrequentQuestions = () => {
               </span>
             </button>
             {activeQuestion === index && (
-              <p className="mt-2 text-gray-700 bg-green-200 rounded p-2">
+              <p className="mt-2 text-gray-700 bg-green-200 rounded-md p-2">
                 {q.answer}
               </p>
             )}

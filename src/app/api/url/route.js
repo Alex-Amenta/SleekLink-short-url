@@ -3,6 +3,7 @@ import { conn } from "@/app/libs/mysql";
 import { nanoid } from "nanoid";
 import { isValidUrl } from "../controllers/isValidUrlController";
 import { generateShortUrl, generateShortUrlUser } from "../controllers/shortUrlController";
+import jwt from "jsonwebtoken";
 import { authenticateUser, createAnonymousId } from "../controllers/auth";
 
 export async function GET() {
@@ -15,7 +16,7 @@ export async function GET() {
 }
 
 export async function POST(request) {
-    const { originalUrl, customDomain } = await request.json();
+    const { originalUrl, customDomain, title } = await request.json();
 
     try {
         if (!originalUrl) {
@@ -55,10 +56,10 @@ export async function POST(request) {
         let dataUrl;
 
         if (userId) {
-            result = await generateShortUrlUser(originalUrl, shortCode, shortUrl, userId);
+            result = await generateShortUrlUser(title, originalUrl, shortCode, shortUrl, userId);
             dataUrl = await conn.query('SELECT * FROM url WHERE originalUrl = ? AND user_id = ?', [originalUrl, userId]);
         } else {
-            result = await generateShortUrl(originalUrl, shortCode, shortUrl, anonymousId);
+            result = await generateShortUrl(title, originalUrl, shortCode, shortUrl, anonymousId);
             dataUrl = await conn.query('SELECT * FROM url WHERE originalUrl = ? AND anonymous_id = ?', [originalUrl, anonymousId]);
         }
 

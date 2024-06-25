@@ -1,7 +1,7 @@
 const DeleteIcon = () => {
   return (
     <svg
-      className="hover:text-red-700"
+      className="group-hover:text-red-700"
       width="24"
       height="24"
       fill="none"
