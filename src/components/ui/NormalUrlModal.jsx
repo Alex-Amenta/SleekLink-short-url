@@ -14,16 +14,17 @@ const NormalUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
       const success = await createShortUrl(title, originalUrl);
 
       if (success) {
-        toast.success("URL creada con exito!", {
+        toast.success("URL creada con éxito!", {
           position: "top-center",
         });
-        onRequestClose()
+        onRequestClose();
+      } else {
+        toast.error("Error al acortar la URL", {
+          position: "top-center",
+        });
       }
     } catch (error) {
-      console.error("Error al acortar la URL:", error.message);
-      toast.error("Error al acortar la URL", {
-        position: "top-center",
-      });
+      console.error("Error interno al acortar la URL:", error.message);
     }
   };
 
@@ -70,6 +71,7 @@ const NormalUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
           </button>
 
           <button
+            type="button"
             onClick={onRequestClose}
             className=" shadow-lg p-2 border rounded-md bg-white hover:border-black transition"
           >
