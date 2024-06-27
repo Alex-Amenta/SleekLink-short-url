@@ -3,10 +3,12 @@
 import TrendingIcon from "./ui/icons/TrendingIcon";
 import DeleteIcon from "./ui/icons/DeleteIcon";
 import CopyButton from "./ui/icons/CopyButton";
-import { formatDate } from "@/helpers/formatDate";
+import { calculateDaysReamiming, formatDate } from "@/helpers/formatDate";
 import { useState } from "react";
 import ConfirmModal from "./ui/ConfirmModal";
 import PulseLoader from "./ui/loader/PulseLoader";
+import Link from "next/link";
+import TimeIcon from "./ui/icons/TimeIcon";
 
 const UrlCard = ({ urlData, deleteUrl }) => {
   const [isConfirm, setIsConfirm] = useState(false);
@@ -24,12 +26,14 @@ const UrlCard = ({ urlData, deleteUrl }) => {
   };
 
   return (
-    <div className="mt-10 mx-auto border border-black rounded-md p-3 bg-white shadow-lg w-full lg:w-[80%]">
+    <article className="mt-10 border border-black rounded-md p-3 bg-white shadow-lg w-full lg:w-[80%]">
       <div className="flex justify-between items-center">
-        <p className="font-bold text-lg">
-          <PulseLoader isActive={urlData.active} />
-          {urlData.title}
-        </p>
+        <Link href={`/dashboard/${urlData.id}`}>
+          <p className="font-bold text-lg hover:underline underline-offset-2">
+            <PulseLoader isActive={urlData.active} />
+            {urlData.title}
+          </p>
+        </Link>
         <div className="flex justify-center items-center gap-1">
           <p className="flex justify-center items-center gap-2 mr-2 pr-3 border-r-2 border-black/40">
             <TrendingIcon /> {urlData.countClick} clicks
@@ -37,7 +41,10 @@ const UrlCard = ({ urlData, deleteUrl }) => {
           <button className="p-1 rounded-md hover:bg-black/10 group">
             <CopyButton />
           </button>
-          <button className="p-1 rounded-md hover:bg-red-100 group" onClick={() => setIsConfirm(true)}>
+          <button
+            className="p-1 rounded-md hover:bg-red-100 group"
+            onClick={() => setIsConfirm(true)}
+          >
             <DeleteIcon />
           </button>
 
@@ -61,8 +68,12 @@ const UrlCard = ({ urlData, deleteUrl }) => {
       <p className="mb-3 text-wrap max-w-full text-black/50">
         {urlData.originalUrl}
       </p>
+      <p className="mb-3 p-1 w-fit bg-red-200 text-red-500 text-sm rounded-full">
+        <span className="inline-flex align-middle mr-1"><TimeIcon/></span>
+        {calculateDaysReamiming(urlData.expirationDate)} days
+      </p>
       <p className="text-sm text-end">{formatDate(urlData.createdAt)}</p>
-    </div>
+    </article>
   );
 };
 

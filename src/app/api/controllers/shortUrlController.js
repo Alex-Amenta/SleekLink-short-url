@@ -11,7 +11,10 @@ export const generateShortUrl = async (title, originalUrl, shortCode, shortUrl, 
         throw new Error("Se ha alcanzado el límite de URLs generadas para usuarios no autenticados");
     }
 
-    const result = await conn.query("INSERT INTO url (title ,originalUrl, shortCode, shortUrl, anonymous_id, active) VALUES (?, ?, ?, ?, ?, true)", [title, originalUrl, shortCode, shortUrl, anonymousId]);
+    const expirationDate = new Date();
+    expirationDate.setHours(expirationDate.getHours() + 5);
+
+    const result = await conn.query("INSERT INTO url (title ,originalUrl, shortCode, shortUrl, anonymous_id, active, expirationDate) VALUES (?, ?, ?, ?, ?, true, ?)", [title, originalUrl, shortCode, shortUrl, anonymousId, expirationDate]);
 
     return result;
 };
@@ -24,7 +27,11 @@ export const generateShortUrlUser = async (title, originalUrl, shortCode, shortU
         throw new Error("El usuario ha alcanzado el límite de URLs generadas");
     }
 
-    const result = await conn.query("INSERT INTO url (title ,originalUrl, shortCode, shortUrl, user_id, active) VALUES (?, ?, ?, ?, ?, true)", [title, originalUrl, shortCode, shortUrl, userId]);
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 30);
+    console.log(expirationDate);
+
+    const result = await conn.query("INSERT INTO url (title ,originalUrl, shortCode, shortUrl, user_id, active, expirationDate) VALUES (?, ?, ?, ?, ?, true, ?)", [title, originalUrl, shortCode, shortUrl, userId, expirationDate]);
 
     return result;
 }

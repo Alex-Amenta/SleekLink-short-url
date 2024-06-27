@@ -1,8 +1,6 @@
 import { conn } from "@/app/libs/mysql";
 import { NextResponse } from "next/server";
-import { auth } from "../auth/[...nextauth]/route";
 import { v4 as uuidv4 } from "uuid";
-import { createUserGoogle } from "../controllers/userController";
 import bcrypt from "bcrypt";
 
 // Expresión regular para validar el formato del correo electrónico

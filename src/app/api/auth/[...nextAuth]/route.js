@@ -12,6 +12,9 @@ export const handler = NextAuth({
   session: {
     jwt: true, // Habilitar JWT para manejar sesiones de usuario
   },
+  pages: {
+    signIn: "/login",
+  },
   callbacks: {
     async signIn({ account, profile }) {
       if (!profile?.email) {

@@ -6,17 +6,12 @@ export const useUserStore = create((set, get) => ({
     error: null,
     setError: (error) => set({ error }),
     setUser: (user) => set({ user }),
-    logout: () => {
-        localStorage.removeItem('authToken');
-        set({ user: null })
-    },
+    logout: () => { set({ user: null }) },
     login: async (email, password) => {
         try {
             const response = await axios.post("/api/user/login", { email, password });
             if (response.status === 200) {
-                const { token, ...user } = response.data;
-                localStorage.setItem("authToken", token);
-                set({ user });
+                set({ user: response.data });
                 return true;
             } else {
                 throw new Error("Failed to login");
@@ -36,7 +31,6 @@ export const useUserStore = create((set, get) => ({
         try {
             const response = await axios.post("/api/user", { name, email, password });
             if (response.status === 200) {
-                console.log(JSON.stringify(response.data));
                 return true;
             }
 
@@ -58,6 +52,7 @@ export const getZustandState = () => {
 
 export const useUrlStore = create((set) => ({
     urls: [],
+    selectedUrl: null,
     shortUrl: null,
     error: null,
     loading: false,
@@ -93,6 +88,23 @@ export const useUrlStore = create((set) => ({
             set({
                 urls: response.data.result,
                 loading: false,
+            });
+        } catch (error) {
+            set({
+                error: error.response ? error.response.data.message : "An error occurred",
+                loading: false,
+            });
+        }
+    },
+
+    getUrlById: async (urlId) => {
+        set({ loading: true, error: null });
+        try {
+            const response = await axios.get(`/api/url/${urlId}`, { withCredentials: true });
+
+            set({
+                selectedUrl: response.data,
+                loading: false
             });
         } catch (error) {
             set({

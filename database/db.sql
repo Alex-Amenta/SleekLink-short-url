@@ -7,7 +7,8 @@ CREATE TABLE url(
     countClick INT DEFAULT 0,
     active BOOLEAN DEFAULT FALSE,
     user_id VARCHAR(32),
-    anonymous_id VARCHAR(255);
+    anonymous_id VARCHAR(255),
+    expirationDate TIMESTAMP NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
