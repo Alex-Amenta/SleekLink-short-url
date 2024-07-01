@@ -5,31 +5,22 @@ import LinkIcon from "@/components/ui/icons/LinkIcon";
 import Loader from "@/components/ui/loader/Loader";
 import NormalUrlModal from "@/components/ui/NormalUrlModal";
 import UrlManager from "@/components/UrlManager";
+import useExpirationWarning from "@/hooks/useExpirationWarning";
+import useFetchUrls from "@/hooks/useFetchUrls";
+import useModalUrl from "@/hooks/useModalUrl";
 import { useUrlStore, useUserStore } from "@/zustand/store";
-import { useEffect, useState } from "react";
 
 const DashboardPage = () => {
-  const { fetchUrlsByUserId, urls, createShortUrl, loading } = useUrlStore();
   const { user } = useUserStore();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { createShortUrl, loading } = useUrlStore();
+  const { isNormalModalOpen, openNormalModal, closeNormalModal } =
+    useModalUrl();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetchUrlsByUserId(user?.id);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
-    fetchData();
-  }, [fetchUrlsByUserId, user?.id]);
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const urls = useFetchUrls(user?.id);
+  useExpirationWarning(urls);
 
   return (
-    <section className="min-h-screen px-10 lg:px-48 mt-[4rem]">
+    <section className="min-h-screen mt-[4rem]">
       {loading && <Loader />}
       {!loading && (
         <div>
@@ -48,14 +39,14 @@ const DashboardPage = () => {
               {`${urls.length}/15`}
             </p>
             <button
-              onClick={openModal}
+              onClick={openNormalModal}
               className="p-2 border-2 rounded-md bg-white hover:bg-white/70"
             >
               <AddCircle />
             </button>
           </div>
           {urls.length > 0 ? (
-            <UrlManager showButtons={false} />
+            <UrlManager showButtons={false} isAuthenticated={true} />
           ) : (
             <div className="my-5 flex flex-col justify-center items-center py-20 px-4 rounded-md bg-white border border-black/50 shadow-lg">
               <p className="text-center text-xl font-bold">
@@ -67,9 +58,9 @@ const DashboardPage = () => {
       )}
 
       <NormalUrlModal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        createShortUrl={createShortUrl} // Pasa la función para crear URL
+        isOpen={isNormalModalOpen}
+        onRequestClose={closeNormalModal}
+        createShortUrl={createShortUrl}
       />
     </section>
   );

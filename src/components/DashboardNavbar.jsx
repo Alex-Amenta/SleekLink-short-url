@@ -16,15 +16,15 @@ const DashboardNavbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="px-10 lg:px-48 flex justify-start items-center gap-8 ">
+    <nav className="flex justify-start items-center gap-8 bg-black/80 w-min p-2 rounded-xl">
       {DashboardLinks.map((link, index) => (
         <Link
           key={index}
-          className={`flex justify-center items-center gap-2 border-b-4 pb-2 ${
+          className={`flex justify-center items-center gap-2 p-1 rounded-xl ${
             pathname === link.href
-              ? "border-green-600 text-black"
-              : "border-transparent text-black/60"
-          } hover:text-black`}
+              ? "bg-green-600 text-white"
+              : "border-transparent text-white/60"
+          } hover:text-white`}
           href={link.href}
         >
           <link.icon />

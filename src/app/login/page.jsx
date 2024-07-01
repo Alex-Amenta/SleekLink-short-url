@@ -25,7 +25,7 @@ const LoginPage = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="min-h-screen px-10 lg:px-48 mt-[-4rem] flex justify-center items-center"
+      className="min-h-screen mt-[-4rem] flex justify-center items-center"
     >
       <section className="py-10 bg-white rounded-md shadow-xl w-full md:w-[50%] flex flex-col justify-center items-center">
         <h2 className="mb-3 text-center font-bold text-3xl">Iniciar Sesión</h2>
@@ -35,7 +35,7 @@ const LoginPage = () => {
 
         <div className="mt-5 flex flex-col justify-start items-stretch w-[70%]">
           <button
-            onClick={() => signIn()}
+            onClick={() => signIn("google")}
             className="mt-2 mb-10 p-2 flex justify-center items-center gap-3 bg-white shadow-md border border-slate-300 rounded-md hover:border hover:border-slate-500 transition"
           >
             <Image

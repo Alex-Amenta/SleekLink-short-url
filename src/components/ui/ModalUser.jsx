@@ -51,7 +51,7 @@ const ModalUser = ({ userData }) => {
 
       {openModal && userData && (
         <div
-          className="px-10 lg:px-48 fixed right-0 top-10 flex items-center justify-center"
+          className="px-10 lg:px-48 fixed top-10 flex items-center justify-center"
           onClick={handleCloseModal}
         >
           <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md py-4 px-10">

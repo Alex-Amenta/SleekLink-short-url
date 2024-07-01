@@ -20,7 +20,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar_blur sticky top-0 z-10 mb-5">
-      <div className="flex justify-between items-center py-3 px-10 lg:px-48">
+      <div className="flex justify-between items-center py-3">
         <Link href="/">
           <div className="">
             <img
@@ -31,17 +31,33 @@ const Navbar = () => {
             />
           </div>
         </Link>
-        <div>
+        <div className="flex justify-center items-center gap-2">
+        <a
+          href="https://www.linkedin.com/in/alexander-amenta/"
+          target="_blank"
+          rel="noopener noreferrer "
+          className="hover:bg-black/10 transition p-2 rounded-md"
+        >
+          <img src="/linkedin.svg" width={25} height={25} alt="Icono de LinkedIn" />
+        </a>
+        <a
+          href="https://github.com/Alex-Amenta"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:bg-black/10 transition p-2 rounded-md"
+        >
+          <img src="/github.svg" width={25} height={25} alt="Icono de Github" />
+        </a>
           {user ? (
             <ModalUser userData={user} />
           ) : (
             <Link
               href="/login"
-              className="p-2 px-6 text-black 
-            hover:bg-green-700 hover:text-white shadow-md 
-            border border-green-600 rounded-md transition"
+              className="p-2 px-3
+            bg-green-700 text-white shadow-md 
+            border border-green-600 hover:bg-green-900 rounded-md transition"
             >
-              Iniciar Sesión
+              Login
             </Link>
           )}
         </div>

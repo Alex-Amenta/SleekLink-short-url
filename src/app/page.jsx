@@ -5,7 +5,7 @@ import UrlManager from "@/components/UrlManager";
 
 export default function Home() {
   return (
-    <main className="min-h-screen px-10 lg:px-48">
+    <main className="min-h-screen ">
       <div>
         <h1 className="text-6xl text-center text-pretty font-bold mt-16 mb-6 bg-gradient-to-r from-slate-950 to-green-500 inline-block text-transparent bg-clip-text">
           Acorta tus enlaces de manera elegante y comparte con facilidad
@@ -18,7 +18,7 @@ export default function Home() {
       </div>
 
       
-      <UrlManager showButtons={true} />
+      <UrlManager showButtons={true} isAuthenticated={false} />
       <Statistics />
       <FrequentQuestions />
       <Footer />

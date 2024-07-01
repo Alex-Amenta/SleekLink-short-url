@@ -9,7 +9,7 @@ export const useUserStore = create((set, get) => ({
     logout: () => { set({ user: null }) },
     login: async (email, password) => {
         try {
-            const response = await axios.post("/api/user/login", { email, password });
+            const response = await axios.post("/api/user/login", { email, password }, { withCredentials: true });
             if (response.status === 200) {
                 set({ user: response.data });
                 return true;
@@ -52,6 +52,7 @@ export const getZustandState = () => {
 
 export const useUrlStore = create((set) => ({
     urls: [],
+    nonAuthUrls: [],
     selectedUrl: null,
     shortUrl: null,
     error: null,
@@ -61,16 +62,23 @@ export const useUrlStore = create((set) => ({
         set({ loading: true, error: null });
 
         try {
-            const token = localStorage.getItem('authToken');
-            const headers = token ? { "Authorization": `Bearer ${token}` } : {};
+            const response = await axios.post("/api/url", { title, originalUrl, customDomain }, { withCredentials: true });
 
-            const response = await axios.post("/api/url", { title, originalUrl, customDomain }, { withCredentials: true, headers });
+            if (response.data.user_id) {
+                set((state) => ({
+                    urls: [...state.urls, response.data],
+                    shortUrl: response.data,
+                    loading: false,
+                }));
+            } else {
+                set((state) => ({
+                    nonAuthUrls: [...state.nonAuthUrls, response.data],
+                    shortUrl: response.data,
+                    loading: false,
+                }));
+            }
 
-            set((state) => ({
-                urls: [...state.urls, response.data],
-                shortUrl: response.data,
-                loading: false,
-            }));
+
         } catch (error) {
             set({
                 error: error.response ? error.response.data.message : "An error occurred",
@@ -114,7 +122,7 @@ export const useUrlStore = create((set) => ({
         }
     },
 
-    fetchUrlsByUserId: async (userId) => {
+    getUrlsByUserId: async (userId) => {
         set({ loading: true, error: null });
 
         try {
@@ -133,6 +141,7 @@ export const useUrlStore = create((set) => ({
             });
         }
     },
+
     deleteUrl: async (id) => {
         set({ loading: true, error: null });
         try {

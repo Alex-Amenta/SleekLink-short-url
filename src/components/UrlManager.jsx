@@ -7,18 +7,21 @@ import HashUrlModal from "./ui/HashUrlModal";
 import LinkIcon from "./ui/icons/LinkIcon";
 import StarIcon from "./ui/icons/StarIcon";
 import UrlCard from "./UrlCard";
+import useModalUrl from "@/hooks/useModalUrl";
 
-const UrlManager = ({ showButtons }) => {
-  const { createShortUrl, urls, deleteUrl } = useUrlStore();
+const UrlManager = ({ showButtons, isAuthenticated }) => {
+  const { createShortUrl, urls, deleteUrl, nonAuthUrls } = useUrlStore();
 
-  const [isNormalModalOpen, setIsNormalModalOpen] = useState(false);
-  const [isHashModalOpen, setIsHashModalOpen] = useState(false);
+  const {
+    isNormalModalOpen,
+    openNormalModal,
+    closeNormalModal,
+    isHashModalOpen,
+    openHashModal,
+    closeHashModal,
+  } = useModalUrl();
 
-  const openNormalModal = () => setIsNormalModalOpen(true);
-  const closeNormalModal = () => setIsNormalModalOpen(false);
-
-  const openHashModal = () => setIsHashModalOpen(true);
-  const closeHashModal = () => setIsHashModalOpen(false);
+  const displayedUrls = isAuthenticated ? urls.flat() : nonAuthUrls.flat();
 
   return (
     <>
@@ -60,8 +63,10 @@ const UrlManager = ({ showButtons }) => {
         createShortUrl={createShortUrl}
       />
 
-      {urls.length > 0 &&
-        urls.flat().map((url) => <UrlCard key={url.id} urlData={url} deleteUrl={deleteUrl}/>)}
+      {displayedUrls.length > 0 &&
+        displayedUrls.map((url) => (
+          <UrlCard key={url.id} urlData={url} deleteUrl={deleteUrl} />
+        ))}
     </>
   );
 };

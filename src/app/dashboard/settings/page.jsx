@@ -8,7 +8,7 @@ const SettingsPage = () => {
   const { user } = useUserStore();
 
   return (
-    <section className="min-h-screen px-10 lg:px-48 mt-[4rem]">
+    <section className="min-h-screen mt-[4rem]">
       <div className="flex flex-col justify-center items-start p-4 rounded-md bg-white border border-black/50 shadow-lg">
         <h3 className="font-bold text-2xl">Configuración de cuenta</h3>
         <p className="mb-5 text-black/70">Actualizá tu información personal:</p>

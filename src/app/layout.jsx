@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <Provider>
           <ToastProvider>
-            <div id="main-content">
+            <div id="main-content" className="px-10 lg:px-48">
               <BackgroundPage />
               <Navbar />
               <DashboardNavbar />
