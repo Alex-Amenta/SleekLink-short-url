@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { conn } from "@/app/libs/mysql";
 import { nanoid } from "nanoid";
-import { isValidUrl } from "../controllers/isValidUrlController";
-import { generateShortUrl, generateShortUrlUser } from "../controllers/shortUrlController";
+import { isValidUrl } from "../controllers/url/isValidUrlController";
+import { generateShortUrl, generateShortUrlUser } from "../controllers/url/shortUrlController";
 import { authenticateUser, createAnonymousId } from "../controllers/auth";
 
 export async function GET() {
