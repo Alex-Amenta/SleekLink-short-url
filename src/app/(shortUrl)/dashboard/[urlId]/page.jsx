@@ -31,7 +31,7 @@ const UrlDetailsPage = ({ params }) => {
         {selectedUrl?.map((url) => (
           <>
             <div key={url.id} className="">
-              <h3 className="font-bold text-xl"><PulseLoader isActive={selectedUrl.active}/>{url.title}</h3>
+              <h3 className="font-bold text-xl"><PulseLoader isActive={url.active}/>{url.title}</h3>
 
               <article className="mt-5 grid grid-cols-4 grid-rows-5 gap-4 ">
 

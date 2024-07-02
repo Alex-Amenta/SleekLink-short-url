@@ -29,7 +29,6 @@ export default function RootLayout({ children }) {
             <div id="main-content" className="px-10 lg:px-48">
               <BackgroundPage />
               <Navbar />
-              <DashboardNavbar />
               {children}
             </div>
             <ModalCookies />
