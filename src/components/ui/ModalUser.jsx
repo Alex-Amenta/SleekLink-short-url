@@ -5,8 +5,10 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import DashboardIcon from "./icons/DashboardIcon";
-import SettingsIcon from "./icons/SettingsIcon";
+import DashboardIcon from "./icons/interface/DashboardIcon";
+import SettingsIcon from "./icons/interface/SettingsIcon";
+import LinkedinIcon from "./icons/social/LinkedinIcon";
+import ArrowRigthIcon from "./icons/navigation/ArrowRigthIcon";
 
 const ModalUser = ({ userData }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -54,11 +56,11 @@ const ModalUser = ({ userData }) => {
           className="px-10 lg:px-48 fixed top-10 flex items-center justify-center"
           onClick={handleCloseModal}
         >
-          <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md py-4 px-10">
+          <div className="relative bg-white dark:bg-black rounded-lg shadow-lg w-full max-w-md py-4 px-10">
             <div className="flex items-center justify-end py-1 border-b">
               <button
                 onClick={handleCloseModal}
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center mb-2"
+                className="text-gray-400 bg-transparent hover:bg-white/10 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center mb-2"
               >
                 <svg
                   className="w-4 h-4"
@@ -74,7 +76,7 @@ const ModalUser = ({ userData }) => {
                 </svg>
               </button>
             </div>
-            <h3 className="mt-3 text-xl text-center font-semibold text-gray-900">
+            <h3 className="mt-3 text-xl text-center font-semibold text-gray-900 dark:text-white">
               {userData.name} 🖐
             </h3>
             <p className="text-sm text-gray-500 text-center">
@@ -83,32 +85,27 @@ const ModalUser = ({ userData }) => {
             <div className="my-4 space-y-2">
               <Link
                 href="/dashboard"
-                className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded-md"
+                className="flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md"
               >
                 <DashboardIcon/>
                 Panel de control
               </Link>
               <Link
                 href="/dashboard/settings"
-                className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded-md"
+                className="flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md"
               >
                 <SettingsIcon />
                 Configuración
               </Link>
-              <a className="flex justify-start items-center gap-1 hover:bg-gray-100 transition p-1 rounded-md" href="https://www.linkedin.com/in/alexander-amenta/" target="_blank" rel="noopener noreferrer">
-              <img  src="/linkedin.svg" alt="Icono de LinkedIn" />
+              <a className="flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md" href="https://www.linkedin.com/in/alexander-amenta/" target="_blank" rel="noopener noreferrer">
+              <LinkedinIcon />
                 Contacto
               </a>
               <button
                 onClick={handleSignOut}
-                className="w-full flex justify-start items-center gap-1 hover:bg-red-100 transition p-1 rounded-md"
+                className="w-full flex justify-start items-center gap-1 hover:bg-red-100 dark:hover:bg-red-950 transition p-1 rounded-md"
               >
-                <img
-                  src="/arrow-rigth.svg"
-                  alt="Arrow rigth svg"
-                  width={20}
-                  height={20}
-                />
+                <ArrowRigthIcon />
                 Salir
               </button>
             </div>

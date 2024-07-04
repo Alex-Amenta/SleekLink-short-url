@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import CaretUpIcon from "./ui/icons/navigation/CaretUpIcon";
+import CaretDownIcon from "./ui/icons/navigation/CaretDownIcon";
 
 const QUESTIONS = [
   {
@@ -57,17 +59,13 @@ const FrequentQuestions = () => {
                 setActiveQuestion(index === activeQuestion ? null : index)
               }
             >
-              <span className="text-left">{q.question}</span>
-              <span>
-                {activeQuestion === index ? (
-                  <img src="/angle-up.svg" alt="Angle up icon" />
-                ) : (
-                  <img src="/angle-down.svg" alt="Angle down icon" />
-                )}
+              <span className="text-left text-black/80 dark:text-white/80">
+                {q.question}
               </span>
+                {activeQuestion === index ? <CaretUpIcon /> : <CaretDownIcon />}
             </button>
             {activeQuestion === index && (
-              <p className="mt-2 text-gray-700 bg-green-200 rounded-md p-2">
+              <p className="mt-2 text-black/70 dark:text-white/70 bg-green-200 dark:bg-green-900 rounded-md p-2">
                 {q.answer}
               </p>
             )}

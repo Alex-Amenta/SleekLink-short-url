@@ -1,15 +1,19 @@
 "use client";
+import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 
 const BackgroundPage = () => {
   const pathname = usePathname();
+  const { theme } = useTheme();
   const bgColorRgba =
     pathname === "/url-inactive" ? "rgba(255,0,0,38%)" : "rgba(0,255,10,38%)";
 
+  const linesColor = theme === "light" ? "#d9d9d9" : "#2e2e2e";
+  const backgroundColor = theme === "light" ? "#ededed" : "#212121";
+
   return (
     <>
-      <div className="absolute inset-0 -z-10 h-full w-full bg-[#ededed] bg-[linear-gradient(to_right,#d9d9d9_1px,transparent_1px),linear-gradient(to_bottom,#d9d9d9_1px,transparent_1px)] bg-[size:6rem_4rem]"></div>
-
+      <div className="absolute bottom-0 -z-10 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:22px_24px] [mask-image:radial-gradient(ellipse_60%_40%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       <div
         className={`absolute top-0 left-0 -z-10 h-screen w-screen`}
         style={{

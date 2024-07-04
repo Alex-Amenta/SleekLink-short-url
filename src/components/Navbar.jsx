@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ModalUser from "./ui/ModalUser";
 import { useUserStore } from "@/zustand/store";
+import ThemeSwitcher from "./ThemeSwitcher";
+import GithubIcon from "./ui/icons/social/GithubIcon";
+import LinkedinIcon from "./ui/icons/social/LinkedinIcon";
 
 const Navbar = () => {
   const { user, setUser } = useUserStore();
@@ -19,7 +22,7 @@ const Navbar = () => {
   }, [session]);
 
   return (
-    <nav className="navbar_blur sticky top-0 z-10 mb-5">
+    <nav className="navbar_blur sticky top-0 z-10 mb-5 px-10 lg:px-48">
       <div className="flex justify-between items-center py-3">
         <Link href="/">
           <div className="">
@@ -32,22 +35,25 @@ const Navbar = () => {
           </div>
         </Link>
         <div className="flex justify-center items-center gap-2">
-        <a
-          href="https://www.linkedin.com/in/alexander-amenta/"
-          target="_blank"
-          rel="noopener noreferrer "
-          className="hover:bg-black/10 transition p-2 rounded-md"
-        >
-          <img src="/linkedin.svg" width={25} height={25} alt="Icono de LinkedIn" />
-        </a>
-        <a
-          href="https://github.com/Alex-Amenta"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:bg-black/10 transition p-2 rounded-md"
-        >
-          <img src="/github.svg" width={25} height={25} alt="Icono de Github" />
-        </a>
+          <a
+            href="https://www.linkedin.com/in/alexander-amenta/"
+            target="_blank"
+            rel="noopener noreferrer "
+            className="hover:bg-black/10 dark:hover:bg-white/10 transition p-2 rounded-md group"
+          >
+            <LinkedinIcon />
+          </a>
+          <a
+            href="https://github.com/Alex-Amenta"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:bg-black/10 dark:hover:bg-white/10 transition p-2 rounded-md group"
+          >
+            <GithubIcon />
+          </a>
+
+          <ThemeSwitcher />
+
           {user ? (
             <ModalUser userData={user} />
           ) : (

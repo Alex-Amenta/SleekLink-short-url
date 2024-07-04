@@ -27,16 +27,16 @@ const LoginPage = () => {
       onSubmit={handleSubmit}
       className="min-h-screen mt-[-4rem] flex justify-center items-center"
     >
-      <section className="py-10 bg-white rounded-md shadow-xl w-full md:w-[50%] flex flex-col justify-center items-center">
+      <section className="py-10 bg-white dark:bg-black/50 rounded-md shadow-xl w-full md:w-[50%] flex flex-col justify-center items-center">
         <h2 className="mb-3 text-center font-bold text-3xl">Iniciar Sesión</h2>
-        <p className="text-black/60 text-center text-sm text-prettyp w-[60%]">
+        <p className="text-black/60 dark:text-white/60 text-center text-sm text-prettyp w-[60%]">
           ¡Bienvenido de vuelta! Por favor, inicia sesión para continuar.
         </p>
 
         <div className="mt-5 flex flex-col justify-start items-stretch w-[70%]">
           <button
             onClick={() => signIn("google")}
-            className="mt-2 mb-10 p-2 flex justify-center items-center gap-3 bg-white shadow-md border border-slate-300 rounded-md hover:border hover:border-slate-500 transition"
+            className="mt-2 mb-10 p-2 flex justify-center items-center gap-3 bg-white text-black shadow-md border border-slate-300 rounded-md hover:border hover:border-slate-500 transition"
           >
             <Image
               src="/google.svg"
@@ -71,7 +71,7 @@ const LoginPage = () => {
             <span className="bg-green-400 shadow-green-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
             Iniciar Sesión
           </button>
-          <p className="mt-5 text-black/50 text-sm text-center">
+          <p className="mt-5 text-black/50 dark:text-white/50 text-sm text-center">
             Todavia no tenes una cuenta?{" "}
             <Link
               className="text-green-500 hover:underline underline-offset-2 animation"

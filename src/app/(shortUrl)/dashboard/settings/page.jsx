@@ -1,7 +1,7 @@
 "use client";
 
-import DeleteIcon from "@/components/ui/icons/DeleteIcon";
-import SaveIcon from "@/components/ui/icons/SaveIcon";
+import DeleteIcon from "@/components/ui/icons/interface/DeleteIcon";
+import SaveIcon from "@/components/ui/icons/interface/SaveIcon";
 import { useUserStore } from "@/zustand/store";
 
 const SettingsPage = () => {

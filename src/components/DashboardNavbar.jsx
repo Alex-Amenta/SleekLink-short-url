@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import HomeIcon from "./ui/icons/HomeIcon";
-import LinkIcon from "./ui/icons/LinkIcon";
-import SettingsIcon from "./ui/icons/SettingsIcon";
+import HomeIcon from "./ui/icons/interface/HomeIcon";
+import LinkIcon from "./ui/icons/interface/LinkIcon";
+import SettingsIcon from "./ui/icons/interface/SettingsIcon";
 import { usePathname } from "next/navigation";
 
 const DashboardLinks = [

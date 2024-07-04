@@ -1,6 +1,6 @@
 "use client"
 
-import ArrowLeft from "@/components/ui/icons/ArrowLeft";
+import ArrowLeft from "@/components/ui/icons/navigation/ArrowLeft";
 import { useRouter } from "next/navigation";
 
 const UrlInactivePage = () => {

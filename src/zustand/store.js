@@ -53,6 +53,8 @@ export const getZustandState = () => {
 export const useUrlStore = create((set) => ({
     urls: [],
     nonAuthUrls: [],
+    searchTerm: '',
+    setSearchTerm: (term) => set({ searchTerm: term }),
     selectedUrl: null,
     shortUrl: null,
     error: null,
@@ -140,6 +142,13 @@ export const useUrlStore = create((set) => ({
                 loading: false,
             });
         }
+    },
+
+    filteredUrls: () => {
+        const { urls, searchTerm } = useUrlStore.getState();
+        return urls.filter((url) =>
+            url.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
     },
 
     deleteUrl: async (id) => {

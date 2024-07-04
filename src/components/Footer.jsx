@@ -1,8 +1,10 @@
-import HearthIcon from "./ui/icons/HearthIcon";
+import GithubIcon from "./ui/icons/social/GithubIcon";
+import HearthIcon from "./ui/icons/others/HearthIcon";
+import LinkedinIcon from "./ui/icons/social/LinkedinIcon";
 
 const Footer = () => {
   return (
-    <footer className="pb-10 text-black flex justify-between items-center font-bold">
+    <footer className="pb-10 text-black dark:text-white flex justify-between items-center">
       <div>
         <p>
           ©Creado por{" "}
@@ -24,17 +26,17 @@ const Footer = () => {
           href="https://www.linkedin.com/in/alexander-amenta/"
           target="_blank"
           rel="noopener noreferrer "
-          className="hover:scale-110 transition border border-black p-1 rounded-md"
+          className="hover:bg-green-500 dark:hover:bg-green-700 transition border border-black dark:border-white/50 p-1 rounded-md"
         >
-          <img src="/linkedin.svg" alt="Icono de LinkedIn" />
+          <LinkedinIcon />
         </a>
         <a
           href="https://github.com/Alex-Amenta"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:scale-110 transition border border-black p-1 rounded-md"
+          className="hover:bg-green-500 dark:hover:bg-green-700 transition border border-black dark:border-white/50 p-1 rounded-md"
         >
-          <img src="/github.svg" alt="Icono de Github" />
+          <GithubIcon />
         </a>
       </div>
     </footer>

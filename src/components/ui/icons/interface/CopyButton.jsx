@@ -1,7 +1,6 @@
 const CopyButton = () => {
   return (
     <svg
-      className="group-hover:text-black/70"
       width="24"
       height="24"
       fill="none"

@@ -1,4 +1,4 @@
-import StarIcon from "./ui/icons/StarIcon";
+import StarIcon from "./ui/icons/others/StarIcon";
 
 const CustomizeUrl = () => {
   return (

@@ -1,11 +1,11 @@
-import { Inter, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import BackgroundPage from "@/components/BackgroundPage";
 import Provider from "@/components/Provider";
 import Navbar from "@/components/Navbar";
 import ToastProvider from "@/components/ToastProvider";
-import DashboardNavbar from "@/components/DashboardNavbar";
 import ModalCookies from "@/components/ui/ModalCookies";
+import { ThemeProvider } from "next-themes";
 
 const inter = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -23,16 +23,18 @@ export default function RootLayout({ children }) {
         sizes="100x100"
         type="image/x-icon"
       />
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-slate-50 dark:bg-[#181818]`}>
         <Provider>
-          <ToastProvider>
-            <div id="main-content" className="px-10 lg:px-48">
-              <BackgroundPage />
-              <Navbar />
-              {children}
-            </div>
-            <ModalCookies />
-          </ToastProvider>
+          <ThemeProvider attribute="class">
+            <ToastProvider>
+                <Navbar />
+              <div id="main-content" className="px-10 lg:px-48">
+                <BackgroundPage />
+                {children}
+              </div>
+              <ModalCookies />
+            </ToastProvider>
+          </ThemeProvider>
         </Provider>
       </body>
     </html>

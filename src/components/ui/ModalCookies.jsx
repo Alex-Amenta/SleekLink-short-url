@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import CookieIcon from "./icons/CookieIcon";
+import CookieIcon from "./icons/interface/CookieIcon";
 
 const ModalCookies = () => {
   const [isOpen, setIsOpen] = useState(true);
