@@ -2,7 +2,7 @@ import { getUrlByShortUrl } from "@/app/api/controllers/url/getUrlByShortUrl";
 import { incrementClickCount } from "@/app/api/controllers/url/incrementClickCount";
 import { NextResponse } from "next/server";
 
-const { BASE_URL } = process.env
+const { NEXTAUTH_URL } = process.env
 
 export async function GET(request, { params }) {
     const { shortCode } = params;
@@ -15,7 +15,7 @@ export async function GET(request, { params }) {
         }
 
         if (!urlData.active) {
-            return NextResponse.redirect(`${BASE_URL}/url-inactive`, 302);
+            return NextResponse.redirect(`${NEXTAUTH_URL}/url-inactive`, 302);
         }
 
         await incrementClickCount(urlData.id);

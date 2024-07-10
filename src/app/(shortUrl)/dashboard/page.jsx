@@ -5,7 +5,6 @@ import LinkIcon from "@/components/ui/icons/interface/LinkIcon";
 import Loader from "@/components/ui/loader/Loader";
 import NormalUrlModal from "@/components/ui/NormalUrlModal";
 import UrlCard from "@/components/UrlCard";
-import UrlManager from "@/components/UrlManager";
 import useExpirationWarning from "@/hooks/useExpirationWarning";
 import useFetchUrls from "@/hooks/useFetchUrls";
 import useModalUrl from "@/hooks/useModalUrl";
@@ -79,7 +78,7 @@ const DashboardPage = () => {
               />
             ))
           ) : (
-            <div className="my-5 flex flex-col justify-center items-center py-20 px-4 rounded-md bg-white dark:bg-[#131313] dark:border-white/20 border border-black/50 shadow-lg">
+            <div className="my-5 flex flex-col justify-center items-center py-20 px-4 rounded-md bg-white dark:bg-[#131313] dark:border-white/20 border  shadow-lg">
               <p className="text-center text-xl font-bold">
                 Todavía no tienes URLs...
               </p>

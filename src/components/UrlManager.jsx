@@ -22,6 +22,7 @@ const UrlManager = ({ isAuthenticated }) => {
   } = useModalUrl();
 
   const displayedUrls = isAuthenticated ? urls.flat() : nonAuthUrls.flat();
+  console.log(displayedUrls);
 
   return (
     <>
@@ -31,7 +32,7 @@ const UrlManager = ({ isAuthenticated }) => {
           className="bg-green-950 text-green-400 border border-green-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group shadow-lg"
         >
           <span className="bg-green-400 shadow-green-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
-          <span className="inline-flex align-middle mr-2">
+          <span className="inline-flex align-middle mr-1">
             <LinkIcon />
           </span>
           Acortar URL
@@ -42,7 +43,7 @@ const UrlManager = ({ isAuthenticated }) => {
           className="bg-violet-950 text-violet-400 border border-violet-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group shadow-lg"
         >
           <span className="bg-violet-500 shadow-violet-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
-          <span className="inline-flex align-middle mr-2">
+          <span className="inline-flex align-middle mr-1">
             <StarIcon />
           </span>
           URL Personalizada

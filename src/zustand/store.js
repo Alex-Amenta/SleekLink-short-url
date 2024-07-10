@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getSession } from "next-auth/react";
 import { create } from "zustand";
 
 export const useUserStore = create((set, get) => ({
@@ -64,7 +65,12 @@ export const useUrlStore = create((set) => ({
         set({ loading: true, error: null });
 
         try {
-            const response = await axios.post("/api/url", { title, originalUrl, customDomain }, { withCredentials: true });
+            const session = await getSession();
+            const response = await axios.post("/api/url", { title, originalUrl, customDomain }, {
+                withCredentials: true, headers: {
+                    Authorization: `Bearer ${session?.accessToken}`,
+                }
+            });
 
             if (response.data.user_id) {
                 set((state) => ({
@@ -80,12 +86,13 @@ export const useUrlStore = create((set) => ({
                 }));
             }
 
-
+            return true;
         } catch (error) {
             set({
                 error: error.response ? error.response.data.message : "An error occurred",
                 loading: false,
             });
+            return false;
         }
     },
 

@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
           <ThemeProvider attribute="class">
             <ToastProvider>
                 <Navbar />
-              <div id="main-content" className="px-10 lg:px-48">
+              <div id="main-content" className="px-5 lg:px-48">
                 <BackgroundPage />
                 {children}
               </div>

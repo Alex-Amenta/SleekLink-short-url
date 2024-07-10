@@ -16,7 +16,7 @@ const Loader = () => {
         <div className={styles.spinnerBlade}></div>
         <div className={styles.spinnerBlade}></div>
         <div className={styles.spinnerBlade}></div>
-        <p className="mt-10 flex justify-center items-center text-sm text-black/80">
+        <p className="mt-10 flex justify-center items-center text-sm text-black/80 dark:text-white/80">
           Loading...
         </p>
       </div>

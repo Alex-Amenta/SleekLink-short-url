@@ -21,7 +21,7 @@ const dataStatistics = [
 const Statistics = () => {
   return (
     <section className="my-44">
-      <h3 className="text-4xl text-center font-bold">
+      <h3 className="text-4xl text-start md:text-center font-bold">
         Monitorea el rendimiento de tus URLs con estadísticas de clics en tiempo
         real.
       </h3>

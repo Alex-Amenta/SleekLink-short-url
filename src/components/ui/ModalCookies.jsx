@@ -35,14 +35,14 @@ const ModalCookies = () => {
 
   return (
     <article className="fixed inset-0 mb-10 flex items-end justify-center z-50">
-      <div className="bg-white rounded-md p-4  max-w-[50%] shadow-md">
+      <div className="bg-white dark:bg-[#131313] rounded-md p-4 max-w-[50%] shadow-md">
         <h3 className="text-xl font-bold mb-2">
           <span className="inline-flex align-middle rounded-md p-1 bg-amber-600">
             <CookieIcon />
           </span>{" "}
           Cookies
         </h3>
-        <p className="text-black/80">
+        <p className="text-black/80 dark:text-white/80">
           Usamos cookies para mejorar tu experiencia en nuestro sitio. Estas
           cookies nos permiten personalizar el contenido que ves, ofrecer
           funcionalidades de redes sociales y analizar nuestro tráfico. Al
@@ -59,7 +59,7 @@ const ModalCookies = () => {
           </button>
           <button
             onClick={handleCancel}
-            className="p-2 rounded-md border hover:border-black"
+            className="p-2 rounded-md border hover:border-black dark:hover:border-white/50"
           >
             Cancelar
           </button>

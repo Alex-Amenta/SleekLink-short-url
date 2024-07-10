@@ -47,7 +47,7 @@ const ModalUser = ({ userData }) => {
             src={userData.image}
             alt={`Imagen de ${userData.name}`}
           />
-          <p className="font-bold">{userData.name}</p>
+          <p className="hidden sm:flex font-bold">{userData.name}</p>
         </button>
       )}
 
@@ -60,7 +60,7 @@ const ModalUser = ({ userData }) => {
             <div className="flex items-center justify-end py-1 border-b">
               <button
                 onClick={handleCloseModal}
-                className="text-gray-400 bg-transparent hover:bg-white/10 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center mb-2"
+                className="text-gray-400 bg-transparent hover:bg-black/10 dark:hover:bg-white/10 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center mb-2"
               >
                 <svg
                   className="w-4 h-4"

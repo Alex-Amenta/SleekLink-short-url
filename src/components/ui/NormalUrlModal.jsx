@@ -44,7 +44,7 @@ const NormalUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
           Titulo de la URL:
         </label>
         <input
-          className="mb-4 p-2 border border-l-8 border-white/10 rounded-md max-w-[600px] w-full focus-visible:border-green-400 shadow-lg"
+          className="mb-4 p-2 border border-l-8 border-black/20 dark:border-white/10 rounded-md max-w-[600px] w-full focus-visible:border-green-400 shadow-lg"
           type="text"
           placeholder="LinkShopify"
           name="title"
@@ -55,14 +55,14 @@ const NormalUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
           Tu URL:
         </label>
         <input
-          className="p-2 border border-l-8 border-white/10 rounded-md max-w-[600px] w-full focus-visible:border-green-400 shadow-lg"
+          className="p-2 border border-l-8 border-black/20 dark:border-white/10 rounded-md max-w-[600px] w-full focus-visible:border-green-400 shadow-lg"
           type="text"
           placeholder="Ejemplo: https://tu-url.com/"
           name="originalUrl"
           required
         />
 
-        <div className="mt-6 flex justify-end items-center gap-4">
+        <div className="mt-10 flex justify-end items-center gap-4">
           <button
             type="submit"
             className=" shadow-lg p-2 rounded-md bg-green-500 text-white hover:bg-green-700 transition"

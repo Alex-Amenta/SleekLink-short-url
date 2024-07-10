@@ -2,10 +2,11 @@ import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
 import crypto from 'crypto';
 
+export const secretKey = process.env.JWT_SECRET_KEY || 'default-secret-key';
+
 export async function authenticateUser(request) {
     // Lógica para autenticar al usuario
     const token = request.headers.get('authorization');
-    const secretKey = process.env.JWT_SECRET_KEY || 'default-secret-key';
     let userId = null;
 
     if (token) {
@@ -13,7 +14,7 @@ export async function authenticateUser(request) {
             const decodedToken = jwt.verify(token.replace('Bearer ', ''), secretKey);
             userId = decodedToken.userId;
         } catch (error) {
-            throw new Error("Invalid token");
+            console.log("Invalid token:", error);
         }
     } else {
         console.log('No se encontró token en el encabezado');
