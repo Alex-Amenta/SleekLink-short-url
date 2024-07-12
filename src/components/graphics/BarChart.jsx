@@ -66,7 +66,7 @@ export function ClickCounterBarChart() {
   };
 
   return (
-    <div className="w-[500px] h-full">
+    <div className="w-full md:w-[500px] h-full">
       <Bar data={chartData} options={chartOptions} />
     </div>
   );

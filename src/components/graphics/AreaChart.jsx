@@ -57,7 +57,7 @@ export function ClicksInTime() {
   };
 
   return (
-    <div className="w-[500px] h-full">
+    <div className="w-full md:w-[500px] h-full">
       <Line data={chartData} options={chartOptions} />
     </div>
   );

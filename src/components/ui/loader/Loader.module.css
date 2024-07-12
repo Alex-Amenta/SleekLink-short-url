@@ -1,18 +1,9 @@
 .spinner {
-    font-size: 28px;
+    font-size: 20px;
     position: relative;
     display: inline-block;
     width: 1em;
     height: 1em;
-  }
-  
-  .spinner.center {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 19rem;
-    bottom: 0;
-    margin: 0 auto;
   }
   
   .spinner .spinnerBlade {

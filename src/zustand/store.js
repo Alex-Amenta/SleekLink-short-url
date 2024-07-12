@@ -117,6 +117,8 @@ export const useUrlStore = create((set) => ({
     getUrlById: async (urlId) => {
         set({ loading: true, error: null });
         try {
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+
             const response = await axios.get(`/api/url/${urlId}`, { withCredentials: true });
 
             set({

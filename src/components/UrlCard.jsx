@@ -2,7 +2,6 @@
 
 import TrendingIcon from "./ui/icons/others/TrendingIcon";
 import DeleteIcon from "./ui/icons/interface/DeleteIcon";
-import CopyButton from "./ui/icons/interface/CopyButton";
 import { calculateDaysReamiming, formatDate } from "@/helpers/formatDate";
 import { useState } from "react";
 import ConfirmModal from "./ui/ConfirmModal";
@@ -10,6 +9,7 @@ import PulseLoader from "./ui/loader/PulseLoader";
 import Link from "next/link";
 import TimeIcon from "./ui/icons/others/TimeIcon";
 import CardPulseBorder from "./ui/CardPulseBorder";
+import CopyText from "./ui/CopyText";
 
 const UrlCard = ({
   id,
@@ -49,9 +49,7 @@ const UrlCard = ({
           <p className="flex justify-center items-center gap-2 mr-2 pr-3 border-r-2 border-black/40 dark:border-white/40">
             <TrendingIcon /> {countClick} clicks
           </p>
-          <button className="p-1 rounded-md hover:bg-black/10 dark:hover:bg-white/10">
-            <CopyButton />
-          </button>
+          <CopyText text={shortUrl} />
           <button
             className="p-1 rounded-md hover:bg-red-100 dark:hover:bg-red-950  group"
             onClick={() => setIsConfirm(true)}
@@ -90,7 +88,9 @@ const UrlCard = ({
         </span>
         {calculateDaysReamiming(expirationDate)} days
       </p>
-      <p className="text-sm text-end text-black/70 dark:text-white/70">{formatDate(createdAt)}</p>
+      <p className="text-sm text-end text-black/70 dark:text-white/70">
+        {formatDate(createdAt)}
+      </p>
     </CardPulseBorder>
   );
 };
