@@ -29,7 +29,6 @@ export const generateShortUrlUser = async (title, originalUrl, shortCode, shortU
 
     const expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate() + 30);
-    console.log(expirationDate);
 
     const result = await conn.query("INSERT INTO url (title ,originalUrl, shortCode, shortUrl, user_id, active, expirationDate) VALUES (?, ?, ?, ?, ?, true, ?)", [title, originalUrl, shortCode, shortUrl, userId, expirationDate]);
 
