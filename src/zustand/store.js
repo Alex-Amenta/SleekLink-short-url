@@ -2,6 +2,8 @@ import axios from "axios";
 import { getSession } from "next-auth/react";
 import { create } from "zustand";
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const useUserStore = create((set, get) => ({
     user: null,
     error: null,
@@ -117,7 +119,7 @@ export const useUrlStore = create((set) => ({
     getUrlById: async (urlId) => {
         set({ loading: true, error: null });
         try {
-            await new Promise((resolve) => setTimeout(resolve, 3000));
+            await delay(3000);
 
             const response = await axios.get(`/api/url/${urlId}`, { withCredentials: true });
 
@@ -137,7 +139,7 @@ export const useUrlStore = create((set) => ({
         set({ loading: true, error: null });
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 3000));
+            await delay(2000);
 
             const response = await axios.get(`/api/url/user/${userId}`, { withCredentials: true });
 

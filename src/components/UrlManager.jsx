@@ -1,34 +1,23 @@
 "use client";
 
 import { useUrlStore } from "@/zustand/store";
-import { useState } from "react";
 import NormalUrlModal from "./ui/NormalUrlModal";
-import HashUrlModal from "./ui/HashUrlModal";
 import LinkIcon from "./ui/icons/interface/LinkIcon";
-import StarIcon from "./ui/icons/others/StarIcon";
 import UrlCard from "./UrlCard";
 import useModalUrl from "@/hooks/useModalUrl";
 import Arrow19 from "./ui/icons/navigation/ArrowDraw";
 
-const UrlManager = ({ isAuthenticated }) => {
-  const { createShortUrl, urls, deleteUrl, nonAuthUrls } = useUrlStore();
+const UrlManager = () => {
+  const { createShortUrl, deleteUrl, nonAuthUrls } = useUrlStore();
 
-  const {
-    isNormalModalOpen,
-    openNormalModal,
-    closeNormalModal,
-    isHashModalOpen,
-    openHashModal,
-    closeHashModal,
-  } = useModalUrl();
-
-  const displayedUrls = isAuthenticated ? urls.flat() : nonAuthUrls.flat();
+  const { isNormalModalOpen, openNormalModal, closeNormalModal } =
+    useModalUrl();
 
   return (
     <>
       <div className="my-10 flex justify-center items-center gap-7">
         <div>
-        <Arrow19/>
+          <Arrow19 />
         </div>
         <button
           onClick={openNormalModal}
@@ -40,8 +29,6 @@ const UrlManager = ({ isAuthenticated }) => {
           </span>
           Acortar URL
         </button>
-
-        
       </div>
 
       <NormalUrlModal
@@ -50,21 +37,23 @@ const UrlManager = ({ isAuthenticated }) => {
         createShortUrl={createShortUrl}
       />
 
-      {displayedUrls.length > 0 &&
-        displayedUrls.map((url) => (
-          <UrlCard
-            key={url.id}
-            id={url.id}
-            title={url.title}
-            originalUrl={url.originalUrl}
-            shortUrl={url.shortUrl}
-            countClick={url.countClick}
-            createdAt={url.createdAt}
-            active={url.active}
-            expirationDate={url.expirationDate}
-            deleteUrl={deleteUrl}
-          />
-        ))}
+      {nonAuthUrls.length > 0 &&
+        nonAuthUrls
+          .flat()
+          .map((url) => (
+            <UrlCard
+              key={url.id}
+              id={url.id}
+              title={url.title}
+              originalUrl={url.originalUrl}
+              shortUrl={url.shortUrl}
+              countClick={url.countClick}
+              createdAt={url.createdAt}
+              active={url.active}
+              expirationDate={url.expirationDate}
+              deleteUrl={deleteUrl}
+            />
+          ))}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { useTheme } from "next-themes";
-import SunIcon from "./ui/icons/interface/SunIcon";
-import MoonIcon from "./ui/icons/interface/MoonIcon";
+import SunIcon from "./icons/interface/SunIcon";
+import MoonIcon from "./icons/interface/MoonIcon";
 
 const ThemeSwitcher = () => {
   const { setTheme, theme } = useTheme();

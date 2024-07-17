@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ModalUser from "./ui/ModalUser";
 import { useUserStore } from "@/zustand/store";
-import ThemeSwitcher from "./ThemeSwitcher";
+import ThemeSwitcher from "./ui/ThemeSwitcher";
 import GithubIcon from "./ui/icons/social/GithubIcon";
 import LinkedinIcon from "./ui/icons/social/LinkedinIcon";
 

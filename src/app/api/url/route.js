@@ -5,6 +5,8 @@ import { isValidUrl } from "../controllers/url/isValidUrlController";
 import { generateShortUrl, generateShortUrlUser } from "../controllers/url/shortUrlController";
 import { authenticateUser, createAnonymousId } from "../controllers/auth";
 
+const BASE_URL = process.env.BASE_URL;
+
 export async function GET() {
     try {
         const result = await conn.query("SELECT * FROM url;");
@@ -45,10 +47,10 @@ export async function POST(request) {
             }
 
             shortCode = customDomain;
-            shortUrl = `https://${customDomain}`;
+            shortUrl = `${BASE_URL}/${customDomain}`;
         } else {
             shortCode = nanoid(6);
-            shortUrl = `https://sleeklink/${shortCode}`;
+            shortUrl = `${BASE_URL}/${shortCode}`;
         }
 
         let result;
@@ -63,7 +65,7 @@ export async function POST(request) {
         }
 
         if (result.affectedRows === 1 && dataUrl.length > 0) {
-            const response = NextResponse.json(dataUrl, { status: 201 });
+            const response = NextResponse.json(dataUrl[0], { status: 201 });
             if (cookieHeader) {
                 response.headers.set('Set-Cookie', cookieHeader);
             }

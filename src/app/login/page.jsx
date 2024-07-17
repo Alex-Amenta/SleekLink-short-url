@@ -36,7 +36,7 @@ const LoginPage = () => {
         <div className="mt-5 flex flex-col justify-start items-stretch w-[70%]">
           <button
             onClick={() => signIn("google")}
-            className="mt-2 mb-10 p-2 flex justify-center items-center gap-3 bg-white text-black shadow-md border border-slate-300 rounded-md hover:border hover:border-slate-500 transition"
+            className="mt-2 mb-10 p-2 flex justify-center items-center gap-3 bg-white text-black shadow-md border border-slate-300 rounded-md hover:border hover:border-slate-500 dark:hover:border-slate-400 transition"
           >
             <Image
               src="/google.svg"

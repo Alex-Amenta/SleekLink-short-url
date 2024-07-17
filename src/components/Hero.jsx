@@ -1,8 +1,6 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import CustomizeUrl from "./CustomizeUrl";
-import SkeletonUrlCard from "./ui/SkeletonUrlCard";
 
 const Hero = () => {
   const { theme } = useTheme();

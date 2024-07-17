@@ -11,7 +11,7 @@ import { useUrlStore } from "@/zustand/store";
 import { Suspense, useEffect } from "react";
 
 const UrlDetailsPage = ({ params }) => {
-  const { getUrlById, selectedUrl } = useUrlStore();
+  const { getUrlById, selectedUrl, loading } = useUrlStore();
   const { urlId } = params;
 
   console.log(selectedUrl);
@@ -31,8 +31,10 @@ const UrlDetailsPage = ({ params }) => {
   return (
     <section className="min-h-screen mt-[4rem]">
       <div className="bg-white dark:bg-[#131313] rounded-md p-4">
-        <Suspense fallback={SkeletonUrlCard}>
-          {selectedUrl?.map((url) => (
+        {loading ? (
+          <SkeletonUrlCard />
+        ) : (
+          selectedUrl?.map((url) => (
             <>
               <div key={url.id} className="">
                 <h3 className="font-bold text-xl">
@@ -111,8 +113,8 @@ const UrlDetailsPage = ({ params }) => {
                 </article>
               </div>
             </>
-          ))}
-        </Suspense>
+          ))
+        )}
       </div>
     </section>
   );

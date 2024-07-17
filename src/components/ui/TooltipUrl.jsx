@@ -5,6 +5,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ArrowRight } from "lucide-react";
+import CopyText from "./CopyText";
 
 const TooltipUrl = ({ textHover, content }) => {
   const truncateUrl = (url, maxLength = 40) => {
@@ -23,9 +24,12 @@ const TooltipUrl = ({ textHover, content }) => {
           </p>
         </TooltipTrigger>
         <TooltipContent>
-          <p className="text-pretty max-w-full overflow-hidden text-ellipsis">
-            {truncateUrl(content)}
-          </p>
+          <div className="flex items-center gap-2">
+            <p className="text-pretty max-w-full overflow-hidden text-ellipsis">
+              {truncateUrl(content)}
+            </p>
+            <CopyText text={content} />
+          </div>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

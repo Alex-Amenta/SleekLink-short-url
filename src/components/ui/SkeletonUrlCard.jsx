@@ -7,7 +7,7 @@ const SkeletonUrlCard = () => {
       <Skeleton className="row-span-2 rounded-md p-4" />
       <Skeleton className="row-span-2 rounded-md p-4" />
       <Skeleton className="row-span-5 rounded-md p-4" />
-      <Skeleton className=" rounded-md col-span-3 row-span-3 row-start-3 p-4" />
+      <Skeleton className="rounded-md col-span-3 row-span-3 row-start-3 p-4" />
     </div>
   );
 };

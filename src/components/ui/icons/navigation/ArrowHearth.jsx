@@ -1,6 +1,7 @@
 const ArrowHearth = () => {
   return (
     <svg
+      className="text-green-700 dark:text-green-500"
       width="150"
       height="80"
       viewBox="0 0 202 139"
