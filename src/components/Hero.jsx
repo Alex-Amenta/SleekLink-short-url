@@ -9,7 +9,7 @@ const Hero = () => {
   return (
     <div>
       <h1
-        className={`sm:hidden text-6xl text-center text-pretty font-bold mt-16 mb-6 bg-gradient-to-r ${fromColor} to-green-600 inline-block text-transparent bg-clip-text`}
+        className={`animate-bounce sm:hidden text-6xl text-center text-pretty font-bold mt-16 mb-6 bg-gradient-to-r ${fromColor} to-green-600 inline-block text-transparent bg-clip-text`}
       >
         Acorta y comparte links facilmente
       </h1>

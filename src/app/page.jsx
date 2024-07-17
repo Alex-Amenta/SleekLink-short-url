@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <Hero />
-      <UrlManager isAuthenticated={false} />
+      <UrlManager />
       <CustomizeUrl />
       <Statistics />
       <FrequentQuestions />

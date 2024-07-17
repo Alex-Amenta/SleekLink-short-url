@@ -1,15 +1,10 @@
 "use client";
-import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 
 const BackgroundPage = () => {
   const pathname = usePathname();
-  const { theme } = useTheme();
   const bgColorRgba =
     pathname === "/url-inactive" ? "rgba(255,0,0,38%)" : "rgba(0,255,10,38%)";
-
-  const linesColor = theme === "light" ? "#d9d9d9" : "#2e2e2e";
-  const backgroundColor = theme === "light" ? "#ededed" : "#212121";
 
   return (
     <>

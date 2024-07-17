@@ -76,13 +76,13 @@ export const useUrlStore = create((set) => ({
 
             if (response.data.user_id) {
                 set((state) => ({
-                    urls: [...state.urls, response.data],
+                    urls: [response.data, ...state.urls],
                     shortUrl: response.data,
                     loading: false,
                 }));
             } else {
                 set((state) => ({
-                    nonAuthUrls: [...state.nonAuthUrls, response.data],
+                    nonAuthUrls: [response.data, ...state.nonAuthUrls],
                     shortUrl: response.data,
                     loading: false,
                 }));

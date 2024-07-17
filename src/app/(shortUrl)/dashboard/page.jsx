@@ -42,7 +42,7 @@ const DashboardPage = () => {
   const filtered = filteredUrls();
 
   return (
-    <section className="min-h-screen mt-[4rem]">
+    <section className="min-h-screen my-16">
       {loading ? (
         <div className="mt-40 flex justify-center items-center">
           <Loader className="text-4xl" />

@@ -22,9 +22,9 @@ const DashboardNavbar = () => {
           key={index}
           className={`flex justify-center items-center gap-2 p-1 rounded-xl ${
             pathname === link.href
-              ? "bg-green-600 text-black dark:text-white"
-              : "border-transparent text-black/60 dark:text-white/60"
-          } hover:text-black dark:hover:text-white`}
+              ? "bg-green-600 text-white"
+              : "border-transparent text-black/60 dark:text-white/60 hover:text-black"
+          }  dark:hover:text-white`}
           href={link.href}
         >
           <link.icon />

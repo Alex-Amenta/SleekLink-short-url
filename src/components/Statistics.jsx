@@ -1,7 +1,4 @@
-import { Suspense } from "react";
-import SkeletonStatistics from "./ui/SkeletonStatistics";
 import ChartsContainer from "./graphics/ChartsContainer";
-import Loading from "@/app/Loading";
 import ArrowHearth from "./ui/icons/navigation/ArrowHearth";
 
 const dataStatistics = [
@@ -23,17 +20,15 @@ const Statistics = () => {
   return (
     <section className="my-44 relative">
       <div className="absolute top-0 left-0 size-72 blur-3xl bg-green-300 dark:bg-green-900 rounded-full opacity-70 -z-50 -inset-32"></div>
-      <div className="absolute right-0 bottom-0 size-60 blur-3xl bg-green-300 dark:bg-green-900 rounded-full opacity-70 -z-50"></div>
+      <div className="absolute animate-pulse right-0 bottom-0 size-60 blur-3xl bg-green-300 dark:bg-green-900 rounded-full opacity-70 -z-50"></div>
 
       <h3 className="text-4xl text-start md:text-center font-bold">
         Monitorea el rendimiento de tus URLs con estadísticas de clics en tiempo
         real.
       </h3>
-      <Suspense fallback={<Loading />}>
         <div className="mt-10 flex justify-start md:justify-center items-center flex-wrap gap-10 xl:gap-28">
           <ChartsContainer />
         </div>
-      </Suspense>
 
       <article className="mt-20 flex flex-wrap justify-center xl:justify-around items-center gap-16 relative">
         {dataStatistics.map(({ data, description }, index) => (
