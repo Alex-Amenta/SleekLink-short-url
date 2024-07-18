@@ -40,10 +40,12 @@ const UrlCard = ({
     <CardPulseBorder>
       <div className="flex justify-between items-center">
         <Link href={`/dashboard/${id}`}>
-          <p className="font-bold text-lg hover:underline underline-offset-2">
+          <div className="flex items-center gap-1">
             <PulseLoader isActive={active} />
-            {title}
-          </p>
+            <p className="font-bold text-lg hover:underline underline-offset-2">
+              {title}
+            </p>
+          </div>
         </Link>
         <div className="flex justify-center items-center gap-1">
           <p className="flex justify-center items-center gap-2 mr-2 pr-3 border-r-2 border-black/40 dark:border-white/40">

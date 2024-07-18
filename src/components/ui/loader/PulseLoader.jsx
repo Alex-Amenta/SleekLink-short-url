@@ -3,7 +3,7 @@ const PulseLoader = ({ isActive }) => {
 
   return (
     <div
-      className="pulse-loader inline-flex align-middle mr-2 h-2 w-2 rounded-full animate-pulse"
+      className="pulse-loader mr-2 h-2 w-2 rounded-full animate-pulse"
       style={{
         backgroundColor: shadowColor,
         "--shadow-color": shadowColor,
