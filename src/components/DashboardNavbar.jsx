@@ -14,7 +14,7 @@ const DashboardNavbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex max-sm:flex-col justify-start max-sm:items-start items-center gap-3 md:gap-8 bg-white/80 dark:bg-black/80 w-min p-2 rounded-xl">
+    <nav className="flex max-[380px]:flex-col justify-start max-[380px]:items-start items-center gap-3 md:gap-8 bg-white/80 dark:bg-black/80 w-min p-2 rounded-xl">
       {DashboardLinks.map((link, index) => (
         <Link
           key={index}

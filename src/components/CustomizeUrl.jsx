@@ -1,6 +1,6 @@
 "use client";
 
-import HashUrlModal from "./ui/HashUrlModal";
+import HashUrlModal from "./ui/modals/HashUrlModal";
 import { useUrlStore, useUserStore } from "@/zustand/store";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -34,20 +34,25 @@ const CustomizeUrl = () => {
 
   return (
     <AnimatedContainer transition={customTransition}>
-      <div className="text-center my-32">
+      <div className="my-32">
         <AnimatedItems>
-          <h2 className="text-5xl text-center text-pretty font-bold my-28 mb-6">
+          <h2 className="text-5xl text-start md:text-center text-pretty font-bold my-28 mb-6">
             Personaliza tus Enlaces
           </h2>
         </AnimatedItems>
         <AnimatedItems>
-          <p className="text-center text-black/65 dark:text-white/65 mb-10">
+          <p className="hidden sm:block text-center text-black/65 dark:text-white/65 mb-10">
             En nuestra aplicación, tienes la libertad de personalizar tus
             enlaces acortados. ¿Cómo? Es sencillo: simplemente ingresa la URL
             original y elige una palabra clave relevante o un nombre fácil de
             recordar para tu enlace. Así, podrás crear enlaces más
             significativos y adaptados a tus necesidades. ¡Haz que tus enlaces
             sean únicos y memorables! 🚀
+          </p>
+          <p className="sm:hidden text-start text-black/65 dark:text-white/65 mb-10">
+            Personaliza tus enlaces acortados fácilmente: ingresa la URL
+            original y elige una palabra clave o nombre sencillo. ¡Haz que tus
+            enlaces sean únicos y memorables!
           </p>
         </AnimatedItems>
 

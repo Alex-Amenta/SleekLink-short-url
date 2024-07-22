@@ -1,8 +1,8 @@
 "use client";
 
-import HashUrlModal from "@/components/ui/HashUrlModal";
+import HashUrlModal from "@/components/ui/modals/HashUrlModal";
 import Loader from "@/components/ui/loader/Loader";
-import NormalUrlModal from "@/components/ui/NormalUrlModal";
+import NormalUrlModal from "@/components/ui/modals/NormalUrlModal";
 import UrlCard from "@/components/UrlCard";
 import useExpirationWarning from "@/hooks/useExpirationWarning";
 import useFetchUrls from "@/hooks/useFetchUrls";
@@ -48,7 +48,7 @@ const DashboardPage = () => {
         </div>
       ) : (
         <div>
-          <div className="flex justify-center items-center gap-4">
+          <div className="flex flex-wrap justify-start md:justify-center items-center gap-4">
             <input
               className="flex-1 p-2 border-2 dark:border-white/20 rounded-md"
               type="search"

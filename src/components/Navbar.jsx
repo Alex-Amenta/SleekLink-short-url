@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import ModalUser from "./ui/ModalUser";
+import ModalUser from "./ui/modals/ModalUser";
 import { useUserStore } from "@/zustand/store";
 import ThemeSwitcher from "./ui/ThemeSwitcher";
 import GithubIcon from "./ui/icons/social/GithubIcon";
@@ -50,8 +50,9 @@ const Navbar = () => {
           >
             <GithubIcon />
           </a>
-
-          <ThemeSwitcher />
+          <div className="max-sm:hidden">
+            <ThemeSwitcher className="p-2"/>
+          </div>
 
           {user ? (
             <ModalUser userData={user} />

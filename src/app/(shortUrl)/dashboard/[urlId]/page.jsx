@@ -41,21 +41,7 @@ const UrlDetailsPage = ({ params }) => {
                   {url.title}
                 </h3>
 
-                <article className="mt-5 grid grid-cols-4 grid-rows-5 gap-4 ">
-                  <div className="row-span-2 flex flex-col justify-between items-start rounded-md p-4 bg-black/10 dark:bg-white/10">
-                    <div className="flex justify-between items-center w-full">
-                      <p className="text-black/80 dark:text-white/80">
-                        Views totales
-                      </p>
-                      <p>
-                        Ojos
-                      </p>
-                    </div>
-                    <div className="flex items-center">
-                      <p className="font-bold text-4xl">32</p>
-                      <p className="text-sm ml-1">views</p>
-                    </div>
-                  </div>
+                <article className="mt-5 grid grid-cols-2 grid-rows-6 md:grid-cols-3 md:grid-rows-5 gap-4 ">
                   <div className="row-span-2 flex flex-col justify-between items-start rounded-md p-4 bg-black/10 dark:bg-white/10">
                     <div className="flex justify-between items-center w-full">
                       <p className="text-black/80 dark:text-white/80">
@@ -86,7 +72,7 @@ const UrlDetailsPage = ({ params }) => {
                     </div>
                   </div>
 
-                  <div className="row-span-5 flex flex-col justify-start space-y-5 items-start rounded-md p-4 bg-black/10 dark:bg-white/10 text-sm">
+                  <div className="max-md:col-span-2 row-span-2 max-md:row-start-3 md:row-span-5 flex flex-col justify-start space-y-5 items-start rounded-md p-4 bg-black/10 dark:bg-white/10 text-sm">
                     <TooltipUrl textHover={"ShortUrl"} content={url.shortUrl} />
                     <TooltipUrl
                       textHover={"OriginalUrl"}
@@ -106,7 +92,7 @@ const UrlDetailsPage = ({ params }) => {
                       </strong>
                     </p>
                   </div>
-                  <div className=" rounded-md col-span-3 row-span-3 row-start-3 p-4 bg-black/10 dark:bg-white/10">
+                  <div className="rounded-md col-span-2 row-span-2 row-start-5 md:row-span-3 md:row-start-3 p-4 bg-black/10 dark:bg-white/10">
                     {/* <ClicksOverTimeChart urlId={urlId} /> */}
                   </div>
                 </article>

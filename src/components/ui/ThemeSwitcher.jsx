@@ -1,14 +1,14 @@
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon } from "lucide-react";
 
-const ThemeSwitcher = () => {
+const ThemeSwitcher = ({ className }) => {
   const { setTheme, theme } = useTheme();
 
   return (
     <>
       <button
         onClick={() => setTheme(theme === "ligth" ? "dark" : "ligth")}
-        className="hover:bg-black/10 dark:hover:bg-white/10 transition p-2 rounded-md group"
+        className={`hover:bg-black/10 dark:hover:bg-white/10 transition rounded-md group ${className}`}
       >
         {theme === "ligth" ? (
           <MoonIcon className="group-hover:rotate-12" />
