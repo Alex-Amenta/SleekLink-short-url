@@ -1,13 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import HomeIcon from "./ui/icons/interface/HomeIcon";
-import LinkIcon from "./ui/icons/interface/LinkIcon";
-import SettingsIcon from "./ui/icons/interface/SettingsIcon";
 import { usePathname } from "next/navigation";
+import { HouseIcon, LinkIcon, SettingsIcon } from "lucide-react";
 
 const DashboardLinks = [
-  { name: "Inicio", href: "/", icon: HomeIcon },
+  { name: "Inicio", href: "/", icon: HouseIcon },
   { name: "Enlaces", href: "/dashboard", icon: LinkIcon },
   { name: "Configuración", href: "/dashboard/settings", icon: SettingsIcon },
 ];
@@ -27,7 +25,7 @@ const DashboardNavbar = () => {
           }  dark:hover:text-white`}
           href={link.href}
         >
-          <link.icon />
+          <link.icon size={20} />
           {link.name}
         </Link>
       ))}

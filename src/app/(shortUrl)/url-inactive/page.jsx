@@ -1,8 +1,7 @@
 "use client";
 
 import CardPulseBorder from "@/components/ui/CardPulseBorder";
-import LinkIcon from "@/components/ui/icons/interface/LinkIcon";
-import ArrowLeft from "@/components/ui/icons/navigation/ArrowLeft";
+import { UnlinkIcon, ArrowLeftIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const UrlInactivePage = () => {
@@ -17,7 +16,7 @@ const UrlInactivePage = () => {
       <CardPulseBorder viaColor="via-red-500">
         <div className="space-y-3 rounded-md p-6">
           <h3 className="font-bold text-3xl">
-            <span className="inline-flex align-middle"><LinkIcon className={"rotate-45"}/></span> Url Inactiva...
+            <span className="inline-flex align-middle"><UnlinkIcon /></span> Url Inactiva...
           </h3>
           <p className="dark:text-white/70 text-black/70">
             Lo sentimos esta url esta inactiva 😥...
@@ -30,7 +29,7 @@ const UrlInactivePage = () => {
             className="p-1 px-4 bg-red-700 hover:bg-red-800 rounded-md text-white"
           >
             <span className="inline-flex align-middle mr-1">
-              <ArrowLeft />
+              <ArrowLeftIcon size={20} />
             </span>
             Volver
           </button>

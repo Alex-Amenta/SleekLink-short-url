@@ -5,10 +5,11 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import DashboardIcon from "./icons/interface/DashboardIcon";
-import SettingsIcon from "./icons/interface/SettingsIcon";
 import LinkedinIcon from "./icons/social/LinkedinIcon";
-import ArrowRigthIcon from "./icons/navigation/ArrowRigthIcon";
+import { LayoutDashboard, SettingsIcon, LogOutIcon, XIcon } from "lucide-react";
+import CustomHr from "./CustomHr";
+import AnimatedContainer from "./animations/AnimatedContainer";
+import AnimatedItems from "./animations/AnimatedItems";
 
 const ModalUser = ({ userData }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -52,30 +53,20 @@ const ModalUser = ({ userData }) => {
       )}
 
       {openModal && userData && (
-        <div
+        <AnimatedContainer
           className="px-10 lg:px-48 fixed top-10 flex items-center justify-center"
           onClick={handleCloseModal}
         >
           <div className="relative bg-white dark:bg-black rounded-lg shadow-lg w-full max-w-md py-4 px-10">
-            <div className="flex items-center justify-end py-1 border-b">
+            <div className="flex items-center justify-end py-1">
               <button
                 onClick={handleCloseModal}
                 className="text-gray-400 bg-transparent hover:bg-black/10 dark:hover:bg-white/10 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center mb-2"
               >
-                <svg
-                  className="w-4 h-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.293 5.293a1 1 0 011.414 0L10 8.586l3.293-3.293a1 1 0 111.414 1.414L11.414 10l3.293 3.293a1 1 0 01-1.414 1.414L10 11.414l-3.293 3.293a1 1 0 01-1.414-1.414L8.586 10 5.293 6.707a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <XIcon size={15} />
               </button>
             </div>
+            <CustomHr spacing="mb-3" />
             <h3 className="mt-3 text-xl text-center font-semibold text-gray-900 dark:text-white">
               {userData.name} 🖐
             </h3>
@@ -83,34 +74,47 @@ const ModalUser = ({ userData }) => {
               {userData.email}
             </p>
             <div className="my-4 space-y-2">
-              <Link
-                href="/dashboard"
-                className="flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md"
-              >
-                <DashboardIcon/>
-                Panel de control
-              </Link>
-              <Link
-                href="/dashboard/settings"
-                className="flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md"
-              >
-                <SettingsIcon />
-                Configuración
-              </Link>
-              <a className="flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md" href="https://www.linkedin.com/in/alexander-amenta/" target="_blank" rel="noopener noreferrer">
-              <LinkedinIcon />
-                Contacto
-              </a>
-              <button
-                onClick={handleSignOut}
-                className="w-full flex justify-start items-center gap-1 hover:bg-red-100 dark:hover:bg-red-950 transition p-1 rounded-md"
-              >
-                <ArrowRigthIcon />
-                Salir
-              </button>
+              <AnimatedItems>
+                <Link
+                  href="/dashboard"
+                  className="flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md"
+                >
+                  <LayoutDashboard size={20} />
+                  Panel de control
+                </Link>
+              </AnimatedItems>
+              <AnimatedItems>
+                <Link
+                  href="/dashboard/settings"
+                  className="flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md"
+                >
+                  <SettingsIcon size={20} />
+                  Configuración
+                </Link>
+              </AnimatedItems>
+              <AnimatedItems>
+                <a
+                  className="flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md"
+                  href="https://www.linkedin.com/in/alexander-amenta/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <LinkedinIcon />
+                  Contacto
+                </a>
+              </AnimatedItems>
+              <AnimatedItems>
+                <button
+                  onClick={handleSignOut}
+                  className="w-full flex justify-start items-center gap-1 hover:bg-red-100 dark:hover:bg-red-950 transition p-1 rounded-md"
+                >
+                  <LogOutIcon size={20} />
+                  Salir
+                </button>
+              </AnimatedItems>
             </div>
           </div>
-        </div>
+        </AnimatedContainer>
       )}
     </>
   );

@@ -1,6 +1,7 @@
 "use client";
-import Modal from "react-modal";
 import { toast } from "react-toastify";
+import CustomHr from "./CustomHr";
+import AnimationModal from "./animations/AnimationModal";
 
 const NormalUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
   const handleSubmit = async (event) => {
@@ -29,16 +30,9 @@ const NormalUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      ariaHideApp={false}
-      className="bg-white dark:bg-black p-6 rounded-lg max-w-lg w-full mx-auto my-52 shadow-lg outline-none"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center"
-    >
-      <h2 className="text-center font-bold text-2xl mb-4 pb-3 border-b-2">
-        Acortar URL
-      </h2>
+    <AnimationModal isOpen={isOpen} onRequestClose={onRequestClose}>
+      <h2 className="text-center font-bold text-2xl">Acortar URL</h2>
+      <CustomHr spacing="mb-7 mt-2" />
       <form onSubmit={handleSubmit}>
         <label className="mt-4 font-semibold" htmlFor="">
           Titulo de la URL:
@@ -79,7 +73,7 @@ const NormalUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
           </button>
         </div>
       </form>
-    </Modal>
+    </AnimationModal>
   );
 };
 

@@ -1,15 +1,15 @@
 "use client";
 
 import HashUrlModal from "@/components/ui/HashUrlModal";
-import AddCircle from "@/components/ui/icons/interface/AddCircle";
-import LinkIcon from "@/components/ui/icons/interface/LinkIcon";
 import Loader from "@/components/ui/loader/Loader";
 import NormalUrlModal from "@/components/ui/NormalUrlModal";
 import UrlCard from "@/components/UrlCard";
 import useExpirationWarning from "@/hooks/useExpirationWarning";
 import useFetchUrls from "@/hooks/useFetchUrls";
-import useModalUrl from "@/hooks/useModalUrl";
+import useModal from "@/hooks/useModal";
 import { useUrlStore, useUserStore } from "@/zustand/store";
+import { LinkIcon, PlusCircle } from "lucide-react";
+import { useState } from "react";
 
 const DashboardPage = () => {
   const { user } = useUserStore();
@@ -21,15 +21,9 @@ const DashboardPage = () => {
     filteredUrls,
     deleteUrl,
   } = useUrlStore();
+  const [modalType, setModalType] = useState(null);
 
-  const {
-    isNormalModalOpen,
-    openNormalModal,
-    closeNormalModal,
-    isHashModalOpen,
-    closeHashModal,
-    openHashModal,
-  } = useModalUrl();
+  const { isOpen, openModal, closeModal } = useModal();
 
   const urls = useFetchUrls(user?.id);
   useExpirationWarning(urls);
@@ -37,6 +31,11 @@ const DashboardPage = () => {
   const handleSearch = (event) => {
     const term = event.target.value;
     setSearchTerm(term);
+  };
+
+  const handleOpenModal = (type) => {
+    setModalType(type);
+    openModal();
   };
 
   const filtered = filteredUrls();
@@ -59,23 +58,21 @@ const DashboardPage = () => {
             />
             <p className="p-2 border-2 dark:border-white/20 rounded-md bg-white dark:bg-[#131313]">
               <span className="inline-flex align-middle mr-1">
-                <LinkIcon
-                  className={"rotate-[-50deg] text-black/70 dark:text-white/70"}
-                />
+                <LinkIcon size={20} />
               </span>
               {`${urls.length}/15`}
             </p>
             <button
-              onClick={openNormalModal}
+              onClick={() => handleOpenModal("normal")}
               className="p-2 border-2 dark:border-white/20 rounded-md text-white bg-green-500 hover:bg-green-700 dark:bg-green-800 dark:hover:bg-green-900"
             >
-              <AddCircle />
+              <PlusCircle />
             </button>
             <button
-              onClick={openHashModal}
+              onClick={() => handleOpenModal("hash")}
               className="p-2 border-2 dark:border-white/20 rounded-md text-white bg-violet-500 hover:bg-violet-700 dark:bg-violet-800 dark:hover:bg-violet-900"
             >
-              <AddCircle />
+              <PlusCircle />
             </button>
           </div>
           {filtered.length > 0 ? (
@@ -104,13 +101,13 @@ const DashboardPage = () => {
       )}
 
       <NormalUrlModal
-        isOpen={isNormalModalOpen}
-        onRequestClose={closeNormalModal}
+        isOpen={isOpen && modalType === "normal"}
+        onRequestClose={closeModal}
         createShortUrl={createShortUrl}
       />
       <HashUrlModal
-        isOpen={isHashModalOpen}
-        onRequestClose={closeHashModal}
+        isOpen={isOpen && modalType === "hash"}
+        onRequestClose={closeModal}
         createShortUrl={createShortUrl}
       />
     </section>

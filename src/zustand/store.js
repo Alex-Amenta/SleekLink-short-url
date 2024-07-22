@@ -43,15 +43,53 @@ export const useUserStore = create((set, get) => ({
             return false;
         }
     },
-    isAuthenticated: () => {
-        return !!get().user
-    }
+
+    updateUser: async (userId, name = null, password = null) => {
+        const currentUser = get().user;
+
+        try {
+            const response = await axios.put(`/api/user/${userId}`, { name, password });
+            if (response.status === 200) {
+                const updatedUser = { ...currentUser, name: name || currentUser.name };
+
+                set({ user: updatedUser });
+                return { success: true, message: response.data.message }
+            }
+
+            return { success: false, error: response.data.message };
+        } catch (error) {
+            console.log("Error", error.message);
+            set({
+                error: error.response ? error.response.data.message : "An error occurred updating the user",
+            });
+        }
+    },
+
+    deleteAccount: async (userId) => {
+        try {
+            const response = await axios.delete(`/api/user/${userId}`);
+
+            if (response.status !== 200) {
+                return { success: false, error: response.data.message };
+            }
+
+            set((state) => ({
+                user: state.user.filter(user => user.id !== userId)
+            }))
+
+            return { success: true, message: response.data.message }
+        } catch (error) {
+            set({
+                error: error.response ? error.response.data.message : "An error occurred deleted the user",
+            });
+        }
+    },
 }));
 
-export const getZustandState = () => {
-    const state = useUserStore.getState();
-    return state;
-}
+// export const getZustandState = () => {
+//     const state = useUserStore.getState();
+//     return state;
+// }
 
 export const useUrlStore = create((set) => ({
     urls: [],
@@ -60,6 +98,7 @@ export const useUrlStore = create((set) => ({
     setSearchTerm: (term) => set({ searchTerm: term }),
     selectedUrl: null,
     shortUrl: null,
+    clicksData: [],
     error: null,
     loading: false,
 
@@ -185,4 +224,19 @@ export const useUrlStore = create((set) => ({
             });
         }
     },
+
+    getClicksForUrl: async (urlId) => {
+        set({ loading: true, error: null });
+
+        try {
+            const response = await axios.get(`/api/url/clicks/${urlId}`);
+            set({ clicksData: response.data, loading: false });
+        } catch (error) {
+            console.error('Error fetching clicks:', error);
+            set({
+                error: error.response ? error.response.data.message : "An error ocurred fetching clicks",
+                loading: false,
+            });
+        }
+    }
 }));

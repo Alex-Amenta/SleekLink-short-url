@@ -1,5 +1,5 @@
+import { HeartIcon } from "lucide-react";
 import GithubIcon from "./ui/icons/social/GithubIcon";
-import HearthIcon from "./ui/icons/others/HearthIcon";
 import LinkedinIcon from "./ui/icons/social/LinkedinIcon";
 
 const Footer = () => {
@@ -17,7 +17,7 @@ const Footer = () => {
             Alexander Amenta
           </a>{" "}
           <span className="inline-flex align-bottom">
-            <HearthIcon />
+            <HeartIcon size={20}/>
           </span>
         </p>
       </div>

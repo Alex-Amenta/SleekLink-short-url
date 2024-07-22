@@ -1,14 +1,13 @@
 "use client";
 
-import { ClickCounterBarChart } from "@/components/graphics/BarChart";
-import CursorClick from "@/components/ui/icons/others/CursorClick";
-import EyeShow from "@/components/ui/icons/others/EyeShow";
+import { ClicksOverTimeChart } from "@/components/graphics/ClicksOverTimeChart";
 import PulseLoader from "@/components/ui/loader/PulseLoader";
 import SkeletonUrlCard from "@/components/ui/SkeletonUrlCard";
 import TooltipUrl from "@/components/ui/TooltipUrl";
 import { calculateDaysReamiming, formatDate } from "@/helpers/formatDate";
 import { useUrlStore } from "@/zustand/store";
-import { Suspense, useEffect } from "react";
+import { MousePointerClickIcon } from "lucide-react";
+import { useEffect } from "react";
 
 const UrlDetailsPage = ({ params }) => {
   const { getUrlById, selectedUrl, loading } = useUrlStore();
@@ -38,7 +37,7 @@ const UrlDetailsPage = ({ params }) => {
             <>
               <div key={url.id} className="">
                 <h3 className="font-bold text-xl">
-                  <PulseLoader isActive={url.active} />
+                  <span className="inline-flex align-middle"><PulseLoader isActive={url.active} /></span>
                   {url.title}
                 </h3>
 
@@ -49,7 +48,7 @@ const UrlDetailsPage = ({ params }) => {
                         Views totales
                       </p>
                       <p>
-                        <EyeShow />
+                        Ojos
                       </p>
                     </div>
                     <div className="flex items-center">
@@ -63,7 +62,7 @@ const UrlDetailsPage = ({ params }) => {
                         Clicks totales
                       </p>
                       <p>
-                        <CursorClick />
+                        <MousePointerClickIcon />
                       </p>
                     </div>
                     <div className="flex items-center">
@@ -78,7 +77,7 @@ const UrlDetailsPage = ({ params }) => {
                         Clicks totales
                       </p>
                       <p>
-                        <CursorClick />
+                        <MousePointerClickIcon />
                       </p>
                     </div>
                     <div className="flex items-center">
@@ -108,7 +107,7 @@ const UrlDetailsPage = ({ params }) => {
                     </p>
                   </div>
                   <div className=" rounded-md col-span-3 row-span-3 row-start-3 p-4 bg-black/10 dark:bg-white/10">
-                    <ClickCounterBarChart />
+                    {/* <ClicksOverTimeChart urlId={urlId} /> */}
                   </div>
                 </article>
               </div>

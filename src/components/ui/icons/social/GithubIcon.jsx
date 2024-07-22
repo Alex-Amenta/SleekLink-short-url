@@ -1,7 +1,7 @@
 const GithubIcon = () => {
   return (
     <svg
-      className="w-6 h-6 text-gray-800 dark:text-white group-hover:rotate-12"
+      className="w-6 h-6 text-black dark:text-white group-hover:rotate-12"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       width="24"

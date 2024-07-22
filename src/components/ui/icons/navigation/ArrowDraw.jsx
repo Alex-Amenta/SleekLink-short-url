@@ -1,6 +1,6 @@
 const Arrow19 = (props, forwardedRef) => (
   <svg
-  className="max-sm:w-32 max-sm:h-16"
+  className="max-sm:w-32 max-sm:h-16 text-black/80 dark:text-white/80"
     width="245"
     height="45"
     viewBox="0 0 245 45"

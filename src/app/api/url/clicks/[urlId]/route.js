@@ -9,7 +9,7 @@ export async function GET(request, { params }) {
     }
 
     try {
-        const response = await conn.query("SELECT clickedAt FROM clicks WHERE url_id = ? ORDER BY clickedAt ASC", [urlId]);
+        const response = await conn.query("SELECT clickedAt FROM clicks WHERE url_id = ? ORDER BY clickedAt DESC", [urlId]);
         return NextResponse.json(response, { status: 200 });
     } catch (error) {
         return NextResponse.json({ message: `Error getting clicks ${error.message}` }, { status: 500 });

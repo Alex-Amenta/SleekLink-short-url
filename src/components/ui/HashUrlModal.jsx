@@ -1,7 +1,8 @@
 "use client";
 
-import Modal from "react-modal";
 import { toast } from "react-toastify";
+import CustomHr from "./CustomHr";
+import AnimationModal from "./animations/AnimationModal";
 
 const HashUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
   const handleSubmit = async (event) => {
@@ -30,20 +31,11 @@ const HashUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      ariaHideApp={false}
-      className="bg-white dark:bg-black p-6 rounded-lg max-w-lg w-full mx-auto my-52 shadow-lg outline-none"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center"
-    >
-      <h2 className="text-center font-bold text-2xl mb-4 pb-3 border-b-2">
-        Acortar URL con hash
-      </h2>
+    <AnimationModal isOpen={isOpen} onRequestClose={onRequestClose}>
+      <h2 className="text-center font-bold text-2xl">Acortar URL con hash</h2>
+      <CustomHr spacing="mb-7 mt-2" />
       <form onSubmit={handleSubmit}>
-        <label htmlFor="">
-          Titulo de la URL:
-        </label>
+        <label htmlFor="">Titulo de la URL:</label>
         <input
           className="mb-5 p-2 border border-l-8 border-black/20 dark:border-white/10 rounded-md max-w-[600px] w-full focus-visible:border-green-400 shadow-lg"
           type="text"
@@ -52,9 +44,7 @@ const HashUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
           required
         />
 
-        <label htmlFor="">
-          Tu URL:
-        </label>
+        <label htmlFor="">Tu URL:</label>
         <input
           className="mb-5 p-2 border border-l-8 border-black/20 dark:border-white/10 rounded-md max-w-[500px] w-full focus-visible:border-green-400 shadow-lg"
           type="text"
@@ -63,9 +53,7 @@ const HashUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
           required
         />
 
-        <label htmlFor="">
-          Tu alias:
-        </label>
+        <label htmlFor="">Tu alias:</label>
         <input
           className="p-2 border border-l-8  border-black/20 dark:border-white/10 rounded-md max-w-[600px] w-full focus-visible:border-green-400 shadow-lg"
           type="text"
@@ -73,7 +61,7 @@ const HashUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
           name="customDomain"
           required
         />
-        <p className="mt-3 bg-yellow-100 text-yellow-700 border border-yellow-600 text-xs rounded-md p-2">
+        <p className="mt-3 bg-yellow-100 dark:bg-yellow-700/30 text-yellow-500 border border-yellow-600 text-xs rounded-md p-2">
           ⚠ Puedes usar guión ( - ó _ ), letras de a-z sin tilde ni ñ y números.
         </p>
 
@@ -86,6 +74,7 @@ const HashUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
           </button>
 
           <button
+            type="button"
             onClick={onRequestClose}
             className=" shadow-lg p-2 border rounded-md text-black bg-white hover:bg-white/80 transition"
           >
@@ -93,7 +82,7 @@ const HashUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
           </button>
         </div>
       </form>
-    </Modal>
+    </AnimationModal>
   );
 };
 

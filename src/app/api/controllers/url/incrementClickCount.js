@@ -4,7 +4,6 @@ export const incrementClickCount = async (urlId) => {
     try {
         await conn.query("UPDATE url SET countClick = countClick + 1 WHERE id = ?", [urlId]);
 
-        // Registrar el clic en la tabla `clicks`
         await conn.query("INSERT INTO clicks (url_id, clickedAt) VALUES (?, NOW())", [urlId]);
     } catch (error) {
         throw new Error(`Error incrementing click count: ${error.message}`);

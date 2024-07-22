@@ -1,12 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    webpack: (config) => {
-        config.ignoreWarnings = [
+    async rewrites() {
+        return [
             {
-                module: /sequelize/, //a Regexp
+                source: '/',
+                destination: '/',
+            },
+            {
+                source: `/:shortCode`,
+                destination: '/api/url/redirect/:shortCode',
             }
-        ];
-        return config;
+        ]
     }
 };
 

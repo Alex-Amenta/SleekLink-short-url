@@ -1,9 +1,18 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 const CardPulseBorder = ({
   children,
   viaColor = "via-black dark:via-white",
 }) => {
   return (
-    <div className="relative mt-10  w-full 2xl:w-[80%]">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className="relative mt-10  w-full "
+    >
       <div className="absolute top-0 flex w-full justify-center">
         <div
           className={`left-0 h-[1px] animate-borderWidth rounded-full bg-gradient-to-r from-[rgba(17,17,17,0)] ${viaColor} to-[rgba(17,17,17,0)] transition-all duration-1000`}
@@ -12,7 +21,7 @@ const CardPulseBorder = ({
       <div className="rounded-md border border-black/20 dark:border-white/20 bg-white dark:bg-[#131313] p-3 shadow-lg">
         {children}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import CookieIcon from "./icons/interface/CookieIcon";
+import { Cookie } from "lucide-react";
 
 const ModalCookies = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -38,7 +38,7 @@ const ModalCookies = () => {
       <div className="bg-white dark:bg-[#131313] rounded-md p-4 max-w-[50%] shadow-md">
         <h3 className="text-xl font-bold mb-2">
           <span className="inline-flex align-middle rounded-md p-1 bg-amber-600">
-            <CookieIcon />
+            <Cookie />
           </span>{" "}
           Cookies
         </h3>
