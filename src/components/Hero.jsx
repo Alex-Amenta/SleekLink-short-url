@@ -19,13 +19,13 @@ const Hero = () => {
 
   const { isOpen, openModal, closeModal } = useModal();
   return (
-    <AnimatedContainer transition={customTransition}>
+    <AnimatedContainer transition={customTransition} className="md:mb-52 mt-20">
       <AnimatedItems>
-        <h1 className="sm:hidden text-6xl text-center text-pretty font-bold mt-16 mb-6">
+        <h1 className="sm:hidden text-6xl text-center text-pretty font-bold">
           Acorta y comparte links facilmente
         </h1>
 
-        <h1 className="hidden sm:block text-6xl text-center text-pretty font-bold mt-16 mb-6">
+        <h1 className="hidden sm:block text-6xl text-center text-pretty font-bold">
           Acorta tus links de manera elegante y comparte con facilidad
         </h1>
       </AnimatedItems>

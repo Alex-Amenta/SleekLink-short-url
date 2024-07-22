@@ -13,11 +13,6 @@ body {
   overflow-x: hidden;
 }
 
-.blur-content {
-  filter: blur(5px);
-  pointer-events: none;
-}
-
 .navbar_blur {
   animation: blur linear both;
   animation-timeline: scroll();
