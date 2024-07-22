@@ -4,7 +4,7 @@ import LinkedinIcon from "./ui/icons/social/LinkedinIcon";
 
 const Footer = () => {
   return (
-    <footer className="pb-10 text-black dark:text-white flex justify-between items-center">
+    <footer className="pb-10 text-black dark:text-white flex md:flex-row flex-col justify-between items-center gap-4">
       <div>
         <p>
           ©Creado por{" "}

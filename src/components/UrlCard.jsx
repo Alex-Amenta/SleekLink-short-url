@@ -1,7 +1,7 @@
 "use client";
 
 import { calculateDaysReamiming, formatDate } from "@/helpers/formatDate";
-import ConfirmModal from "./ui/ConfirmModal";
+import ConfirmModal from "./ui/modals/ConfirmModal";
 import PulseLoader from "./ui/loader/PulseLoader";
 import Link from "next/link";
 import CardPulseBorder from "./ui/CardPulseBorder";
@@ -46,7 +46,7 @@ const UrlCard = ({
           </div>
         </Link>
         <div className="flex justify-center items-center gap-1">
-          <p className="flex justify-center items-center gap-2 mr-2 pr-3 border-r-2 border-black/40 dark:border-white/40">
+          <p className="max-sm:hidden flex justify-center items-center gap-2 mr-2 pr-3 border-r-2 border-black/40 dark:border-white/40">
             <TrendingUpIcon /> {countClick} clicks
           </p>
           <CopyText text={shortUrl} />
@@ -67,20 +67,20 @@ const UrlCard = ({
           )}
         </div>
       </div>
-      <p className="my-3 text-wrap max-w-72">
+      <p className="my-3 text-wrap md:max-w-72">
         <span className="mr-2 text-black dark:text-white">ShortUrl:</span>
         <a
           href={originalUrl}
           rel="noopener noreferrer"
           target="_blank"
-          className="text-green-900 dark:text-green-500 hover:underline"
+          className="text-green-900 dark:text-green-500 hover:underline max-sm:break-words"
         >
           {shortUrl}
         </a>
       </p>
       <p>Original Url:</p>
-      <p className="mb-3 text-wrap max-w-full text-black/50 dark:text-white/50">
-        {originalUrl}
+      <p className="mb-3 max-w-full text-black/50 dark:text-white/50 break-words">
+        {originalUrl.slice(0, 60)}...
       </p>
       <p className="mb-3 p-1 w-fit bg-red-200 dark:bg-red-950 text-red-500 text-sm rounded-full">
         <span className="inline-flex align-middle mr-1">

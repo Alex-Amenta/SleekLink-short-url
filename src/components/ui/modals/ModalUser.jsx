@@ -5,16 +5,19 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import LinkedinIcon from "./icons/social/LinkedinIcon";
+import LinkedinIcon from "../icons/social/LinkedinIcon";
 import { LayoutDashboard, SettingsIcon, LogOutIcon, XIcon } from "lucide-react";
-import CustomHr from "./CustomHr";
-import AnimatedContainer from "./animations/AnimatedContainer";
-import AnimatedItems from "./animations/AnimatedItems";
+import CustomHr from "../CustomHr";
+import AnimatedContainer from "../animations/AnimatedContainer";
+import AnimatedItems from "../animations/AnimatedItems";
+import ThemeSwitcher from "../ThemeSwitcher";
+import { useTheme } from "next-themes";
 
 const ModalUser = ({ userData }) => {
   const [openModal, setOpenModal] = useState(false);
   const { data: session } = useSession();
   const { logout } = useUserStore();
+  const { setTheme, theme } = useTheme();
   const router = useRouter();
 
   const handleToggleModal = () => {
@@ -33,6 +36,10 @@ const ModalUser = ({ userData }) => {
 
     logout();
     router.push("/");
+  };
+
+  const handleThemeSwitcher = () => {
+    setTheme(theme === "ligth" ? "dark" : "ligth");
   };
 
   return (
@@ -103,6 +110,19 @@ const ModalUser = ({ userData }) => {
                   Contacto
                 </a>
               </AnimatedItems>
+
+              <div className="md:hidden">
+                <AnimatedItems>
+                  <button
+                    onClick={handleThemeSwitcher}
+                    className="w-full flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md"
+                  >
+                    <ThemeSwitcher />
+                    Tema
+                  </button>
+                </AnimatedItems>
+              </div>
+
               <AnimatedItems>
                 <button
                   onClick={handleSignOut}

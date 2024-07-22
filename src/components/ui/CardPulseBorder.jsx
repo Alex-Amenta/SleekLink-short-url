@@ -10,7 +10,7 @@ const CardPulseBorder = ({
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.5 }}
       className="relative mt-10  w-full "
     >
       <div className="absolute top-0 flex w-full justify-center">

@@ -4,7 +4,7 @@ import useModal from "@/hooks/useModal";
 import { useUrlStore } from "@/zustand/store";
 import Arrow19 from "./ui/icons/navigation/ArrowDraw";
 import { LinkIcon } from "lucide-react";
-import NormalUrlModal from "./ui/NormalUrlModal";
+import NormalUrlModal from "./ui/modals/NormalUrlModal";
 import AnimatedContainer from "./ui/animations/AnimatedContainer";
 import AnimatedItems from "./ui/animations/AnimatedItems";
 

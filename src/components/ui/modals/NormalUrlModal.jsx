@@ -1,7 +1,7 @@
 "use client";
 import { toast } from "react-toastify";
-import CustomHr from "./CustomHr";
-import AnimationModal from "./animations/AnimationModal";
+import CustomHr from "../CustomHr";
+import AnimationModal from "../animations/AnimationModal";
 
 const NormalUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
   const handleSubmit = async (event) => {

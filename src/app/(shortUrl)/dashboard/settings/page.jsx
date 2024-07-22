@@ -1,6 +1,6 @@
 "use client";
 
-import ConfirmModal from "@/components/ui/ConfirmModal";
+import ConfirmModal from "@/components/ui/modals/ConfirmModal";
 import CustomHr from "@/components/ui/CustomHr";
 import useModal from "@/hooks/useModal";
 import { useUserStore } from "@/zustand/store";
@@ -85,7 +85,7 @@ const SettingsPage = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.5 }}
         className="mb-10 flex flex-col justify-center items-start p-4 rounded-md bg-white dark:bg-[#131313] dark:border-white/20 border shadow-lg"
       >
         <h3 className="font-bold text-2xl">Configuración de cuenta</h3>

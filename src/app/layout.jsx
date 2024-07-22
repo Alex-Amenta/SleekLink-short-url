@@ -4,8 +4,8 @@ import BackgroundPage from "@/components/BackgroundPage";
 import Provider from "@/components/Provider";
 import Navbar from "@/components/Navbar";
 import ToastProvider from "@/components/ToastProvider";
-import ModalCookies from "@/components/ui/ModalCookies";
 import { ThemeProvider } from "next-themes";
+import CookieModal from "@/components/ui/modals/CookieModal";
 
 const inter = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
                 <BackgroundPage />
                 {children}
               </div>
-              <ModalCookies />
+              <CookieModal />
             </ToastProvider>
           </ThemeProvider>
         </Provider>
