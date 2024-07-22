@@ -11,6 +11,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
+// export const metadata = {
+//   title: "Settings - Dashboard",
+//   description: "Settings - dashboard",
+// };
+
 const SettingsPage = () => {
   const { user, deleteAccount, updateUser } = useUserStore();
   const { status } = useSession();
