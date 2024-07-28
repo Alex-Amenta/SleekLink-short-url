@@ -19,7 +19,7 @@ import { toast } from "react-toastify";
 const SettingsPage = () => {
   const { user, deleteAccount, updateUser } = useUserStore();
   const { status } = useSession();
-  const { isOpen, closeModal, openModal } = useModal();
+  const { isOpen, closeModal, openModal } = useModal("ConfirmDeleteUser");
   const [isChangedPassword, setIsChangedPassword] = useState(false);
   const router = useRouter();
 

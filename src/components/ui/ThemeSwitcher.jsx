@@ -1,22 +1,27 @@
-import { useTheme } from "next-themes";
-import { MoonIcon, SunIcon } from "lucide-react";
+"use client";
+
+import { useEffect, useState } from "react";
+import { useThemeToggle, ThemeIcon } from "@/hooks/useThemeToggle";
 
 const ThemeSwitcher = ({ className }) => {
-  const { setTheme, theme } = useTheme();
+  const { handleToggleTheme } = useThemeToggle();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
-    <>
-      <button
-        onClick={() => setTheme(theme === "ligth" ? "dark" : "ligth")}
-        className={`hover:bg-black/10 dark:hover:bg-white/10 transition rounded-md group ${className}`}
-      >
-        {theme === "ligth" ? (
-          <MoonIcon className="group-hover:rotate-12" />
-        ) : (
-          <SunIcon className="group-hover:rotate-12" />
-        )}
-      </button>
-    </>
+    <button
+      onClick={handleToggleTheme}
+      className={`hover:bg-black/10 dark:hover:bg-white/10 transition rounded-md group ${className}`}
+    >
+      <ThemeIcon />
+    </button>
   );
 };
 

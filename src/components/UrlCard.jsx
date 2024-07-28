@@ -20,7 +20,7 @@ const UrlCard = ({
   expirationDate,
   deleteUrl,
 }) => {
-  const { isOpen, closeModal, openModal } = useModal();
+  const { isOpen, closeModal, openModal } = useModal(`confirm-${id}`);
 
   const handleDeleteUrl = async () => {
     const result = await deleteUrl(id);

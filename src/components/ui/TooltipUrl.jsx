@@ -28,7 +28,7 @@ const TooltipUrl = ({ textHover, content }) => {
             <p className="text-pretty max-w-full overflow-hidden text-ellipsis">
               {truncateUrl(content)}
             </p>
-            <CopyText text={content} />
+            <CopyText text={content} size="15"/>
           </div>
         </TooltipContent>
       </Tooltip>

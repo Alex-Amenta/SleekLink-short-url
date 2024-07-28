@@ -4,7 +4,7 @@ import { useState } from "react";
 import Loader from "./loader/Loader";
 import { Check, Copy } from "lucide-react";
 
-const CopyText = ({ text }) => {
+const CopyText = ({ text, size = "20" }) => {
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,7 +23,7 @@ const CopyText = ({ text }) => {
       onClick={copyToClipboard}
       className="p-1 rounded-md hover:bg-black/10 dark:hover:bg-white/10"
     >
-      {isLoading ? <Loader /> : copied ? <Check /> : <Copy />}
+      {isLoading ? <Loader /> : copied ? <Check /> : <Copy size={size} />}
     </button>
   );
 };

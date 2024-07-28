@@ -17,9 +17,13 @@ const customTransition = {
 const Hero = () => {
   const { createShortUrl } = useUrlStore();
 
-  const { isOpen, openModal, closeModal } = useModal();
+  const { isOpen, openModal, closeModal } = useModal("NormalUrlModal");
+
   return (
-    <AnimatedContainer transition={customTransition} className="md:mb-52 mt-20">
+    <AnimatedContainer
+      transition={customTransition}
+      className="flex flex-col justify-center items-center min-h-[calc(100vh-150px)] mb-[70px]"
+    >
       <AnimatedItems>
         <h1 className="sm:hidden text-6xl text-center text-pretty font-bold">
           Acorta y comparte links facilmente
@@ -30,13 +34,13 @@ const Hero = () => {
         </h1>
       </AnimatedItems>
       <AnimatedItems>
-        <p className="hidden sm:block text-base w-full text-center lg:w-[80%] lg:mx-auto text-black/65 dark:text-white/65">
+        <p className="hidden sm:block mt-6 text-base w-full text-center lg:w-[80%] lg:mx-auto text-black/65 dark:text-white/65">
           SleekLink es tu compañero perfecto para transformar URLs largas y
           complicadas en enlaces cortos y fáciles de compartir. ¡Simplemente
           pega tu URL, obtén tu enlace corto y compártelo con el mundo!
         </p>
 
-        <p className="sm:hidden text-base w-full text-center lg:w-[70%] lg:mx-auto text-black/65 dark:text-white/65">
+        <p className="sm:hidden mt-6 text-base w-full text-center lg:w-[70%] lg:mx-auto text-black/65 dark:text-white/65">
           ¡Simplemente pega tu URL, obtén tu enlace corto y compártelo con el
           mundo!
         </p>

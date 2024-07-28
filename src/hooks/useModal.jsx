@@ -1,14 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useModalStore } from "@/zustand/store";
 
-const useModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const useModal = (modalId) => {
+  const { openModal, closeModal, isOpen, toggleModal } = useModalStore();
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const handleOpen = () => openModal(modalId);
+  const handleClose = () => closeModal(modalId);
+  const handleToggleModal = () => toggleModal(modalId);
 
-  return { isOpen, openModal, closeModal };
+  return {
+    isOpen: isOpen(modalId),
+    openModal: handleOpen,
+    closeModal: handleClose,
+    toggleModal: handleToggleModal,
+  };
 };
 
 export default useModal;

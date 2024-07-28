@@ -1,73 +1,98 @@
 "use client";
 
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { TrendingUp } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+
+const chartData = [
+  { url: "URL A", clicks: 186 },
+  { url: "URL B", clicks: 305 },
+  { url: "URL C", clicks: 237 },
+  { url: "URL D", clicks: 73 },
+];
+
+const chartConfig = {
+  clicks: {
+    label: "Clicks",
+    color: "hsl(var(--chart-1))",
+  },
+};
 
 export function ClickCounterBarChart() {
-  const chartData = {
-    labels: ["URL A", "URL B", "URL C", "URL D"],
-    datasets: [
-      {
-        label: "Clics",
-        data: [120, 80, 150, 200], // Datos ficticios
-        backgroundColor: "rgb(54 235 78 / 50%)", // Color de las barras
-        borderColor: "rgb(54 235 78 / 100%)", // Color del borde de las barras
-        borderWidth: 2,
-      },
-    ],
-  };
-
-  const chartOptions = {
-    scales: {
-      y: {
-        type: "linear",
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: "Total de clics",
-          font: {
-            size: 14,
-            weight: "bold",
-          },
-        },
-      },
-    },
-    plugins: {
-      title: {
-        display: true,
-        text: "Contador de clics",
-        font: {
-          size: 16,
-          weight: "bold",
-        },
-        position: "top",
-      },
-      legend: {
-        display: false,
-      },
-    },
-  };
-
   return (
-    <div className="w-full md:w-[500px] h-full">
-      <Bar data={chartData} options={chartOptions} />
-    </div>
+    <article className="p-4 bg-white shadow-md dark:bg-white/5 rounded-lg">
+      <h3 className="font-bold text-xl">Contador de Clicks</h3>
+      <p className="text-black/80 dark:text-white/80">
+        Mostrando el resultado de las URLs
+      </p>
+      <header className="my-5">
+        <ChartContainer config={chartConfig}>
+          <BarChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              top: 20,
+            }}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="url"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              tickFormatter={(value) => value}
+            />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <defs>
+              <linearGradient id="fillClicks" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="20%"
+                  stopColor="var(--color-clicks)"
+                  stopOpacity={1}
+                />
+                <stop
+                  offset="100%"
+                  stopColor="var(--color-clicks)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+            </defs>
+            <Bar
+              dataKey="clicks"
+              fill="url(#fillClicks)"
+              fillOpacity={0.4}
+              stroke="var(--color-clicks)"
+              radius={8}
+            >
+              <LabelList
+                position="top"
+                offset={12}
+                className="fill-foreground"
+                fontSize={12}
+              />
+            </Bar>
+          </BarChart>
+        </ChartContainer>
+      </header>
+      <footer>
+        <div className="grid gap-2 justify-start text-sm w-full">
+          <p className="flex items-center gap-2 font-medium leading-none">
+            En tendencia ascendente en un 5.2% este mes
+            <TrendingUp className="h-4 w-4" />
+          </p>
+          <p className="flex items-center gap-2 leading-none text-muted-foreground">
+            Mostrando el total de visitantes en los últimos 6 meses
+          </p>
+        </div>
+      </footer>
+    </article>
   );
 }

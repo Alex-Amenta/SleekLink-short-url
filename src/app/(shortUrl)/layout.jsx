@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function RedirectLayout({ children }) {
   return (
-    <section className="">
+    <section>
       <DashboardNavbar />
       {children}
     </section>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useUserStore } from "@/zustand/store";
+import { useModalStore, useUserStore } from "@/zustand/store";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,23 +10,15 @@ import { LayoutDashboard, SettingsIcon, LogOutIcon, XIcon } from "lucide-react";
 import CustomHr from "../CustomHr";
 import AnimatedContainer from "../animations/AnimatedContainer";
 import AnimatedItems from "../animations/AnimatedItems";
-import ThemeSwitcher from "../ThemeSwitcher";
-import { useTheme } from "next-themes";
+import { ThemeIcon, useThemeToggle } from "@/hooks/useThemeToggle";
+import useModal from "@/hooks/useModal";
 
 const ModalUser = ({ userData }) => {
-  const [openModal, setOpenModal] = useState(false);
+  const { isOpen, closeModal, openModal, toggleModal } = useModal("ModalUser");
   const { data: session } = useSession();
   const { logout } = useUserStore();
-  const { setTheme, theme } = useTheme();
+  const { theme, handleToggleTheme } = useThemeToggle();
   const router = useRouter();
-
-  const handleToggleModal = () => {
-    setOpenModal(!openModal);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
 
   const handleSignOut = async () => {
     if (session) {
@@ -38,36 +30,35 @@ const ModalUser = ({ userData }) => {
     router.push("/");
   };
 
-  const handleThemeSwitcher = () => {
-    setTheme(theme === "ligth" ? "dark" : "ligth");
-  };
-
   return (
     <>
       {userData && (
         <button
-          onClick={handleToggleModal}
+          onClick={toggleModal}
           className="flex justify-center items-center gap-2 hover:scale-105 transition"
           type="button"
         >
-          <img
-            className="rounded-full w-12 border-2 border-green-600"
-            src={userData.image}
-            alt={`Imagen de ${userData.name}`}
-          />
+          <span>
+            <img
+              className="rounded-full w-12 border-2 border-green-600"
+              src={userData.image}
+              alt={`Imagen de ${userData.name}`}
+            />
+          </span>
+
           <p className="hidden sm:flex font-bold">{userData.name}</p>
         </button>
       )}
 
-      {openModal && userData && (
+      {isOpen && userData && (
         <AnimatedContainer
           className="px-10 lg:px-48 fixed top-10 flex items-center justify-center"
-          onClick={handleCloseModal}
+          onClick={closeModal}
         >
           <div className="relative bg-white dark:bg-black rounded-lg shadow-lg w-full max-w-md py-4 px-10">
             <div className="flex items-center justify-end py-1">
               <button
-                onClick={handleCloseModal}
+                onClick={closeModal}
                 className="text-gray-400 bg-transparent hover:bg-black/10 dark:hover:bg-white/10 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center mb-2"
               >
                 <XIcon size={15} />
@@ -114,11 +105,11 @@ const ModalUser = ({ userData }) => {
               <div className="md:hidden">
                 <AnimatedItems>
                   <button
-                    onClick={handleThemeSwitcher}
+                    onClick={handleToggleTheme}
                     className="w-full flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md"
                   >
-                    <ThemeSwitcher />
-                    Tema
+                    <ThemeIcon />
+                    {theme === 'light' ? 'Dark' : 'Light'}
                   </button>
                 </AnimatedItems>
               </div>

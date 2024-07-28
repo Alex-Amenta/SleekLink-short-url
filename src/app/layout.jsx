@@ -35,7 +35,12 @@ export default function RootLayout({ children }) {
       />
       <body className={`${inter.className} bg-slate-50 dark:bg-[#181818]`}>
         <Provider>
-          <ThemeProvider attribute="class">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
             <ToastProvider>
               <Navbar />
               <div id="main-content" className="px-5 lg:px-48">

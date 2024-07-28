@@ -4,6 +4,20 @@ import { create } from "zustand";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+export const useModalStore = create((set, get) => ({
+    modals: {},
+    openModal: (modalId) => set((state) => ({
+        modals: { ...state.modals, [modalId]: true }
+    })),
+    closeModal: (modalId) => set((state) => ({
+        modals: { ...state.modals, [modalId]: false }
+    })),
+    toggleModal: (id) => set((state) => ({
+        modals: { ...state.modals, [id]: !state.modals[id] }
+    })),
+    isOpen: (modalId) => (get().modals[modalId] || false),
+}))
+
 export const useUserStore = create((set, get) => ({
     user: null,
     error: null,
@@ -86,11 +100,6 @@ export const useUserStore = create((set, get) => ({
     },
 }));
 
-// export const getZustandState = () => {
-//     const state = useUserStore.getState();
-//     return state;
-// }
-
 export const useUrlStore = create((set) => ({
     urls: [],
     nonAuthUrls: [],
@@ -98,7 +107,6 @@ export const useUrlStore = create((set) => ({
     setSearchTerm: (term) => set({ searchTerm: term }),
     selectedUrl: null,
     shortUrl: null,
-    clicksData: [],
     error: null,
     loading: false,
 
@@ -224,19 +232,4 @@ export const useUrlStore = create((set) => ({
             });
         }
     },
-
-    getClicksForUrl: async (urlId) => {
-        set({ loading: true, error: null });
-
-        try {
-            const response = await axios.get(`/api/url/clicks/${urlId}`);
-            set({ clicksData: response.data, loading: false });
-        } catch (error) {
-            console.error('Error fetching clicks:', error);
-            set({
-                error: error.response ? error.response.data.message : "An error ocurred fetching clicks",
-                loading: false,
-            });
-        }
-    }
 }));

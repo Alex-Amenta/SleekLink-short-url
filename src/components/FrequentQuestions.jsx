@@ -1,11 +1,10 @@
-"use client";
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import AnimatedScroll from "./ui/animations/AnimatedScroll";
 
 const QUESTIONS = [
   {
@@ -55,17 +54,19 @@ const QUESTIONS = [
 const FrequentQuestions = () => {
 
   return (
+    <AnimatedScroll>
     <section className="my-32">
       <h2 className="text-3xl font-bold mb-5">Preguntas Frecuentes(FAQ) </h2>
       <Accordion type="single" collapsible>
         {QUESTIONS.map((q, index) => (
-          <AccordionItem key={index} className="" value={q.item}>
+          <AccordionItem key={index} value={q.item}>
             <AccordionTrigger>{q.question}</AccordionTrigger>
             <AccordionContent className="leading-7 text-black/70 dark:text-white/70">{q.answer}</AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>
     </section>
+    </AnimatedScroll>
   );
 };
 
