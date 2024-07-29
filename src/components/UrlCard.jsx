@@ -1,13 +1,13 @@
 "use client";
 
 import { calculateDaysReamiming, formatDate } from "@/helpers/formatDate";
-import ConfirmModal from "./ui/modals/ConfirmModal";
 import PulseLoader from "./ui/loader/PulseLoader";
 import Link from "next/link";
 import CardPulseBorder from "./ui/CardPulseBorder";
 import CopyText from "./ui/CopyText";
-import useModal from "@/hooks/useModal";
-import { AlarmClockIcon, Trash2Icon, TrendingUpIcon } from "lucide-react";
+import { AlarmClockIcon, TrendingUpIcon } from "lucide-react";
+
+import DeleteRestoreButton from "./DeleteRestoreButton";
 
 const UrlCard = ({
   id,
@@ -18,22 +18,8 @@ const UrlCard = ({
   createdAt,
   active,
   expirationDate,
-  deleteUrl,
+  updateStatusUrl,
 }) => {
-  const { isOpen, closeModal, openModal } = useModal(`confirm-${id}`);
-
-  const handleDeleteUrl = async () => {
-    const result = await deleteUrl(id);
-
-    if (result.success) {
-      alert(result.message); // Mostrar mensaje de éxito
-    } else {
-      alert(result.error); // Mostrar mensaje de error en caso de fallo
-    }
-
-    closeModal();
-  };
-
   return (
     <CardPulseBorder>
       <div className="flex justify-between items-center">
@@ -50,21 +36,12 @@ const UrlCard = ({
             <TrendingUpIcon /> {countClick} clicks
           </p>
           <CopyText text={shortUrl} />
-          <button
-            className="p-1 rounded-md hover:bg-red-100 dark:hover:bg-red-950  group"
-            onClick={openModal}
-          >
-            <Trash2Icon />
-          </button>
-
-          {isOpen && (
-            <ConfirmModal
-              isOpen={isOpen}
-              message={`¿Estás seguro de eliminar la URL '${title}'?`}
-              onConfirm={handleDeleteUrl}
-              onCancel={closeModal}
-            />
-          )}
+          <DeleteRestoreButton
+            urlId={id}
+            updateStatusUrl={updateStatusUrl}
+            active={active}
+            title={title}
+          />
         </div>
       </div>
       <p className="my-3 text-wrap md:max-w-72">

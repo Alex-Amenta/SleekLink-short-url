@@ -4,7 +4,7 @@ import { useUrlStore } from "@/zustand/store";
 import UrlCard from "./UrlCard";
 
 const UrlManager = () => {
-  const { deleteUrl, nonAuthUrls } = useUrlStore();
+  const { updateStatusUrl, nonAuthUrls } = useUrlStore();
 
   return (
     <>
@@ -22,7 +22,7 @@ const UrlManager = () => {
               createdAt={url.createdAt}
               active={url.active}
               expirationDate={url.expirationDate}
-              deleteUrl={deleteUrl}
+              updateStatusUrl={updateStatusUrl}
             />
           ))}
     </>

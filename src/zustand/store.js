@@ -209,14 +209,16 @@ export const useUrlStore = create((set) => ({
         );
     },
 
-    deleteUrl: async (id) => {
+    updateStatusUrl: async (id, active) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.delete(`/api/url/${id}`);
+            const response = await axios.put(`/api/url/${id}`, { active });
 
-            if (response.statusCode === 200) {
+            if (response.status === 200) {
                 set((state) => ({
-                    urls: state.urls.filter(url => url.id !== id),
+                    urls: state.urls.map((url) =>
+                        url.id === id ? { ...url, active } : url
+                    ),
                     loading: false,
                 }));
                 return { success: true, message: response.data.message }
@@ -231,5 +233,5 @@ export const useUrlStore = create((set) => ({
                 loading: false,
             });
         }
-    },
+    }
 }));

@@ -9,7 +9,7 @@ import useFetchUrls from "@/hooks/useFetchUrls";
 import useModal from "@/hooks/useModal";
 import { useUrlStore, useUserStore } from "@/zustand/store";
 import { LinkIcon, PlusCircle } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 const DashboardPage = () => {
   const { user } = useUserStore();
@@ -19,7 +19,7 @@ const DashboardPage = () => {
     searchTerm,
     setSearchTerm,
     filteredUrls,
-    deleteUrl,
+    updateStatusUrl
   } = useUrlStore();
 
   const {
@@ -92,7 +92,7 @@ const DashboardPage = () => {
                 createdAt={url.createdAt}
                 active={url.active}
                 expirationDate={url.expirationDate}
-                deleteUrl={deleteUrl}
+                updateStatusUrl={updateStatusUrl}
               />
             ))
           ) : (
