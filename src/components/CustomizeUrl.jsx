@@ -1,23 +1,19 @@
 "use client";
 
-import HashUrlModal from "./ui/modals/HashUrlModal";
-import { useUrlStore, useUserStore } from "@/zustand/store";
+import { useUserStore } from "@/zustand/store";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import useModal from "@/hooks/useModal";
 import { SparklesIcon } from "lucide-react";
 import AnimatedScroll from "./ui/animations/AnimatedScroll";
 import Arrow18 from "./ui/icons/navigation/ArrowDraw2";
 
 const CustomizeUrl = () => {
-  const { createShortUrl } = useUrlStore();
   const { user } = useUserStore();
-  const { isOpen, openModal, closeModal } = useModal("HashUrlModal");
   const router = useRouter();
 
   const handleCustomUrlClick = () => {
     if (user) {
-      openModal();
+      router.push("/dashboard");
     } else {
       router.push("/login");
       toast.info("Debes iniciar sesion para usar esta funcionalidad...");
@@ -60,11 +56,7 @@ const CustomizeUrl = () => {
         </div>
       </div>
 
-      <HashUrlModal
-        isOpen={isOpen}
-        onRequestClose={closeModal}
-        createShortUrl={createShortUrl}
-      />
+      
     </AnimatedScroll>
   );
 };
