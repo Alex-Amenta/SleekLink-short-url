@@ -5,9 +5,11 @@ export async function GET(request, { params }) {
     const { id } = params;
 
     try {
-        const url = await conn.query("SELECT * FROM url WHERE id = ?", [id]);
+        const url = await prisma.url.findUnique({
+            where: { id },
+        })
 
-        if (url.length === 0) return NextResponse.json({ message: "URL not found" }, { status: 404 });
+        if (!url) return NextResponse.json({ message: "URL not found" }, { status: 404 });
 
         return NextResponse.json(url);
     } catch (error) {
@@ -20,11 +22,12 @@ export async function PUT(request, { params }) {
     const { active } = request.json();
 
     try {
-        const result = await conn.query("UPDATE url SET active = ? WHERE id = ?", [active, id]);
+        // const result = await conn.query("UPDATE url SET active = ? WHERE id = ?", [active, id]);
 
-        if (result.affectedRows === 0) {
-            return NextResponse.json({ message: "URL not found" }, { status: 404 });
-        }
+        await prisma.url.update({
+            where: { id },
+            data: { active }
+        });
 
         return NextResponse.json({ message: active ? 'URL activated successfully' : 'URL desactived successfully' }, { status: 200 });
     } catch (error) {

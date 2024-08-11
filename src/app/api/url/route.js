@@ -4,8 +4,10 @@ import { nanoid } from "nanoid";
 import { isValidUrl } from "../controllers/url/isValidUrlController";
 import { generateShortUrl, generateShortUrlUser } from "../controllers/url/shortUrlController";
 import { authenticateUser, createAnonymousId } from "../controllers/auth";
-
-const BASE_URL = process.env.BASE_URL;
+import { checkUserOrAnonymousLimits, getExpirationDate, getShortUrl, validateAndCheckDuplicateUrl } from "@/helpers/urls-helpers";
+import { getServerSession } from "next-auth";
+import prisma from "@/lib/prisma";
+import { getOrCreateAnonymousId } from "@/helpers/cookies";
 
 export async function GET() {
     try {
@@ -20,59 +22,45 @@ export async function POST(request) {
     const { originalUrl, customDomain, title } = await request.json();
 
     try {
-        if (!originalUrl) {
-            return NextResponse.json({ message: "Url is required" }, { status: 404 });
+        const session = await getServerSession(authOptions);
+
+        const userInDb = await prisma.user.findUnique({
+            where: { email: session.user.email }
+        })
+
+        const existingUrl = await validateAndCheckDuplicateUrl(originalUrl);
+
+        if (!existingUrl.success) {
+            return { success: false, message: existingUrl.message };
         }
 
-        const userId = await authenticateUser(request);
-        const { anonymousId, cookieHeader } = await createAnonymousId(request);
+        // Obtener URL corta
+        const { shortCode, shortUrl } = await getShortUrl(customDomain);
 
-        // Validar la URL
-        const isValid = await isValidUrl(originalUrl);
-        if (isValid.status === 404) return isValid;
+        // Obtener fecha de expiración
+        const expirationDate = await getExpirationDate(session);
 
-        // Evitar duplicados
-        const existingUrl = await conn.query("SELECT * FROM url WHERE originalUrl = ?", [originalUrl]);
-        if (existingUrl.length > 0) {
-            return NextResponse.json({ message: "This URL has already been shortened" }, { status: 400 });
-        }
+        // Obtener o crear ID anónimo
+        const anonymousId = session ? null : getOrCreateAnonymousId().value;
 
-        let shortCode;
-        let shortUrl;
+        // Verificar límites
+        await checkUserOrAnonymousLimits(session, anonymousId);
 
-        if (customDomain) {
-            const existingCustomDomain = await conn.query("SELECT * FROM url WHERE shortCode = ?", [customDomain]);
-            if (existingCustomDomain.length > 0) {
-                return NextResponse.json({ message: "This custom domain is already in use" }, { status: 400 });
+        // Crear URL
+        const createdUrl = await prisma.url.create({
+            data: {
+                title,
+                originalUrl,
+                shortCode,
+                shortUrl,
+                user_id: userInDb?.id,
+                anonymous_id: anonymousId,
+                expirationDate,
+                active: true
             }
+        });
 
-            shortCode = customDomain;
-            shortUrl = `${BASE_URL}/${customDomain}`;
-        } else {
-            shortCode = nanoid(6);
-            shortUrl = `${BASE_URL}/${shortCode}`;
-        }
-
-        let result;
-        let dataUrl;
-
-        if (userId) {
-            result = await generateShortUrlUser(title, originalUrl, shortCode, shortUrl, userId);
-            dataUrl = await conn.query('SELECT * FROM url WHERE originalUrl = ? AND user_id = ?', [originalUrl, userId]);
-        } else {
-            result = await generateShortUrl(title, originalUrl, shortCode, shortUrl, anonymousId);
-            dataUrl = await conn.query('SELECT * FROM url WHERE originalUrl = ? AND anonymous_id = ?', [originalUrl, anonymousId]);
-        }
-
-        if (result.affectedRows === 1 && dataUrl.length > 0) {
-            const response = NextResponse.json(dataUrl[0], { status: 201 });
-            if (cookieHeader) {
-                response.headers.set('Set-Cookie', cookieHeader);
-            }
-            return response;
-        } else {
-            return NextResponse.json({ error: "Could not shorten the URL. Try again later." }, { status: 500 });
-        }
+        return NextResponse.json(createdUrl, { status: 200 })
     } catch (error) {
         console.log("URL shortening error: ", error);
         return NextResponse.json({ error: "An error occurred while shortening the URL." }, { status: 404 });
