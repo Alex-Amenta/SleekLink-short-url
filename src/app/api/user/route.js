@@ -17,7 +17,6 @@ export async function GET() {
 
 export async function POST(request) {
     const { name, email, image, password } = await request.json();
-    const userId = uuidv4().substring(0, 32);
 
     try {
         // Verificar si el correo electrónico tiene un formato válido
@@ -26,24 +25,30 @@ export async function POST(request) {
         }
 
         // Verificar si ya existe un usuario con el mismo correo electrónico
-        const existingUser = await conn.query("SELECT * FROM user WHERE email = ?", [email]);
-        if (existingUser.length > 0) {
+        const existingUser = await prisma.user.findUnique({
+            where: {
+                email: email,
+            }
+        });
+        if (existingUser) {
             return NextResponse.json({ message: "User with this email already exists" }, { status: 400 });
         }
 
         // Generar el hash de la contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Establecer imagen por defecto
-        const userImage = image ? image : "https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user2-256.png"
+        //creamos el usuario
+        const newUser = await prisma.user.create({
+            data: {
+                name,
+                email,
+                image: image || "https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user2-256.png",
+                password_hash: hashedPassword
+            }
+        })
 
-        const result = await conn.query("INSERT INTO user (id, name, email, image, password_hash) VALUES (?, ?, ?, ?, ?)", [userId, name, email, userImage, hashedPassword]);
 
-        if (result.affectedRows === 1) {
-            return NextResponse.json({ message: "User created successfully" }, { status: 201 });
-        } else {
-            return NextResponse.json({ message: "Failed to create user" }, { status: 500 });
-        }
+        return NextResponse.json({ message: "User created successfully", data: newUser }, { status: 201 });
 
     } catch (error) {
         return NextResponse.json({ message: error.message }, { status: 500 });
