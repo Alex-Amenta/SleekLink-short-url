@@ -3,22 +3,16 @@
 import { useUrlStore } from "@/zustand/store";
 import { useEffect } from "react";
 
-const useFetchUrls = (userId) => {
-  const { urls, getUrlsByUserId } = useUrlStore();
+const useFetchUrls = () => {
+  const { urls, getUrlsByUserEmail } = useUrlStore();
 
   useEffect(() => {
     const fetchData = async () => {
-      if (urls.length === 0) {
-        try {
-          await getUrlsByUserId(userId);
-        } catch (error) {
-          console.log(error.message);
-        }
-      }
+      await getUrlsByUserEmail();
     };
 
     fetchData();
-  }, [getUrlsByUserId, userId, urls.length]);
+  }, [getUrlsByUserEmail]);
 
   return urls;
 };

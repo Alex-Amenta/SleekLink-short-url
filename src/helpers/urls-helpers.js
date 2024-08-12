@@ -10,24 +10,27 @@ const MAX_URLS_PER_USER = 15;
 export const formatValidUrl = async (originalUrl) => {
     try {
         const response = await axios.head(originalUrl);
-
-        return response.status
-
+        return response.status === 200;
     } catch (error) {
         return false;
     }
-}
+};
 
-export const validateAndCheckDuplicateUrl = async (originalUrl) => {
+export const validateAndCheckDuplicateUrl = async (originalUrl, userId = null, anonymousId = null) => {
     const isValid = await formatValidUrl(originalUrl);
-    if (!isValid) throw new Error("Url no valida!");
+    if (!isValid) return { success: false, message: "URL no válida!" };
 
-    //evitamos duplicados
     const existingUrl = await prisma.url.findFirst({
-        where: { originalUrl: originalUrl }
+        where: {
+            originalUrl: originalUrl,
+            OR: [
+                { user_id: userId },
+                { anonymous_id: anonymousId }
+            ]
+        }
     });
 
-    if (existingUrl) return { success: false, message: "Esta url ya fue acortada" };
+    if (existingUrl) return { success: false, message: "Esta URL ya fue acortada" };
 
     return { success: true };
 };
@@ -41,6 +44,7 @@ export const getShortUrl = async (customDomain) => {
         if (existingCustomDomain) return { success: false, message: "Este dominio personalizado ya existe" };
 
         return {
+            success: true,
             shortCode: customDomain,
             shortUrl: `${BASE_URL}/${customDomain}`
         };
@@ -48,6 +52,7 @@ export const getShortUrl = async (customDomain) => {
 
     const shortCode = nanoid(6);
     return {
+        success: true,
         shortCode,
         shortUrl: `${BASE_URL}/${shortCode}`
     };
@@ -67,9 +72,10 @@ export const checkUserOrAnonymousLimits = async (session, anonymousId) => {
     let count;
     if (session) {
         count = await prisma.url.count({ where: { user_id: session.user.id } });
-        if (count >= MAX_URLS_PER_USER) return { success: false, message: "Alcanzaste el limite urls generadas." };
+        if (count >= MAX_URLS_PER_USER) return { success: false, message: "Has alcanzado el límite de URLs generadas." };
     } else {
         count = await prisma.url.count({ where: { anonymous_id: anonymousId } });
-        if (count >= MAX_URLS_PER_ANONYMOUS) return { success: false, message: "Alcanzaste el limite urls generadas." };
+        if (count >= MAX_URLS_PER_ANONYMOUS) return { success: false, message: "Has alcanzado el límite de URLs generadas." };
     }
-}
+    return { success: true };
+};

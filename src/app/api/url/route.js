@@ -1,17 +1,13 @@
 import { NextResponse } from "next/server";
-import { conn } from "@/app/libs/mysql";
-import { nanoid } from "nanoid";
-import { isValidUrl } from "../controllers/url/isValidUrlController";
-import { generateShortUrl, generateShortUrlUser } from "../controllers/url/shortUrlController";
-import { authenticateUser, createAnonymousId } from "../controllers/auth";
 import { checkUserOrAnonymousLimits, getExpirationDate, getShortUrl, validateAndCheckDuplicateUrl } from "@/helpers/urls-helpers";
 import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
 import { getOrCreateAnonymousId } from "@/helpers/cookies";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function GET() {
     try {
-        const result = await conn.query("SELECT * FROM url;");
+        const result = await prisma.url.findMany();
         return NextResponse.json(result)
     } catch (error) {
         return NextResponse.json({ message: error.message }, { status: 404 })
@@ -24,14 +20,22 @@ export async function POST(request) {
     try {
         const session = await getServerSession(authOptions);
 
-        const userInDb = await prisma.user.findUnique({
-            where: { email: session.user.email }
-        })
+        let userId = null;
 
-        const existingUrl = await validateAndCheckDuplicateUrl(originalUrl);
+        if (session) {
+            const userInDb = await prisma.user.findUnique({
+                where: { email: session.user.email }
+            });
+            userId = userInDb?.id || null;
+        }
+
+        // Obtener o crear ID anónimo
+        const anonymousId = session ? null : getOrCreateAnonymousId().value;
+
+        const existingUrl = await validateAndCheckDuplicateUrl(originalUrl, userId, anonymousId);
 
         if (!existingUrl.success) {
-            return { success: false, message: existingUrl.message };
+            return NextResponse.json({ message: existingUrl.message }, { status: 400 });
         }
 
         // Obtener URL corta
@@ -40,11 +44,12 @@ export async function POST(request) {
         // Obtener fecha de expiración
         const expirationDate = await getExpirationDate(session);
 
-        // Obtener o crear ID anónimo
-        const anonymousId = session ? null : getOrCreateAnonymousId().value;
-
         // Verificar límites
-        await checkUserOrAnonymousLimits(session, anonymousId);
+        const limitCheck = await checkUserOrAnonymousLimits(session, anonymousId);
+
+        if (!limitCheck.success) {
+            return NextResponse.json({ message: limitCheck.message }, { status: 400 });
+        }
 
         // Crear URL
         const createdUrl = await prisma.url.create({
@@ -53,7 +58,7 @@ export async function POST(request) {
                 originalUrl,
                 shortCode,
                 shortUrl,
-                user_id: userInDb?.id,
+                user_id: userId,
                 anonymous_id: anonymousId,
                 expirationDate,
                 active: true

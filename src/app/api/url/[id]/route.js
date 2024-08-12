@@ -1,4 +1,4 @@
-import { conn } from "@/app/libs/mysql";
+import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET(request, { params }) {
@@ -22,8 +22,6 @@ export async function PUT(request, { params }) {
     const { active } = request.json();
 
     try {
-        // const result = await conn.query("UPDATE url SET active = ? WHERE id = ?", [active, id]);
-
         await prisma.url.update({
             where: { id },
             data: { active }

@@ -7,20 +7,13 @@ import UrlCard from "@/components/UrlCard";
 import useExpirationWarning from "@/hooks/useExpirationWarning";
 import useFetchUrls from "@/hooks/useFetchUrls";
 import useModal from "@/hooks/useModal";
-import { useUrlStore, useUserStore } from "@/zustand/store";
+import { useUrlStore } from "@/zustand/store";
 import { LinkIcon, PlusCircle } from "lucide-react";
 import { useCallback } from "react";
 
 const DashboardPage = () => {
-  const { user } = useUserStore();
-  const {
-    createShortUrl,
-    loading,
-    searchTerm,
-    setSearchTerm,
-    filteredUrls,
-    updateStatusUrl
-  } = useUrlStore();
+  const { loading, searchTerm, setSearchTerm, filteredUrls, updateStatusUrl } =
+    useUrlStore();
 
   const {
     isOpen: isNormalOpen,
@@ -33,7 +26,7 @@ const DashboardPage = () => {
     closeModal: closeHashModal,
   } = useModal("HashUrlModal");
 
-  const urls = useFetchUrls(user?.id);
+  const urls = useFetchUrls();
   useExpirationWarning(urls);
 
   const handleSearch = useCallback(
@@ -109,15 +102,10 @@ const DashboardPage = () => {
         <NormalUrlModal
           isOpen={isNormalOpen}
           onRequestClose={closeNormalModal}
-          createShortUrl={createShortUrl}
         />
       )}
       {isHashOpen && (
-        <HashUrlModal
-          isOpen={isHashOpen}
-          onRequestClose={closeHashModal}
-          createShortUrl={createShortUrl}
-        />
+        <HashUrlModal isOpen={isHashOpen} onRequestClose={closeHashModal} />
       )}
     </section>
   );

@@ -2,22 +2,13 @@
 
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import ModalUser from "./ui/modals/ModalUser";
-import { useUserStore } from "@/zustand/store";
 import ThemeSwitcher from "./ui/ThemeSwitcher";
 import GithubIcon from "./ui/icons/social/GithubIcon";
 import LinkedinIcon from "./ui/icons/social/LinkedinIcon";
 
 const Navbar = () => {
-  const { user, setUser } = useUserStore();
   const { data: session } = useSession();
-
-  useEffect(() => {
-    if (session?.user) {
-      setUser(session.user);
-    }
-  }, [session]);
 
   return (
     <nav className="navbar_blur sticky top-0 z-10 mb-5 px-10 lg:px-48">
@@ -54,14 +45,14 @@ const Navbar = () => {
             <ThemeSwitcher className="p-2"/>
           </div>
 
-          {user ? (
-            <ModalUser userData={user} />
+          {session ? (
+            <ModalUser userData={session.user} />
           ) : (
             <Link
-              href="/login"
+              href="/auth/login"
               className="p-2 px-3
             bg-green-700 text-white shadow-md 
-            border border-green-600 hover:bg-green-900 rounded-md transition"
+            border border-green-600 hover:bg-green-800 rounded-md transition"
             >
               Login
             </Link>

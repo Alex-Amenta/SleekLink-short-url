@@ -19,8 +19,8 @@ model clicks {
 model url {
   id             String    @id @default(uuid()) @db.VarChar(36)
   title          String    @db.VarChar(255)
-  originalUrl    String    @db.VarChar(255) @unique
-  shortCode      String    @db.VarChar(255) @unique
+  originalUrl    String    @db.VarChar(255)
+  shortCode      String    @unique @db.VarChar(255)
   shortUrl       String    @db.VarChar(255)
   countClick     Int?      @default(0)
   createdAt      DateTime? @default(now()) @db.Timestamp(0)
@@ -29,14 +29,13 @@ model url {
   anonymous_id   String?   @db.VarChar(255)
   expirationDate DateTime? @db.Timestamp(0)
   clicks         clicks[]
-
   user           user?     @relation(fields: [user_id], references: [id], onDelete: SetNull)
 }
 
 model user {
   id            String    @id @default(uuid()) @db.VarChar(36)
   name          String    @db.VarChar(255)
-  email         String    @db.VarChar(255) @unique
+  email         String    @unique @db.VarChar(255)
   image         String?   @db.VarChar(255)
   createdAt     DateTime? @default(now()) @db.Timestamp(0)
   password_hash String?   @db.Text

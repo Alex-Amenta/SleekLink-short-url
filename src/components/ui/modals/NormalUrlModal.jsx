@@ -2,59 +2,59 @@
 import { toast } from "react-toastify";
 import CustomHr from "../CustomHr";
 import AnimationModal from "../animations/AnimationModal";
+import { useForm } from "react-hook-form";
+import { useUrlStore } from "@/zustand/store";
 
-const NormalUrlModal = ({ isOpen, onRequestClose, createShortUrl }) => {
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
+const NormalUrlModal = ({ isOpen, onRequestClose }) => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
-    try {
-      const title = formData.get("title");
-      const originalUrl = formData.get("originalUrl");
+  const { createShortUrl } = useUrlStore();
 
-      const success = await createShortUrl(title, originalUrl);
+  const onSubmit = handleSubmit(async (data) => {
+    const { title, originalUrl } = data;
 
-      if (success) {
-        toast.success("URL creada con éxito!", {
-          position: "top-center",
-        });
-        onRequestClose();
-      } else {
-        toast.error("Error al acortar la URL", {
-          position: "top-center",
-        });
-      }
-    } catch (error) {
-      console.error("Error interno al acortar la URL:", error.message);
+    const result = await createShortUrl(title, originalUrl);
+
+    if (result.success) {
+      toast.success("URL creada con éxito!");
+      onRequestClose();
+    } else {
+      toast.error(result.message);
     }
-  };
+  });
 
   return (
     <AnimationModal isOpen={isOpen} onRequestClose={onRequestClose}>
       <h2 className="text-center font-bold text-2xl">Acortar URL</h2>
       <CustomHr spacing="mb-7 mt-2" />
-      <form onSubmit={handleSubmit}>
-        <label className="mt-4 font-semibold" htmlFor="">
-          Titulo de la URL:
-        </label>
+      <form onSubmit={onSubmit}>
+        <label className="mt-4 font-semibold">Titulo de la URL:</label>
         <input
+          {...register("title", { required: "El titulo es requerido" })}
           className="mb-4 p-2 border border-l-8 border-black/20 dark:border-white/10 rounded-md max-w-[600px] w-full focus-visible:border-green-400 shadow-lg"
           type="text"
           placeholder="LinkShopify"
-          name="title"
-          required
         />
+        {errors.title && (
+          <p className="mt-2 text-sm text-red-500">{errors.title.message}</p>
+        )}
 
-        <label className="mt-4 font-semibold" htmlFor="">
-          Tu URL:
-        </label>
+        <label className="mt-4 font-semibold">Tu URL:</label>
         <input
+          {...register("originalUrl", { required: "La url es requerida" })}
           className="p-2 border border-l-8 border-black/20 dark:border-white/10 rounded-md max-w-[600px] w-full focus-visible:border-green-400 shadow-lg"
-          type="text"
+          type="url"
           placeholder="Ejemplo: https://tu-url.com/"
-          name="originalUrl"
-          required
         />
+        {errors.originalUrl && (
+          <p className="mt-2 text-sm text-red-500">
+            {errors.originalUrl.message}
+          </p>
+        )}
 
         <div className="mt-10 flex justify-end items-center gap-4">
           <button

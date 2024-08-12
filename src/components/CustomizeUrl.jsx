@@ -1,18 +1,18 @@
 "use client";
 
-import { useUserStore } from "@/zustand/store";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { SparklesIcon } from "lucide-react";
 import AnimatedScroll from "./ui/animations/AnimatedScroll";
 import Arrow18 from "./ui/icons/navigation/ArrowDraw2";
+import { useSession } from "next-auth/react";
 
 const CustomizeUrl = () => {
-  const { user } = useUserStore();
+  const { data: session } = useSession();
   const router = useRouter();
 
   const handleCustomUrlClick = () => {
-    if (user) {
+    if (session?.user) {
       router.push("/dashboard");
     } else {
       router.push("/login");
@@ -22,7 +22,7 @@ const CustomizeUrl = () => {
 
   return (
     <AnimatedScroll>
-      <div>
+      <div className="mt-[90px]">
         <h2 className="text-5xl text-start md:text-center text-pretty font-bold mb-6">
           Personaliza tus Enlaces
         </h2>
@@ -55,8 +55,6 @@ const CustomizeUrl = () => {
           </button>
         </div>
       </div>
-
-      
     </AnimatedScroll>
   );
 };

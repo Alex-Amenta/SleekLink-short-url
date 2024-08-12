@@ -25,7 +25,7 @@ const LoginPage = () => {
       callbackUrl: "/dashboard",
     });
 
-    if (res.error) {      
+    if (res.error) {
       toast.error(res.error);
     } else {
       router.push("/dashboard");
@@ -59,22 +59,24 @@ const LoginPage = () => {
             Iniciar Sesión con Google
           </button>
 
-          <label htmlFor="">Email</label>
+          <label>Email</label>
           <input
             {...register("email", {
-              required: "Please enter your email",
+              required: "El email es requerido",
+              pattern: {
+                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                message: "Correo electrónico no válido",
+              },
             })}
             className="p-2 rounded-md border"
             type="email"
-            placeholder="tuemail@gmail.com"
+            placeholder="sleeklink@gmail.com"
           />
           {errors.email && (
             <p className="mt-2 text-sm text-red-500">{errors.email.message}</p>
           )}
 
-          <label className="mt-5" htmlFor="">
-            Password
-          </label>
+          <label className="mt-5">Password</label>
           <input
             {...register("password", {
               required: "Please enter your password",

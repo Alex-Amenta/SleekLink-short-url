@@ -1,13 +1,13 @@
 "use client";
 
 import useModal from "@/hooks/useModal";
-import { useUrlStore, useUserStore } from "@/zustand/store";
 import Arrow19 from "./ui/icons/navigation/ArrowDraw";
 import { LinkIcon } from "lucide-react";
 import NormalUrlModal from "./ui/modals/NormalUrlModal";
 import AnimatedContainer from "./ui/animations/AnimatedContainer";
 import AnimatedItems from "./ui/animations/AnimatedItems";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const customTransition = {
   when: "beforeChildren",
@@ -16,14 +16,13 @@ const customTransition = {
 };
 
 const Hero = () => {
-  const { createShortUrl } = useUrlStore();
-  const { user } = useUserStore();
+  const { data: session } = useSession();
   const { isOpen, openModal, closeModal } = useModal("NormalUrlModal");
 
   const router = useRouter();
 
   const handleClick = () => {
-    if (user) {
+    if (session?.user) {
       router.push("/dashboard");
     } else {
       openModal();
@@ -33,7 +32,7 @@ const Hero = () => {
   return (
     <AnimatedContainer
       transition={customTransition}
-      className="flex flex-col justify-center items-center min-h-[calc(100vh-150px)] mb-[70px]"
+      className="flex flex-col justify-center items-center min-h-[calc(100vh-150px)]"
     >
       <AnimatedItems>
         <h1 className="sm:hidden text-6xl text-center text-pretty font-bold">
@@ -74,11 +73,7 @@ const Hero = () => {
         </div>
       </AnimatedItems>
 
-      <NormalUrlModal
-        isOpen={isOpen}
-        onRequestClose={closeModal}
-        createShortUrl={createShortUrl}
-      />
+      <NormalUrlModal isOpen={isOpen} onRequestClose={closeModal} />
     </AnimatedContainer>
   );
 };

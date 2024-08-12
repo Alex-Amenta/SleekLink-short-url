@@ -8,6 +8,7 @@ import CopyText from "./ui/CopyText";
 import { AlarmClockIcon, TrendingUpIcon } from "lucide-react";
 
 import DeleteRestoreButton from "./DeleteRestoreButton";
+import { useSession } from "next-auth/react";
 
 const UrlCard = ({
   id,
@@ -20,6 +21,8 @@ const UrlCard = ({
   expirationDate,
   updateStatusUrl,
 }) => {
+  const { data: session } = useSession();
+
   return (
     <CardPulseBorder>
       <div className="flex justify-between items-center">
@@ -36,12 +39,14 @@ const UrlCard = ({
             <TrendingUpIcon /> {countClick} clicks
           </p>
           <CopyText text={shortUrl} />
-          <DeleteRestoreButton
-            urlId={id}
-            updateStatusUrl={updateStatusUrl}
-            active={active}
-            title={title}
-          />
+          {session?.user && (
+            <DeleteRestoreButton
+              urlId={id}
+              updateStatusUrl={updateStatusUrl}
+              active={active}
+              title={title}
+            />
+          )}
         </div>
       </div>
       <p className="my-3 text-wrap md:max-w-72">

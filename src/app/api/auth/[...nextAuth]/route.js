@@ -58,6 +58,7 @@ const authOptions = {
 
       if (user) {
         token.id = user.id;
+        token.provider = account ? account.provider : 'credentials';
       }
       return token;
     },
@@ -69,6 +70,7 @@ const authOptions = {
       if (token.accessToken) {
         session.accessToken = token.accessToken;
       }
+      session.user.provider = token.provider || 'credentials';
       return session;
     },
 

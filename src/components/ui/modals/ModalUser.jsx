@@ -1,10 +1,7 @@
 "use client";
 
-import { useModalStore, useUserStore } from "@/zustand/store";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import LinkedinIcon from "../icons/social/LinkedinIcon";
 import { LayoutDashboard, SettingsIcon, LogOutIcon, XIcon } from "lucide-react";
 import CustomHr from "../CustomHr";
@@ -15,20 +12,7 @@ import useModal from "@/hooks/useModal";
 
 const ModalUser = ({ userData }) => {
   const { isOpen, closeModal, openModal, toggleModal } = useModal("ModalUser");
-  const { data: session } = useSession();
-  const { logout } = useUserStore();
   const { theme, handleToggleTheme } = useThemeToggle();
-  const router = useRouter();
-
-  const handleSignOut = async () => {
-    if (session) {
-      await signOut();
-      logout();
-    }
-
-    logout();
-    router.push("/");
-  };
 
   return (
     <>
@@ -109,14 +93,14 @@ const ModalUser = ({ userData }) => {
                     className="w-full flex justify-start items-center gap-1 hover:bg-gray-100 dark:hover:bg-white/10 transition p-1 rounded-md"
                   >
                     <ThemeIcon />
-                    {theme === 'light' ? 'Dark' : 'Light'}
+                    {theme === "light" ? "Dark" : "Light"}
                   </button>
                 </AnimatedItems>
               </div>
 
               <AnimatedItems>
                 <button
-                  onClick={handleSignOut}
+                  onClick={() => signOut()}
                   className="w-full flex justify-start items-center gap-1 hover:bg-red-100 dark:hover:bg-red-950 transition p-1 rounded-md"
                 >
                   <LogOutIcon size={20} />

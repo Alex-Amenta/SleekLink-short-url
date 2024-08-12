@@ -3,87 +3,74 @@
 import ConfirmModal from "@/components/ui/modals/ConfirmModal";
 import CustomHr from "@/components/ui/CustomHr";
 import useModal from "@/hooks/useModal";
-import { useUserStore } from "@/zustand/store";
 import { motion } from "framer-motion";
 import { Trash2Icon, SaveIcon } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-
-// export const metadata = {
-//   title: "Settings - Dashboard",
-//   description: "Settings - dashboard",
-// };
+import { useForm } from "react-hook-form";
+import Passwordinput from "@/components/PasswordInput";
+import { deleteUserAccount, updateUserAccount } from "@/actions/user";
 
 const SettingsPage = () => {
-  const { user, deleteAccount, updateUser } = useUserStore();
-  const { status } = useSession();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    watch,
+  } = useForm();
+  const { data: session } = useSession();
+
   const { isOpen, closeModal, openModal } = useModal("ConfirmDeleteUser");
   const [isChangedPassword, setIsChangedPassword] = useState(false);
-  const router = useRouter();
 
   const handleDeleteUser = async () => {
-    try {
-      const success = await deleteAccount(user?.id);
-      if (success) {
-        toast.success("Usuario eliminado con exito!", {
-          position: "top-center",
-        });
-        closeModal();
-        router.push("/");
-      } else {
-        toast.error("Error al eliminar el usuario", {
-          position: "top-center",
-        });
-      }
-    } catch (error) {
-      console.error("Error interno al eliminar usuario:", error.message);
+    const userId = session?.user.id;
+    const result = await deleteUserAccount(userId);
+
+    if (result.success) {
+      toast.success(result.message);
+      closeModal();
+      setTimeout(() => {
+        signOut();
+      }, 2000);
+    } else {
+      toast.error(result.message);
     }
   };
 
-  const handleUpdateUser = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const name = formData.get("name");
-    const password = formData.get("password");
-    const confirmedPassword = formData.get("confirmedPassword");
+  const handleUpdateUser = handleSubmit(async (data) => {
+    const { name, password } = data;
 
-    const originalName = user?.name;
+    const userId = session?.user.id;
+    const originalName = session?.user.name;
     const isNameChanged = name !== originalName;
 
-    if (password && password !== confirmedPassword) {
-      toast.error("Password is not equal to confirmed", {
-        position: "top-center",
-      });
-      return;
-    }
-
     if (!isNameChanged && !password) {
-      toast.error("No se han realizado cambios.", {
-        position: "top-center",
-      });
+      toast.error("No se han realizado cambios.");
       return;
     }
 
-    try {
-      const success = await updateUser(user?.id, name, password);
+    const result = await updateUserAccount(userId, data);
 
-      if (success) {
-        toast.success("Usuario actualizado con exito!", {
-          position: "top-center",
-        });
-        event.target.reset();
-        setIsChangedPassword(false);
+    if (result.success) {
+      if (password) {
+        toast.success(
+          "Contraseña actualizada con éxito. Por seguridad, se ha cerrado la sesión. Por favor, inicie sesión nuevamente."
+        );
+        setTimeout(() => {
+          signOut();
+        }, 3000);
       } else {
-        toast.error("Error al actualizar el usuario", {
-          position: "top-center",
-        });
+        toast.success(result.message);
       }
-    } catch (error) {
-      console.error("Error interno al actualizar el usuario:", error.message);
+      setIsChangedPassword(false);
+    } else {
+      toast.error(result.message);
     }
-  };
+  });
+
+  const password = watch("password", "");
 
   return (
     <section className="min-h-screen mt-[4rem]">
@@ -106,11 +93,10 @@ const SettingsPage = () => {
             Tu nombre:
           </label>
           <input
+            {...register("name", { required: "El nombre es requerido" })}
             className="mb-5 p-2 rounded-md border w-full md:w-[70%]"
             type="text"
-            defaultValue={user?.name}
-            name="name"
-            required
+            defaultValue={session?.user.name}
           />
 
           <label className="mb-2" htmlFor="">
@@ -119,14 +105,14 @@ const SettingsPage = () => {
           <input
             className="p-2 rounded-md border text-black/70 dark:text-white/70 w-full md:w-[70%] bg-black/10 dark:bg-white/10"
             type="email"
-            defaultValue={user?.email}
+            defaultValue={session?.user.email}
             disabled
           />
           <p className="mt-2 text-sm dark:text-white/70 text-black/70 mb-5">
             ⚠ El correo electrónico no puede ser modificado por seguridad.
             Contacta soporte si necesitas cambiarlo.
           </p>
-          {status === "unauthenticated" && (
+          {session?.user.provider !== "google" && (
             <>
               <CustomHr />
               <label className="mb-5">
@@ -142,27 +128,14 @@ const SettingsPage = () => {
           )}
 
           {isChangedPassword && (
-            <>
-              <label className="mb-2" htmlFor="">
-                Nueva contraseña:
-              </label>
-              <input
-                className="mb-5 p-2 rounded-md border w-full md:w-[70%]"
-                type="password"
-                name="password"
-                placeholder="*****************"
-                required
+            <div className="w-full md:w-[70%]">
+              <Passwordinput
+                register={register}
+                password={password}
+                errors={errors}
+                passwordLabel="Nueva contraseña:"
               />
-              <label className="mb-2" htmlFor="">
-                Confirma contraseña:
-              </label>
-              <input
-                className="mb-5 p-2 rounded-md border w-full md:w-[70%]"
-                type="password"
-                name="confirmedPassword"
-                placeholder="*****************"
-              />
-            </>
+            </div>
           )}
 
           <button

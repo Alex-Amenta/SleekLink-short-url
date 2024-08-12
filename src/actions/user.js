@@ -1,15 +1,10 @@
 "use server"
 
-import { delay } from "@/helpers/delay";
 import prisma from "@/lib/prisma";
 import bcrypt from 'bcrypt';
 
-export async function signupUser(formData) {
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const image = formData.get('image');
-    const password = formData.get('password');
-
+export async function signupUser(data) {
+    const { image, name, email, password } = data
     try {
         const existingUser = await prisma.user.findUnique({
             where: {
