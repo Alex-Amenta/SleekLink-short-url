@@ -1,6 +1,6 @@
 "use server"
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route.js";
 import { delay } from "@/helpers/delay";
 import { validateAndCheckDuplicateUrl, checkUserOrAnonymousLimits, getExpirationDate, getShortUrl } from "@/helpers/urls-helpers";
 import prisma from "@/lib/prisma"

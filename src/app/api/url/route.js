@@ -3,7 +3,7 @@ import { checkUserOrAnonymousLimits, getExpirationDate, getShortUrl, validateAnd
 import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
 import { getOrCreateAnonymousId } from "@/helpers/cookies";
-import { authOptions } from "@/auth/[...nextauth]/route";
+import { authOptions } from "@/auth/[...nextauth]/route.js";
 
 export async function GET() {
     try {
