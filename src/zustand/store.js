@@ -122,13 +122,12 @@ export const useUrlStore = create((set, get) => ({
     },
 
     fetchAnonymousUrls: async () => {
-        set({ loading: true, error: null });
+        set({ error: null });
         try {
             const response = await axios.get('/api/url/anonymous', { withCredentials: true });
 
             set({
                 nonAuthUrls: response.data,
-                loading: false,
             });
         } catch (error) {
             set({
