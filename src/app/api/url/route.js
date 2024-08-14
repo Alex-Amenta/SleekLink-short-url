@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import { checkUserOrAnonymousLimits, getExpirationDate, getShortUrl, validateAndCheckDuplicateUrl } from "@/helpers/urls-helpers";
 import { getServerSession } from "next-auth";
